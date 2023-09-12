@@ -36,4 +36,6 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
  Next to it, is the "Current Branch" tab. This will tell you what branch you are working on. **Important Note:** Make sure you are working on your own branch and not the main branch. Otherwise, any commits you make will be directly added to the main branch whitch could lead to a lot of bugs and breakages. 
 
- The final tab is useful if you are working on the project across multiple computers (i.e. you laptop and your pc). It will pull any changes made to the branch from the cloud and add them to your local files. 
+ The final tab is useful if you are working on the project across multiple computers (i.e. you laptop and your pc). It will pull any changes made to the branch from the cloud and add them to your local files.
+
+ The options in the centre of the screen allow you to open the project in vscode, open the files in your file explorer and open the github codebase in your web browser. If you have made commits to your branch as I have in the picture above, it will give you the option of previewing and creating a pull request(covered below).
