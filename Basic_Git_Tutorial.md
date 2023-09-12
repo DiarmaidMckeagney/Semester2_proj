@@ -19,7 +19,7 @@ This tutorial will go over the basics of creating a new branch, using github des
     4.2. [Step 2: Titling, Describing, and Labeling Your Pull Request](#step-2-titling-describing-and-labeling-your-pull-request)<br>
     4.3. [Step 3: Approval](#step-3-approval)<br>
 5. [Issue Tracker](#issue-tracker)<br>
-6.[Documentation](#documentation)<br>
+6. [Documentation](#documentation)<br>
 
 
 ## Branches
@@ -48,7 +48,7 @@ Now whenever you commit your code, it will first be committed to your branch. Th
 
 ## Github Desktop
 
-You should download Github Desktop as it is the best visualiser for committing and managing your code. The link to download the app is [here](https://desktop.github.com/ 'github desktop link'). Once you download the app, log in to your github account. After that you can choose a repository to download on to your local computer. Pick the "clone repository" option and the project should come up as an option under the "your repos" tab. Click on the project, then choose a location on your computer to store the repo(sorry I don't have a picture for any of this).
+You should download Github Desktop as it is the best visualiser for committing and managing your code. The link to download the app is [here](https://desktop.github.com/ 'github desktop link'). Once you download the app, log in to your github account. After that you can choose a repository to download on to your local computer. Pick the "clone repository" option and the project should come up as an option under the "your repos" tab. Click on the project, then choose a location on your computer to store the repo (sorry I don't have a picture for any of this).
 
 Now you should be seeing a menu not unlike the one you see below (with the exception of the tab in blue, don't worry about that for now).
 <img src="/Tutorial_pics/github_desktop/Github_Desktop_main_page.png" alt="Main Menu for Github Desktop" />
@@ -59,11 +59,11 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
  The final tab is useful if you are working on the project across multiple computers (i.e. you laptop and your pc). It will pull any changes made to the branch from the cloud and add them to your local files.
 
- The options in the centre of the screen allow you to open the project in vscode, open the files in your file explorer and open the github codebase in your web browser. If you have made commits to your branch as I have in the picture above, it will give you the option of previewing and creating a pull request(covered below).
+ The options in the centre of the screen allow you to open the project in vscode, open the files in your file explorer and open the github codebase in your web browser. If you have made commits to your branch as I have in the picture above, it will give you the option of previewing and creating a pull request (covered [below](#pull-requests)).
 
  ## Commits
  
- Opening the project in vscode (I know there are other IDEs but im just going to write a tutorial on this) you can edit the code however you want. Whenever you save the project (Ctrl + s), it will automatically show these changes in Github Desktop.
+ Opening the project in vscode (I know there are other IDEs but I'm just going to write a tutorial on this) you can edit the code however you want. Whenever you save the project (Ctrl + s), it will automatically show these changes in Github Desktop.
 
  <img src="/Tutorial_pics/commit/committing_github_desktop_interface_1.png" alt="Commit Menu"/>
 
@@ -71,7 +71,7 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
  ### Step 1: Titling your Commit
 
- You need to give the commit a title. This title needs to be descriptive as it will tell you and the other members of the group what this commit does for the codebase. You enter this name into the "Summary" box at the bottom left of the screen.
+ You need to give the commit a title. This title needs to be descriptive as it will tell you and the other members of the group what this commit does for the codebase. You enter this title into the "Summary" box at the bottom left of the screen.
 
  <img src="/Tutorial_pics/commit/committing_github_desktop_interface_2.png" alt="Enter Summary Name"/>
 
