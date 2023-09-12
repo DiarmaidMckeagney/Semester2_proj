@@ -5,21 +5,21 @@ This tutorial will go over the basics of creating a new branch, using github des
 
 ## Table of Contents
 
-1. [Branches](#branches)
-    1.1. [Step 1: Open Branches Menu](#step-1-open-branches-menu)
-    1.2. [Step 2: New Branch](#step-2-new-branch)
-    1.3. [Step 3:  Giving your Branch a Name](#step-3-giving-your-branch-a-name)
-2. [GitHub Desktop](#github-desktop)
-3. [Commits](#commits)
-    3.1. [Step 1: Titling your Commit](#step-1-titling-your-commit)
-    3.2. [Step 2: Adding a description](#step-2-adding-a-description)
-    3.3. [Step 3: Commiting and Pushing the Origin](#step-3-commiting-and-pushing-the-origin)
-4. [Pull Requests](#pull-requests)
-    4.1. [Step 1: Getting to the Pull Request Menu](#step-1-getting-to-the-pull-request-menu)
-    4.2. [Step 2: Titling, Describing, and Labeling Your Pull Request](#step-2-titling-describing-and-labeling-your-pull-request)
-    4.3. [Step 3: Approval](#step-3-approval)
-5. [Issue Tracker](#issue-tracker)
-6.[Documentation](#documentation)
+1. [Branches](#branches)<br>
+    1.1. [Step 1: Open Branches Menu](#step-1-open-branches-menu)<br>
+    1.2. [Step 2: New Branch](#step-2-new-branch)<br>
+    1.3. [Step 3:  Giving your Branch a Name](#step-3-giving-your-branch-a-name)<br>
+2. [GitHub Desktop](#github-desktop)<br>
+3. [Commits](#commits)<br>
+    3.1. [Step 1: Titling your Commit](#step-1-titling-your-commit)<br>
+    3.2. [Step 2: Adding a description](#step-2-adding-a-description)<br>
+    3.3. [Step 3: Commiting and Pushing the Origin]<br>(#step-3-commiting-and-pushing-the-origin)<br>
+4. [Pull Requests](#pull-requests)<br>
+    4.1. [Step 1: Getting to the Pull Request Menu]<br>(#step-1-getting-to-the-pull-request-menu)<br>
+    4.2. [Step 2: Titling, Describing, and Labeling Your Pull Request]<br>(#step-2-titling-describing-and-labeling-your-pull-request)<br>
+    4.3. [Step 3: Approval](#step-3-approval)<br>
+5. [Issue Tracker](#issue-tracker)<br>
+6.[Documentation](#documentation)<br>
 
 
 ## Branches
