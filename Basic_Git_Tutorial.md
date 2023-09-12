@@ -65,3 +65,9 @@ There are three main tabs on the top left of your screen. The "Current Repositor
    <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="Enter Summary Name"/>
 
    ## Pull Requests
+
+   A pull request allows you to add a number of commits into the codebase of the parent branch. The commits you put into your pull requests should be related to each other. For example, you are working on an early version of a feature. Once you finish coding this feature, and you have tested it to make sure it works and is stable, then you can create a pull request.
+
+   ### Step 1
+
+   
