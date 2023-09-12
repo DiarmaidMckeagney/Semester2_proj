@@ -56,18 +56,34 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
  <img src="/Tutorial_pics/commit/committing_github_desktop_interface_2.png" alt="Enter Summary Name"/>
 
+### Step 2
+
  Next you should add a description. While this is not completly neccessary it will be helpful to give as much info on the changes this commit makes as possible. For very minor changes, the title might suffice in giving as much context as needed, however for more complex changes, a description is going to be very useful to others in the group.
 
   <img src="/Tutorial_pics/commit/committing_github_desktop_interface_3.png" alt="Give a Description"/>
 
+### Step 3
+
   Now just press the "commit to [branch name]" button. This will commit the change to the local machine only. To push this change to the cloud, you will need to hit the "push origin" button that will appear in a blue tab in the centre of the Github Desktop main menu.
 
-   <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="Enter Summary Name"/>
+   <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="push to origin"/>
 
    ## Pull Requests
 
-   A pull request allows you to add a number of commits into the codebase of the parent branch. The commits you put into your pull requests should be related to each other. For example, you are working on an early version of a feature. Once you finish coding this feature, and you have tested it to make sure it works and is stable, then you can create a pull request.
+   A pull request allows you to add a number of commits into the codebase of the parent branch. The commits that go into your pull requests should be related to each other. For example, you are working on an early version of a feature. Once you finish coding this feature, and you have tested it to make sure it works and is stable, then you can create a pull request. **Note:** all commits you have made will be included in your pull request, so you should only work on one thing at a time. If you want to work on multiple things at once, then use multiple branches.
 
    ### Step 1
 
-   
+   First, go into the code page of your branch. There should be a message in a yellow box at the top saying that there were recent pushes to this branch. Click on the "Compare & Pull Request" button in green.
+
+   <img src="/Tutorial_pics/pull_request/creating_pull_request_1.png" alt="Main code page"/>
+
+   ### Step 2
+
+   This will bring you to a new menu. Here you can give a title and description to the pull request. As with the commits, please give as much context as possible. Now you should add a label to the pull request. If it is a bug fix(s), add the "bug" label. If it is a new feature add the "enhancement" tag. If it is documentation then add the "documentation" tag. Then once your happy with your pull request, click the "Create pull request" button.
+
+   <img src="/Tutorial_pics/pull_request/creating_pull_request_2.png" alt="Main code page"/>
+
+   ### Step 3
+
+   Now you need to get the pull request approved. If you are committing to the dev branch you need to get one other person to approve the pull request before it can be merged. Committing to the main branch needs everyones approval before it can be merged. This is to facilitate code reviews. To view open pull requests go to the corresponding tab in the project, and click on the pull request you want to review. You can request changes to the code if you need to. When you are happy with the pull request, you can hit the "approve pull request" button.
