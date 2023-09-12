@@ -8,4 +8,8 @@ Branches are a way to work on code yourself without affecting the main codebase.
 
 Open the main code section of the project and click on the button that tells you how many branches there are (where the mouse is clicking in the below pictured)
 
-    ![Opening the branch menu](/Tutorial_pics/Screenshot%20from%202023-09-12%2014-15-52.png)
+<img src="/Tutorial_pics/creating_new_branch_step_1" alt="Opening the branch menu"/>
+
+### Step 2
+
+Click on the
