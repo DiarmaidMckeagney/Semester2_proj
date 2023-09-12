@@ -1,4 +1,5 @@
 # Basic Github Tutorial
+#### created by Diarmaid McKeagney
 
 ## Branches
 
@@ -15,3 +16,15 @@ Open the main code section of the project and click on the button that tells you
 You should now be on a new menu that shows you all the branches. Next you want to click on the "New Branch" option.
 
 <img src="/Tutorial_pics/creating_new_branch_step_2.png" alt="Branches Menu" />
+
+### Step 3
+
+Now just enter the name for your branch and make sure it's source is the main branch. Then hit "create new branch" and its done.
+
+<img src="/Tutorial_pics/creating_new_branch_step_3.png" alt="Creating new branch Menu option" />
+
+Now whenever you commit your code, it will first be committed to your branch. Then, once you are sure that your code is ready to be added to the main project, you can submit a pull request (covered down below). 
+
+## Github Desktop
+
+You should download Github Desktop as it is the best visualiser for committing and managing your code. The link to download the app is [here](https://desktop.github.com/ 'github desktop link').
