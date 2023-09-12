@@ -1,6 +1,8 @@
 # Basic Github Tutorial
 #### created by Diarmaid McKeagney
 
+This tutorial will go over the basics of creating a new branch, using github desktop, commiting code, creating pull requests, raising issues, and documentation.
+
 ## Branches
 
 Branches are a way to work on code yourself without affecting the main codebase. All group members need to create a branch for themselves. I have called my branch "diarmaid's-branch". I think this is a good way of making it clear who's code is who.
@@ -61,3 +63,5 @@ There are three main tabs on the top left of your screen. The "Current Repositor
   Now just press the "commit to [branch name]" button. This will commit the change to the local machine only. To push this change to the cloud, you will need to hit the "push origin" button that will appear in a blue tab in the centre of the Github Desktop main menu.
 
    <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="Enter Summary Name"/>
+
+   ## Pull Requests
