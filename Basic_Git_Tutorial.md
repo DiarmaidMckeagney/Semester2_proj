@@ -39,3 +39,25 @@ There are three main tabs on the top left of your screen. The "Current Repositor
  The final tab is useful if you are working on the project across multiple computers (i.e. you laptop and your pc). It will pull any changes made to the branch from the cloud and add them to your local files.
 
  The options in the centre of the screen allow you to open the project in vscode, open the files in your file explorer and open the github codebase in your web browser. If you have made commits to your branch as I have in the picture above, it will give you the option of previewing and creating a pull request(covered below).
+
+ ## Commits
+
+ Opening the project in vscode (I know there are other IDEs but im just going to write a tutorial on this) you can edit the code however you want. Whenever you save the project (Ctrl + s), it will automatically show these changes in Github Desktop.
+
+ <img src="/Tutorial_pics/commit/committing_github_desktop_interface_1.png" alt="Commit Menu"/>
+
+ In the left column, it will tell you what files have been added/altered/deleted. On the right hand side of the screen, it will tell you what lines in the currently selected file have been added/altered/deleted. To commit these changes to the branch, follow these steps:
+
+ ### Step 1
+
+ You need to give the commit a title. This title needs to be descriptive as it will tell you and the other members of the group what this commit does for the codebase. You enter this name into the "Summary" box at the bottom left of the screen.
+
+ <img src="/Tutorial_pics/commit/committing_github_desktop_interface_2.png" alt="Enter Summary Name"/>
+
+ Next you should add a description. While this is not completly neccessary it will be helpful to give as much info on the changes this commit makes as possible. For very minor changes, the title might suffice in giving as much context as needed, however for more complex changes, a description is going to be very useful to others in the group.
+
+  <img src="/Tutorial_pics/commit/committing_github_desktop_interface_3.png" alt="Give a Description"/>
+
+  Now just press the "commit to [branch name]" button. This will commit the change to the local machine only. To push this change to the cloud, you will need to hit the "push origin" button that will appear in a blue tab in the centre of the Github Desktop main menu.
+
+   <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="Enter Summary Name"/>
