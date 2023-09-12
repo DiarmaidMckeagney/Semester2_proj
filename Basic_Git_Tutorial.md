@@ -5,7 +5,7 @@ This tutorial will go over the basics of creating a new branch, using github des
 
 ## Branches
 
-Branches are a way to work on code yourself without affecting the main codebase. All group members need to create a branch for themselves. I have called my branch "diarmaid's-branch". I think this is a good way of making it clear who's code is who.
+Branches are a way to work on code yourself without affecting the main codebase. There is a main branch which will hold the final version of the code. There is a dev branch which we will use to develop new features. We will pull the code from the dev branch and push it to the main branch every week or so (TBD) as a new version. All group members need to create a branch for themselves. This branch will come off of the dev branch. I have called my branch "diarmaid's-branch". I think this is a good way of making it clear who's code is who.
 
 ### Step 1
 
@@ -21,7 +21,7 @@ You should now be on a new menu that shows you all the branches. Next you want t
 
 ### Step 3
 
-Now just enter the name for your branch and make sure it's source is the main branch. Then hit "create new branch" and its done.
+Now just enter the name for your branch and make sure it's source is the dev branch. Then hit "create new branch" and its done.
 
 <img src="/Tutorial_pics/branch/creating_new_branch_step_3.png" alt="Creating new branch Menu option" />
 
