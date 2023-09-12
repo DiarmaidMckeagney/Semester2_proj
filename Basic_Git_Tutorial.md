@@ -13,10 +13,10 @@ This tutorial will go over the basics of creating a new branch, using github des
 3. [Commits](#commits)<br>
     3.1. [Step 1: Titling your Commit](#step-1-titling-your-commit)<br>
     3.2. [Step 2: Adding a description](#step-2-adding-a-description)<br>
-    3.3. [Step 3: Commiting and Pushing the Origin]<br>(#step-3-commiting-and-pushing-the-origin)<br>
+    3.3. [Step 3: Commiting and Pushing the Origin](#step-3-commiting-and-pushing-the-origin)<br>
 4. [Pull Requests](#pull-requests)<br>
-    4.1. [Step 1: Getting to the Pull Request Menu]<br>(#step-1-getting-to-the-pull-request-menu)<br>
-    4.2. [Step 2: Titling, Describing, and Labeling Your Pull Request]<br>(#step-2-titling-describing-and-labeling-your-pull-request)<br>
+    4.1. [Step 1: Getting to the Pull Request Menu](#step-1-getting-to-the-pull-request-menu)<br>
+    4.2. [Step 2: Titling, Describing, and Labeling Your Pull Request](#step-2-titling-describing-and-labeling-your-pull-request)<br>
     4.3. [Step 3: Approval](#step-3-approval)<br>
 5. [Issue Tracker](#issue-tracker)<br>
 6.[Documentation](#documentation)<br>
