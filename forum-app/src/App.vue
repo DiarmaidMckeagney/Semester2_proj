@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Header component included at the top, so it appears on all pages -->
-    <AppHeader />
+    <AppHeader :message="store.name"/>
 
     <main>
       <router-view></router-view>
@@ -9,22 +9,32 @@
     <!-- Footer component included at the bottom, so it appears on all pages -->
     <TheFooter />
   </div>
+
+
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue'; // Import the Header component
 import TheFooter from './components/TheFooter.vue'; // Import the Footer component
+import { useHeaderStore } from '@/stores/header.js'
 
 export default {
+
+  data() {
+    return {
+      store: useHeaderStore(), //Tip - dont use data() and setup() in the same export default
+    };
+  },
   components: {
     AppHeader,// Register the Header component
     TheFooter
-  }
+  },
+
+  
 };
 </script>
 
 <style scoped>
-/* Your global CSS styles can go here */
 
 footer {
   background-color: #333; /* Set your desired background color */

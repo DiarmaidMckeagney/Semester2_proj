@@ -1,9 +1,6 @@
 <template>
   <div id="terms-of-use-page">
-    <!-- Header Section -->
-    <div class="header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">Terms of Use</h1>
-    </div>
+ 
 
     <!-- Main Content Section -->
     <main style="padding: 20px;">

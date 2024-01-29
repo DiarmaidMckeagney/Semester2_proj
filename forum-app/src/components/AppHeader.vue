@@ -5,6 +5,10 @@
       <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Site Logo" class="logo" />
     </div>
 
+    <div class="home-header" style="text-align: center; background-color: #333; padding: 20px;">
+      <h1 style="color: white;">{{ message }}</h1>
+    </div>
+
     <!-- Navigation Menu -->
     <div class="menu-section">
       <NavigationMenu />
@@ -18,9 +22,15 @@ import NavigationMenu from './NavigationMenu.vue';
 export default {
   components: {
     NavigationMenu
-  }
-};
+  },
+  props: {
+    message: String,
+  },
+  
+}
 </script>
+
+
 
 <style scoped>
 .app-header {

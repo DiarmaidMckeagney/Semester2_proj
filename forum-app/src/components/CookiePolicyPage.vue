@@ -1,9 +1,6 @@
 <template>
   <div id="cookie-policy-page">
-    <!-- Header Section -->
-    <div class="header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">Cookie Policy</h1>
-    </div>
+
 
     <!-- Main Content Section -->
     <main style="padding: 20px;">

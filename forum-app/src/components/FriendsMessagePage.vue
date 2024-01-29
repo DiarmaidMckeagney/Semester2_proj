@@ -1,9 +1,5 @@
 <template>
   <div id="friends-message-page">
-    <!-- Header Section -->
-    <div class="header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">Friends Page</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; padding: 20px;">

@@ -1,9 +1,5 @@
 <template>
   <div id="topics-page">
-    <!-- Header Section -->
-    <div class="topics-header" style="background-color: #333; color: white; padding: 20px;">
-      <h1 style="text-align: center;">Topics Page</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-between; padding: 20px;">

@@ -1,9 +1,5 @@
 <template>
   <div id="quiz-page">
-    <!-- Header Section -->
-    <div class="quiz-header" style="display: flex; justify-content: center; padding: 20px; background-color: #333;">
-      <h1 style="color: white;">Quiz</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-around; padding: 20px;">

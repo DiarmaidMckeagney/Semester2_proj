@@ -1,9 +1,5 @@
 <template>
   <div id="post-page">
-    <!-- Header Section -->
-    <div class="post-header" style="display: flex; justify-content: center; align-items: center; padding: 20px; background-color: #333;">
-      <h1 style="color: white;">Posts</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-between; padding: 20px;">

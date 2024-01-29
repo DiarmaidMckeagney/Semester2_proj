@@ -1,9 +1,6 @@
 <template>
   <div id="profile-page">
-    <!-- Profile Header -->
-    <div class="profile-header" style="background-color: #333; color: white; padding: 20px; text-align: center;">
-      <h1>Profile page</h1>
-    </div>
+  
 
     <!-- Main Content Section -->
     <main style="display: flex; padding: 20px;">

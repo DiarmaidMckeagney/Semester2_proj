@@ -5,10 +5,6 @@ vue
 Copy code
 <template>
   <div id="community-finder-page">
-    <!-- Header Section -->
-    <div class="community-header" style="text-align: center; background-color: #333; color: white; padding: 20px;">
-      <h1>Community Finder</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-between; padding: 20px;">

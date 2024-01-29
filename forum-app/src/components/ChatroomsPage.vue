@@ -1,9 +1,5 @@
 <template>
   <div id="chatrooms-page">
-    <!-- Header Section -->
-    <div class="chatrooms-header" style="text-align: center; background-color: #333; color: white; padding: 20px;">
-      <h1>Chatrooms</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; flex-direction: row; padding: 20px;">

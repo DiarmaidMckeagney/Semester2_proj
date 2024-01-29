@@ -1,15 +1,10 @@
 <template>
   <div id="home-page">
-    <!-- Header Section -->
-    <div class="home-header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">Home Page</h1>
-    </div>
-
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-between; padding: 20px;">
       <!-- Topics List Section -->
       <aside style="width: 20%; background-color: #ddd; padding: 10px;">
-        <h2>Topics List</h2>
+        <h2>Topics List </h2>
         <ul>
           <!-- Direct topic links -->
           <li>
@@ -44,3 +39,15 @@
 <style scoped>
 /* Add your CSS here */
 </style>
+
+<script>
+import AppHeader from './AppHeader.vue';
+
+export default {
+
+  components: {
+   AppHeader
+  }
+}
+
+</script>

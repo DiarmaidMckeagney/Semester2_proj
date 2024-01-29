@@ -22,13 +22,26 @@
 </template>
 
 <script>
+import { useHeaderStore } from '@/stores/header.js';
+
+
 export default {
+  methods: {
+    updateNameInStore(newName)
+    {
+        const headerStore = useHeaderStore();
+        headerStore.updateHeaderName(newName);
+
+    },
+  },
+
+  
   name: 'NavigationMenu'
 };
 </script>
 
 <style scoped>
-/* Style for the navigation bar */
+/* Style for the navigation bar {name: 'about', params: {message: 'Hi there' }} */
 .navbar {
   width: 100%;
   display: flex;

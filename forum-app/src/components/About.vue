@@ -1,9 +1,5 @@
 <template>
   <div id="about-page">
-    <!-- Header Section -->
-    <div class="about-header" style="background-color: #333; color: white; padding: 20px; text-align: center;">
-      <h1>About Us</h1>
-    </div>
 
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: right ; padding: 20px; text-align: center;  background-color: #;">
@@ -12,6 +8,7 @@
         <h2>About Us</h2>
         <p>Who are we  ?</p>
         <p>Need to think of something nice to write here </p>
+        <h3>{{ $route.params.message }}</h3>
       </section>
 
       <!-- Contact Section -->

@@ -1,9 +1,5 @@
 <template>
   <div id="community-page">
-    <!-- Header Section -->
-    <div class="header" style="text-align: center; background-color: #333; color: white; padding: 20px;">
-      <h1>Community</h1>
-    </div>
     <!-- Main Content Section -->
     <main style="display: flex; justify-content: space-between; padding: 20px;">
       <!-- Sidebar: List of Users Joined -->
