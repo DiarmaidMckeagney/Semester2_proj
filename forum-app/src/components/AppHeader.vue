@@ -1,21 +1,4 @@
 <template>
-<<<<<<< Updated upstream
-  <header class="app-header">
-    <!-- Logo Section -->
-    <div class="logo-section">
-      <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Site Logo" class="logo" />
-    </div>
-
-    <div class="home-header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">{{ message }}</h1>
-    </div>
-
-    <!-- Navigation Menu -->
-    <div class="menu-section">
-      <NavigationMenu />
-    </div>
-=======
-  
   <header class="app-header">
 
     <!-- Logo Section -->
@@ -32,9 +15,6 @@
           
         </div>
 
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-        </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
@@ -63,24 +43,19 @@
           <button type="button" class="btn btn-warning">Sign-up</button>
         </div>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu Deletable -->
           <div class="menu-section">
             <NavigationMenu />
-        
           </div>
       </div>
     </div>
-
->>>>>>> Stashed changes
   </header>
 </template>
 
 <script>
 import NavigationMenu from './NavigationMenu.vue';
-<<<<<<< Updated upstream
-=======
+
 import SignUpForm from './SignUpForm.vue';
->>>>>>> Stashed changes
 
 export default {
   components: {
@@ -105,8 +80,7 @@ export default {
   padding: 1rem;
 }
 
-<<<<<<< Updated upstream
-=======
+
 
 .active {
   /* Add your active styles here */
@@ -120,7 +94,6 @@ export default {
 {
 
 }
->>>>>>> Stashed changes
 .logo-section .logo {
   width: 100px ; /* Adjust as needed */
 }

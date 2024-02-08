@@ -1,11 +1,5 @@
 <template>
   <footer class="footer" >
-<<<<<<< Updated upstream
-    <router-link to="/support">Support</router-link> |
-    <router-link to="/privacy-policy">Privacy Policy</router-link> |
-    <router-link to="/cookie-policy">Cookie Policy</router-link> |
-    <router-link to="/terms-of-use">Terms of Use</router-link>
-=======
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-auto">
       <li :class="{ 'active': $route.path === '/support' }">
         <router-link to="/support">Support</router-link>
@@ -23,7 +17,6 @@
      
     
   </ul>
->>>>>>> Stashed changes
   </footer>
 </template>
 
@@ -46,8 +39,6 @@ export default {
 .footer a:hover {
   text-decoration: underline;
 }
-<<<<<<< Updated upstream
-=======
 
 .active {
   /* Add your active styles here */
@@ -57,5 +48,4 @@ export default {
   
   
 }
->>>>>>> Stashed changes
 </style>
