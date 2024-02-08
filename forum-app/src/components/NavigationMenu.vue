@@ -21,6 +21,7 @@
   </nav>
 </template>
 
+<<<<<<< Updated upstream
 <script>
 import { useHeaderStore } from '@/stores/header.js';
 
@@ -40,6 +41,10 @@ export default {
 };
 </script>
 
+=======
+
+
+>>>>>>> Stashed changes
 <style scoped>
 /* Style for the navigation bar {name: 'about', params: {message: 'Hi there' }} */
 .navbar {
