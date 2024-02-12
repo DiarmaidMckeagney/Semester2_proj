@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "forum-app-9d1c4",
     "public": "dist",
     "ignore": [
       "firebase.json",
