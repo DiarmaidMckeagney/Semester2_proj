@@ -1,0 +1,28 @@
+Welcome to Alumn!
+
+Join us, a diverse team of computer science and IT undergraduates from the University of Galway, where youthful energy meets the rich perspective of maturity. In our second year, we're united by a common goal: to innovate and connect.
+
+Meet the Team:
+
+Peter Fitzgerald: A tech enthusiast with a passion for exploring new possibilities in the digital world.
+Diarmaid McKeagney: Our coding expert, whose technical skills and algorithmic prowess are integral to our project's success.
+Igor Pokrzywniak: Known for his detail-oriented approach and innovative software development strategies, Igor's contributions are key to our project's design and implementation.
+Natalia Kowalska: At 37, Natalia brings a unique blend of life experience and insight, adding depth and perspective to our team.
+
+Our Mission:
+Through Alumn , we aim to create an engaging online space for students to connect, share knowledge, and grow together. Our platform is a testament to the power of technology in enhancing community and learning.
+
+What We Offer:
+We've designed a feature-rich platform for student interaction, including:
+
+Real-time chat for immediate communication.
+Customizable profiles to reflect each user's unique identity and interests.
+Various chat rooms to cater to different topics and study groups.
+Interactive quizzes for both learning and entertainment.
+A forum to post, discuss, and engage on diverse topics.
+Our Passion:
+Bound by our love for technology, we're driven to leverage our skills in computer science and IT to enrich the student experience. This project is not just an academic endeavor; it's our commitment to the future of education and community building.
+
+Be Part of Our Community:
+As we navigate this exciting project, we welcome you to join us. Your participation, ideas, and feedback will help shape a vibrant and inclusive student community.
+
