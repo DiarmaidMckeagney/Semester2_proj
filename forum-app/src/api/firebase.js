@@ -9,7 +9,6 @@ import { getAnalytics } from "firebase/analytics";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-
     apiKey: "AIzaSyCayi2qFrto9Z2DEulmsI3JxKBgfn9II3U",
     authDomain: "forum-app-9d1c4.firebaseapp.com",
     projectId: "forum-app-9d1c4",
@@ -17,10 +16,11 @@ const firebaseConfig = {
     messagingSenderId: "905082844652",
     appId: "1:905082844652:web:dd800b06c62a3ed671fcc9",
     measurementId: "G-3P9029P87L"
-
 };
 
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export default app;
