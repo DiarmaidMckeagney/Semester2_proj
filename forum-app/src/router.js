@@ -18,6 +18,7 @@ import AboutPage from './components/About.vue';
 
 import { useHeaderStore } from '@/stores/header.js';
 import Registration from "@/components/Registration.vue";
+import Login from "@/components/Login.vue";
 
 const routes = [
     { path: '/', component: HomePage, props: {customHeader: 'Hello world', }, },
@@ -34,7 +35,8 @@ const routes = [
     { path: '/privacy-policy', component: PrivacyPolicyPage },
     { path: '/cookie-policy', component: CookiePolicyPage },
     { path: '/terms-of-use', component: TermsOfUsePage },
-    { path: '/registration', component: Registration }
+    { path: '/registration', component: Registration },
+    { path: '/login', component: Login }
 ];
 
 const router = createRouter({

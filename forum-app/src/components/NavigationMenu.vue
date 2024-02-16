@@ -17,6 +17,7 @@
         <router-link to="/chatrooms">Chatrooms</router-link>
         <router-link to="/mod-tools">Mod Tools</router-link>
         <router-link to="/registration">Sign Up</router-link>
+        <router-link to="/login">Login</router-link>
       </div>
     </div>
   </nav>
