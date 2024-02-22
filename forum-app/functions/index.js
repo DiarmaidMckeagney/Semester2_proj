@@ -17,7 +17,7 @@ exports.userInfo = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        const docRef = admin.firestore().collection("Profiles").where("Uid", "==", request.body.Uid);
+        const docRef = admin.firestore().collection("Profiles").where("Uid", "==", request.body.data.Uid);
         return docRef.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -26,6 +26,15 @@ exports.userInfo = functions.https.onRequest((request, response) => {
             response.send({data : myData});
         }).catch((error) => {
                 console.log("Error getting documents: ", error);
+        });
+    });
+});
+
+exports.createProfile = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        return admin.firestore().collection("Profiles").add(request.body).then(() => {
+            response.send("Saved in the database");
         });
     });
 });
