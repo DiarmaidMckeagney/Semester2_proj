@@ -16,12 +16,14 @@
         <router-link to="/quiz">Quiz</router-link> <!-- New link for Quiz Page -->
         <router-link to="/chatrooms">Chatrooms</router-link>
         <router-link to="/mod-tools">Mod Tools</router-link>
+        <router-link to="/registration">Sign Up</router-link>
+        <router-link to="/login">Login</router-link>
       </div>
     </div>
   </nav>
 </template>
 
-<<<<<<< Updated upstream
+
 <script>
 import { useHeaderStore } from '@/stores/header.js';
 
@@ -41,10 +43,6 @@ export default {
 };
 </script>
 
-=======
-
-
->>>>>>> Stashed changes
 <style scoped>
 /* Style for the navigation bar {name: 'about', params: {message: 'Hi there' }} */
 .navbar {
