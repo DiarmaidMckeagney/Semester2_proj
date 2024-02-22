@@ -8,7 +8,7 @@
         <h2>Tabs</h2>
         <ul style="list-style-type: none; padding: 0;">
           <li style="margin-bottom: 10px;">
-            <router-link to="/quizz">Quiz</router-link> <!-- Link to Quiz Page -->
+            <router-link to="/quiz">Quiz</router-link> <!-- Link to Quiz Page -->
           </li>
           <li style="margin-bottom: 10px;">Homework</li>
           <li style="margin-bottom: 10px;">Exercises</li>
