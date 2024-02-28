@@ -38,3 +38,40 @@ exports.createProfile = functions.https.onRequest((request, response) => {
         });
     });
 });
+
+exports.chatroomMessages = functions.https.onRequest( (request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        let myData = [];
+        admin.firestore().collection("chatrooms/"+ request.body.data.name + "posts").orderBy("timestamp",
+            "asc").get().then((snapshot) => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                response.send({data : 'No data in database'});
+                return;
+            }
+            snapshot.forEach(doc => {
+                myData.push(doc.data());
+            });
+            response.send({data : myData});
+        });
+    });
+});
+
+exports.chatroomNames = functions.https.onRequest((request, response) => {
+   request.header("Access-Control-Allow-Origin: *");
+   cors(request,response, () => {
+       let myData = [];
+       admin.firestore().collection("chatrooms").get().then((snapshot) => {
+           if (snapshot.empty) {
+               console.log('No matching documents.');
+               response.send({data : 'No data in database'});
+               return;
+           }
+           snapshot.forEach(doc => {
+               myData.push(doc.id);
+           });
+           response.send({data : myData});
+       });
+   });
+});
