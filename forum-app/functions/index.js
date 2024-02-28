@@ -34,7 +34,10 @@ exports.createProfile = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         return admin.firestore().collection("Profiles").add(request.body).then(() => {
-            response.send("Saved in the database");
+            response.send({
+                status: "success",
+                data: null
+            });
         });
     });
 });
@@ -43,7 +46,7 @@ exports.chatroomMessages = functions.https.onRequest( (request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        admin.firestore().collection("chatrooms/"+ request.body.data.name + "posts").orderBy("timestamp",
+        admin.firestore().collection("chatrooms/"+ request.body.data.name + "/posts").orderBy("timestamp",
             "asc").get().then((snapshot) => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
@@ -84,7 +87,21 @@ exports.newChatroom = functions.https.onRequest((request, response) => {
         return admin.firestore().collection("chatrooms").doc(request.body.data.name).collection("posts").add({"username": "Alumn", "timestamp": currentTime, "message": "Welcome to your new chatroom!"}).then(() => {
             response.send({
                 status: "success",
-                data: "your data object or string or any type"
+                data: null
+            });
+        });
+    });
+});
+
+exports.newMessage = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        return admin.firestore().collection('chatrooms').doc(request.body.data.name).collection("posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message}).then((
+        )=>{
+            response.send({
+                status: "success",
+                data: null
             });
         });
     });

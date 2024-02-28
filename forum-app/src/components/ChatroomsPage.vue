@@ -6,11 +6,11 @@
       <!-- Chatroom List Section -->
       <section style="width: 66%; margin-right: 4%;">
         <h2>What's New in Chatrooms</h2>
-        <ul v-for="n in chatrooms.length">
+        <ul v-for="n in chatrooms.length" :key="refresher">
           <!-- List of Chatrooms -->
           <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
             <span>{{ chatrooms[n-1] }}</span>
-            <button class="join-button" style="background-color: #333; color: white;">Join</button>
+            <button class="join-button" style="background-color: #333; color: white;" @click="moveToChatroom(chatrooms[n-1])">Join</button>
           </li>
           <!-- Create New Chatroom -->
         </ul>
@@ -34,12 +34,19 @@
 <script>
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
-
+import { useChatroomName } from "@/stores/counter.js";
+import router from "@/router.js";
 
 export default {
+  setup(){
+    const chatroomNamestore = useChatroomName();
+
+    return { chatroomNamestore }
+  },
   data() {
     return {
-      chatrooms:[]
+      chatrooms:[],
+      refresher: 0
     }
   },
   created() {
@@ -53,14 +60,18 @@ export default {
         console.log(result);
         this.chatrooms = result.data;
       })
+      this.refresher++;
     },
     newChatroom() {
       const functions = getFunctions(app);
       const newChatroom = httpsCallable(functions, 'newChatroom');
-      newChatroom({name: "public4"}).then((result) => {
-        console.log(result.data);
+      newChatroom({name: "public21"}).then((result) => {
         this.chatroomNames();
       })
+    },
+    moveToChatroom(chatroom){
+      this.chatroomNamestore.changeName(chatroom);
+      router.push({path: "/chatroom"});
     }
   }
 }
