@@ -17,7 +17,7 @@
         <ul>
           <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
             <span>Create New Chat</span>
-            <button class="join-button" style="background-color: #333; color: white;">Create</button>
+            <button class="join-button" style="background-color: #333; color: white;" @click="newChatroom">Create</button>
           </li>
         </ul>
       </section>
@@ -54,6 +54,14 @@ export default {
         this.chatrooms = result.data;
       })
     },
+    newChatroom() {
+      const functions = getFunctions(app);
+      const newChatroom = httpsCallable(functions, 'newChatroom');
+      newChatroom({name: "public4"}).then((result) => {
+        console.log(result.data);
+        this.chatroomNames();
+      })
+    }
   }
 }
 

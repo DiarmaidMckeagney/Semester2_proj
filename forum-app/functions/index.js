@@ -75,3 +75,17 @@ exports.chatroomNames = functions.https.onRequest((request, response) => {
        });
    });
 });
+
+exports.newChatroom = functions.https.onRequest((request, response) => {
+   request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        const chatRoomDocRef = admin.firestore().collection("chatrooms").doc(request.body.data.name).set({isPublic: true});
+        return admin.firestore().collection("chatrooms").doc(request.body.data.name).collection("posts").add({"username": "Alumn", "timestamp": currentTime, "message": "Welcome to your new chatroom!"}).then(() => {
+            response.send({
+                status: "success",
+                data: "your data object or string or any type"
+            });
+        });
+    });
+});
