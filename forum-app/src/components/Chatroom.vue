@@ -38,7 +38,10 @@ export default {
     displayMessages(){
       const functions = getFunctions(app);
       const chatroomMessages = httpsCallable(functions, 'chatroomMessages');
-      chatroomMessages({name: this.chatroomNamestore.$state}).then((result) => {
+      const nameOfChatroom = this.chatroomNamestore.nameOfRoom;
+      console.log(nameOfChatroom);
+      chatroomMessages({name: nameOfChatroom}).then((result) => {
+        console.log(result)
         this.messages = result.data;
       })
       this.refresher++;
