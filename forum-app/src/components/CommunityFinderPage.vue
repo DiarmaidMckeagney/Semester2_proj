@@ -16,7 +16,7 @@ Copy code
           <!-- List of Communities -->
           <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
               <span>{{ communities[n-1] }}</span>
-              <button class="join-button" style="background-color: #333; color: white;">Join</button>
+              <Router-link to = "/Community"><button class="join-button" style="background-color: #333; color: white;">Join</button></Router-link>
             </li>
         </ul>
       </section>
