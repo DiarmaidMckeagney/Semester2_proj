@@ -12,10 +12,13 @@ Copy code
       <section style="width: 70%; padding: 10px;">
         <!-- Search Bar -->
         <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Search Bar Placeholder</div>
-        <!-- Community Details -->
-        <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Community Details Placeholder</div>
-        <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Community Details Placeholder</div>
-        <div style="background-color: #f0f0f0; padding: 20px;">Community Details Placeholder</div>
+        <ul v-for="n in communities.length">
+          <!-- List of Communities -->
+          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
+              <span>{{ communities[n-1] }}</span>
+              <button class="join-button" style="background-color: #333; color: white;">Join</button>
+            </li>
+        </ul>
       </section>
 
       <!-- Tag Search and List Section -->
@@ -32,6 +35,34 @@ Copy code
     </main>
   </div>
 </template>
+
+<script>
+import app from '../api/firebase';
+import {getFunctions, httpsCallable} from "firebase/functions";
+
+
+export default {
+  data() {
+    return {
+      communities:[]
+    }
+  },
+  created() {
+    this.communityNames();
+  },
+  methods: {
+    communityNames() {
+      const functions = getFunctions(app);
+      const communityNames = httpsCallable(functions, 'communityNames');
+      communityNames().then((result) => {
+        console.log(result);
+        this.communities = result.data;
+      })
+    },
+  }
+}
+
+</script>
 
 <style scoped>
 /* Scoped CSS styles go here */
