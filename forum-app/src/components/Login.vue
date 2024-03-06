@@ -14,6 +14,7 @@
 <script>
 import app from "../api/firebase"
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import router from "@/router.js";
 
 export default {
   name: "Login",
@@ -36,6 +37,7 @@ export default {
         console.log(errorCode)
         console.log(errorMessage)
       });
+      router.push({path: "/"});
     }
   }
 }
