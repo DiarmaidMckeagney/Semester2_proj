@@ -12,11 +12,11 @@ Copy code
       <section style="width: 70%; padding: 10px;">
         <!-- Search Bar -->
         <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Search Bar Placeholder</div>
-        <ul v-for="n in communities.length">
+        <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
+          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;list-style-type: none;">
               <span>{{ communities[n-1] }}</span>
-              <Router-link to = "/Community"><button class="join-button" style="background-color: #333; color: white;">Join</button></Router-link>
+              <button class="join-button" style="background-color: #333; color: white;" @click = "moveToCommunity(communities[n-1])">Join</button>
             </li>
         </ul>
       </section>
@@ -37,14 +37,24 @@ Copy code
 </template>
 
 <script>
+import router from '@/router';
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 
+import { useCommunityName } from "@/stores/counter.js";
+
 
 export default {
+  setup(){
+    const communityNamestore = useCommunityName();
+
+    return { communityNamestore }
+  },
+
   data() {
     return {
-      communities:[]
+      communities:[],
+      refresher: 0
     }
   },
   created() {
@@ -58,9 +68,16 @@ export default {
         console.log(result);
         this.communities = result.data;
       })
+      this.refresher++;
     },
+
+    moveToCommunity(community){
+      this.communityNamestore.changeName(community);
+      router.push({path: "/community"});
+    }
   }
 }
+
 
 </script>
 

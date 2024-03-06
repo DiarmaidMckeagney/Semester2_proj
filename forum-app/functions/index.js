@@ -43,7 +43,7 @@ exports.chatroomMessages = functions.https.onRequest( (request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        admin.firestore().collection("chatrooms/"+ request.body.data.name + "posts").orderBy("timestamp",
+        admin.firestore().collection("chatrooms/"+ request.body.data.name + "/posts").orderBy("timestamp",
             "asc").get().then((snapshot) => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
@@ -77,11 +77,11 @@ exports.chatroomNames = functions.https.onRequest((request, response) => {
 });
 
 
-exports.communityMessages = functions.https.onRequest( (request, response) => {
+exports.communityPosts = functions.https.onRequest( (request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        admin.firestore().collection("communities/"+ request.body.data.name + "posts").orderBy("timestamp",
+        admin.firestore().collection("communities/"+ request.body.data.name + "/posts").orderBy("timestamp",
             "asc").get().then((snapshot) => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
@@ -113,3 +113,33 @@ exports.communityNames = functions.https.onRequest((request, response) => {
        });
    });
 });
+
+exports.newCommunity = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request,response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": "Alumn",
+    "timestamp": currentTime, "content": "Welcome to your new community!"}).then(() => {
+            response.send({
+                status: "success",
+                data: null
+            })
+        });
+    });
+ });
+
+ exports.newPost = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request,response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": request.body.data.username,
+    "timestamp": currentTime, "content": request.body.data.message}).then(() => {
+            response.send({
+                status: "success",
+                data: null
+            })
+        });
+    });
+ });
