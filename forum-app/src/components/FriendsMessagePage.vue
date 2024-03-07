@@ -8,8 +8,8 @@
         <h2>Friends</h2>
         <div style="margin-bottom: 10px;">Search Placeholder</div>
         <div>
-          <ul v-for="n in FriendsNames" :key="refresher">
-            <li><button>{{ FriendsNames[n-1] }}</button></li>
+          <ul v-for="n in 5" :key="refresher">
+            <li><button>Hello World </button></li>
           </ul>
         </div>
       </aside>
@@ -44,7 +44,7 @@ export default {
     }
   },
   created() {
-    this.friendsNames();
+    //this.friendsNames();
   },
   methods: {
     friendsNames() {
