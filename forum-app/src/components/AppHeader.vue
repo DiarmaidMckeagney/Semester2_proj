@@ -1,19 +1,7 @@
 <template>
   <header class="app-header">
+
     <!-- Logo Section -->
-    <div class="logo-section">
-      <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Site Logo" class="logo" />
-    </div>
-
-    <div class="home-header" style="text-align: center; background-color: #333; padding: 20px;">
-      <h1 style="color: white;">{{ message }}</h1>
-    </div>
-
-<<<<<<< Updated upstream
-    <!-- Navigation Menu -->
-    <div class="menu-section">
-      <NavigationMenu />
-=======
     <div class="container">
 
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -50,9 +38,9 @@
             <router-link to="/quiz" class="nav-link px-2 text-white">Quiz</router-link>
           </li>
         </ul>
-        
         <LoginForm/>
         <SignUpForm/>
+
 
             <!-- Navigation Menu -->
           <div class="menu-section">
@@ -60,18 +48,16 @@
 
           </div>
       </div>
->>>>>>> Stashed changes
     </div>
   </header>
 </template>
 
 <script>
 import NavigationMenu from './NavigationMenu.vue';
-<<<<<<< Updated upstream
-=======
+
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
->>>>>>> Stashed changes
+
 
 export default {
   
@@ -102,6 +88,20 @@ export default {
   padding: 1rem;
 }
 
+
+
+.active {
+  /* Add your active styles here */
+  background-color: #1e1e1e; /* Example background color for the active link */
+  color: #ffffff; /* Example text color for the active link */
+  border-radius: 15%; /* Make the background circular */
+  padding: auto;
+
+}
+.nav
+{
+
+}
 .logo-section .logo {
   width: 100px ; /* Adjust as needed */
 }

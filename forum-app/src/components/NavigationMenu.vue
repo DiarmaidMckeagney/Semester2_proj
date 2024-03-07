@@ -16,10 +16,13 @@
         <router-link to="/quiz">Quiz</router-link> <!-- New link for Quiz Page -->
         <router-link to="/chatrooms">Chatrooms</router-link>
         <router-link to="/mod-tools">Mod Tools</router-link>
+        <router-link to="/registration">Sign Up</router-link>
+        <router-link to="/login">Login</router-link>
       </div>
     </div>
   </nav>
 </template>
+
 
 <script>
 import { useHeaderStore } from '@/stores/header.js';

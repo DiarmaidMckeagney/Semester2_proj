@@ -30,19 +30,19 @@ Branches are a way to work on code yourself without affecting the main codebase.
 
 Open the main code section of the project and click on the button that tells you how many branches there are (where the mouse is clicking in the below pictured)
 
-<img src="/Tutorial_pics/branch/creating_new_branch_step_1.png" alt="Opening the branch menu"/>
+<img src="/Documents/Tutorial_pics/branch/creating_new_branch_step_1.png" alt="Opening the branch menu"/>
 
 ### Step 2: New Branch
 
 You should now be on a new menu that shows you all the branches. Next you want to click on the "New Branch" option.
 
-<img src="/Tutorial_pics/branch/creating_new_branch_step_2.png" alt="Branches Menu" />
+<img src="/Documents/Tutorial_pics/branch/creating_new_branch_step_2.png" alt="Branches Menu" />
 
 ### Step 3: Giving your Branch a Name
 
 Now just enter the name for your branch and make sure it's source is the dev branch. Then hit "create new branch" and its done.
 
-<img src="/Tutorial_pics/branch/creating_new_branch_step_3.png" alt="Creating new branch Menu option" />
+<img src="/Documents/Tutorial_pics/branch/creating_new_branch_step_3.png" alt="Creating new branch Menu option" />
 
 Now whenever you commit your code, it will first be committed to your branch. Then, once you are sure that your code is ready to be added to the main project, you can submit a pull request (covered down below). 
 
@@ -65,7 +65,7 @@ There are three main tabs on the top left of your screen. The "Current Repositor
  
  Opening the project in vscode (I know there are other IDEs but I'm just going to write a tutorial on this) you can edit the code however you want. Whenever you save the project (Ctrl + s), it will automatically show these changes in Github Desktop.
 
- <img src="/Tutorial_pics/commit/committing_github_desktop_interface_1.png" alt="Commit Menu"/>
+ <img src="/Documents/Tutorial_pics/commit/committing_github_desktop_interface_1.png" alt="Commit Menu"/>
 
  In the left column, it will tell you what files have been added/altered/deleted. On the right hand side of the screen, it will tell you what lines in the currently selected file have been added/altered/deleted. To commit these changes to the branch, follow these steps:
 
@@ -73,19 +73,19 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
  You need to give the commit a title. This title needs to be descriptive as it will tell you and the other members of the group what this commit does for the codebase. You enter this title into the "Summary" box at the bottom left of the screen.
 
- <img src="/Tutorial_pics/commit/committing_github_desktop_interface_2.png" alt="Enter Summary Name"/>
+ <img src="/Documents/Tutorial_pics/commit/committing_github_desktop_interface_2.png" alt="Enter Summary Name"/>
 
 ### Step 2: Adding a description
 
  Next you should add a description. While this is not completly neccessary it will be helpful to give as much info on the changes this commit makes as possible. For very minor changes, the title might suffice in giving as much context as needed, however for more complex changes, a description is going to be very useful to others in the group.
 
-  <img src="/Tutorial_pics/commit/committing_github_desktop_interface_3.png" alt="Give a Description"/>
+  <img src="/Documents/Tutorial_pics/commit/committing_github_desktop_interface_3.png" alt="Give a Description"/>
 
 ### Step 3: Commiting and Pushing the Origin
 
   Now just press the "commit to [branch name]" button. This will commit the change to the local machine only. To push this change to the cloud, you will need to hit the "push origin" button that will appear in a blue tab in the centre of the Github Desktop main menu.
 
-   <img src="/Tutorial_pics/commit/pushing_origin_github.png" alt="push to origin"/>
+   <img src="/Documents/Tutorial_pics/commit/pushing_origin_github.png" alt="push to origin"/>
 
    ## Pull Requests
 
@@ -95,13 +95,13 @@ There are three main tabs on the top left of your screen. The "Current Repositor
 
    First, go into the code page of your branch. There should be a message in a yellow box at the top saying that there were recent pushes to this branch. Click on the "Compare & Pull Request" button in green.
 
-   <img src="/Tutorial_pics/pull_request/creating_pull_request_1.png" alt="Main code page"/>
+   <img src="/Documents/Tutorial_pics/pull_request/creating_pull_request_1.png" alt="Main code page"/>
 
    ### Step 2: Titling, Describing, and Labeling Your Pull Request
 
    This will bring you to a new menu. Here you can give a title and description to the pull request. As with the commits, please give as much context as possible. Now you should add a label to the pull request. If it is a bug fix(s), add the "bug" label. If it is a new feature add the "enhancement" tag. If it is documentation then add the "documentation" tag. Then once your happy with your pull request, click the "Create pull request" button.
 
-   <img src="/Tutorial_pics/pull_request/creating_pull_request_2.png" alt="Main code page"/>
+   <img src="/Documents/Tutorial_pics/pull_request/creating_pull_request_2.png" alt="Main code page"/>
 
    ### Step 3: Approval
 
