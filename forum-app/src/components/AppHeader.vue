@@ -2,8 +2,6 @@
   <header class="app-header">
 
     <!-- Logo Section -->
-
-
     <div class="container">
 
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -40,13 +38,9 @@
             <router-link to="/quiz" class="nav-link px-2 text-white">Quiz</router-link>
           </li>
         </ul>
+        <LoginForm/>
+        <SignUpForm/>
 
-        <div class="text-end">
-          <router-link to="/login">
-            <button type="button" class="btn btn-outline-light me-2" data-toggle="modal" data-target="#mymodal">Login</button>
-          </router-link>
-          <button type="button" class="btn btn-warning">Sign-up</button>
-        </div>
 
             <!-- Navigation Menu -->
           <div class="menu-section">
@@ -62,17 +56,24 @@
 import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
+import LoginForm from './LoginForm.vue';
 
 
 export default {
-  components: {
-    NavigationMenu
-  },
-  props: {
-    message: String,
-  },
   
-}
+  props: ['TogglePopup'],
+
+  components: {
+    NavigationMenu,
+    SignUpForm,
+    LoginForm
+  }
+  //Props are no longer needed since we pass nothing into the header
+  //props: {
+   // message: String,
+ // },
+  
+};
 </script>
 
 
