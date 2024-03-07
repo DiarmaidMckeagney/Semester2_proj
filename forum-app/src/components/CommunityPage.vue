@@ -30,7 +30,7 @@
       <!-- Right Sidebar for Actions like Create Community -->
       <aside style="width: 20%; background-color: #ddd; padding: 20px;">
         <router-link to="/community-finder" class="button-link">Community Finder</router-link>
-        <button>Create Community</button>
+        <button @click="newCommunity">Create Community</button>
       </aside>
     </main>
 
@@ -82,6 +82,17 @@ export default {
           this.posts = result.data
         })
         this.refresher++; 
+    },
+    newCommunity() {
+      const functions = getFunctions(app);
+      const newCommunity = httpsCallable(functions, 'newCommunity');
+      let comName = window.prompt("Please enter a community name", "Community" + Math.floor(Math.random() * 10000));
+      if(comName != null){
+        newCommunity({name: comName}).then((result) => {
+        this.communityNames();
+        this.refreshCommunity(comName);
+        })
+      }
     },
     refreshCommunity(community){
       this.communityNamestore.changeName(community);
