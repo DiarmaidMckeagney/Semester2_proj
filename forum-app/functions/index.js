@@ -126,7 +126,7 @@ exports.displayFriendMessages = functions.https.onRequest((request, response) =>
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        let docRef = admin.firestore().collection("Friends" + request.body.data.userId + "/FriendsList").where(admin.firestore.FieldPath.documentId(), "!=", "1234");
+        let docRef = admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").where(admin.firestore.FieldPath.documentId(), "!=", "1234");
         docRef.get().then((snapshot) => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
@@ -145,7 +145,7 @@ exports.newFriendMessage = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         const currentTime = admin.firestore.Timestamp.now();
-        return admin.firestore().collection('Friends' + request.body.data.username + "/FriendsList" + request.body.data.friendId + "/Posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message}).then((
+        return admin.firestore().collection('Friends/' + request.body.data.username + "/FriendsList/" + request.body.data.friendId + "/Posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message}).then((
         )=>{
             response.send({
                 status: "success",
@@ -160,7 +160,7 @@ exports.displayFriends = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        admin.firestore().collection("Friends" + request.body.data.userId +"/FriendsList").get().then((snapshot) => {
+        admin.firestore().collection("Friends/" + request.body.data.userId +"/FriendsList").get().then((snapshot) => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
                 response.send({data : 'No data in database'});
