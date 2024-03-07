@@ -10,3 +10,22 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
+
+export const useChatroomName = defineStore('nameOfRoom', {
+  state: () => {
+    return {
+      name: 'Chatroom 1'
+    }
+  },
+  getters: {
+    nameOfRoom(){
+      return this.name
+    }
+  },
+  actions: {
+    changeName(newName){
+      this.name = newName
+    }
+  },
+
+})
