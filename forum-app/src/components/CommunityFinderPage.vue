@@ -65,9 +65,10 @@ export default {
       const functions = getFunctions(app);
       const communityNames = httpsCallable(functions, 'communityNames');
       communityNames().then((result) => {
-        console.log(result);
         this.communities = result.data;
+        console.log(result.data);
       })
+      
       this.refresher++;
     },
 

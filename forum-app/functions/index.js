@@ -175,6 +175,7 @@ exports.communityNames = functions.https.onRequest((request, response) => {
            }
            snapshot.forEach(doc => {
                myData.push(doc.id);
+               console.log(doc.id);
            });
            response.send({data : myData});
        });
@@ -185,7 +186,7 @@ exports.newCommunity = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request,response, () => {
         const currentTime = admin.firestore.Timestamp.now();
-        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name).set({isPublic: true});
         return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": "Alumn",
     "timestamp": currentTime, "content": "Welcome to your new community!"}).then(() => {
             response.send({

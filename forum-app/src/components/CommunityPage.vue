@@ -6,7 +6,7 @@
       <aside style="width: 20%; background-color: #ddd; padding-right: 30px; padding-top: 20px;">
         <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
-          <li style="border: 1px solid #ccc; display:  margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
+          <li style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
               <span></span>
               <button class="join-button" style="background-color: #333; color: white;" @click = "refreshCommunity(communities[n-1])">{{ communities[n-1] }}</button>
             </li>
@@ -19,8 +19,7 @@
         <ul v-for="n in posts.length" :key="refresher">
           <div style="background-color: #f0f0f0; margin-bottom: 20px;" @load="displayPosts()">
             <li style="list-style-type: none;">
-              <span>{{ posts[n-1].username }}</span> 
-              <span>{{ posts[n-1].timestamp }}</span> 
+              <span>{{ posts[n-1].username }}:    </span> 
               <span>{{ posts[n-1].content }}</span> 
             </li>
           </div>
@@ -87,7 +86,7 @@ export default {
     newCommunity() {
       const functions = getFunctions(app);
       const newCommunity = httpsCallable(functions, 'newCommunity');
-      let comName = window.prompt("Please enter a community name", "Community" + Math.floor(Math.random() * 10000));
+      let comName = window.prompt("Please enter a community name", "community" + Math.floor(Math.random() * 10000));
       if(comName != null){
         newCommunity({name: comName}).then((result) => {
         this.communityNames();
