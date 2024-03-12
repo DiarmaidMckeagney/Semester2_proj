@@ -80,6 +80,26 @@ exports.chatroomNames = functions.https.onRequest((request, response) => {
    });
 });
 
+
+exports.communityPosts = functions.https.onRequest( (request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        let myData = [];
+        admin.firestore().collection("communities/"+ request.body.data.name + "/posts").orderBy("timestamp",
+            "asc").get().then((snapshot) => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                response.send({data : 'No data in database'});
+                return;
+            }
+            snapshot.forEach(doc => {
+                myData.push(doc.data());
+            });
+            response.send({data : myData});
+        });
+    });
+});
+
 exports.newChatroom = functions.https.onRequest((request, response) => {
    request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
@@ -128,6 +148,7 @@ exports.displayFriendMessages = functions.https.onRequest((request, response) =>
         let myData = [];
         let docRef = admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").where(admin.firestore.FieldPath.documentId(), "!=", "1234");
         docRef.get().then((snapshot) => {
+
             if (snapshot.empty) {
                 console.log('No matching documents.');
                 response.send({data : 'No data in database'});
@@ -140,6 +161,55 @@ exports.displayFriendMessages = functions.https.onRequest((request, response) =>
         });
     });
 });
+
+
+exports.communityNames = functions.https.onRequest((request, response) => {
+   request.header("Access-Control-Allow-Origin: *");
+   cors(request,response, () => {
+       let myData = [];
+       admin.firestore().collection("communities").get().then((snapshot) => {
+           if (snapshot.empty) {
+               console.log('No matching documents.');
+               response.send({data : 'No data in database'});
+               return;
+           }
+           snapshot.forEach(doc => {
+               myData.push(doc.id);
+           });
+           response.send({data : myData});
+       });
+   });
+});
+
+exports.newCommunity = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request,response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": "Alumn",
+    "timestamp": currentTime, "content": "Welcome to your new community!"}).then(() => {
+            response.send({
+                status: "success",
+                data: null
+            })
+        });
+    });
+ });
+
+ exports.newPost = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request,response, () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": request.body.data.username,
+    "timestamp": currentTime, "content": request.body.data.message}).then(() => {
+            response.send({
+                status: "success",
+                data: null
+            })
+        });
+    });
+ });
 
 exports.newFriendMessage = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");

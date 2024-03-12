@@ -4,8 +4,8 @@
       <li :class="{ 'active': $route.path === '/support' }">
         <router-link to="/support">Support</router-link>
       </li> |
-      <li :class="{ 'active': $route.path === '/privacy-policy' }">
-        <router-link to="/privacy-policy">Privacy Policy</router-link> 
+      <li :class="{ 'active': $route.path === '/about' }">
+        <router-link to="/about">About Us </router-link>
       </li> |
       <li :class="{ 'active': $route.path === '/cookie-policy' }">
         <router-link to="/cookie-policy">Cookie Policy</router-link>
