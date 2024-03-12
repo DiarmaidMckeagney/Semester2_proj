@@ -12,10 +12,13 @@ Copy code
       <section style="width: 70%; padding: 10px;">
         <!-- Search Bar -->
         <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Search Bar Placeholder</div>
-        <!-- Community Details -->
-        <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Community Details Placeholder</div>
-        <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Community Details Placeholder</div>
-        <div style="background-color: #f0f0f0; padding: 20px;">Community Details Placeholder</div>
+        <ul v-for="n in communities.length" :key="refresher">
+          <!-- List of Communities -->
+          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;list-style-type: none;">
+              <span>{{ communities[n-1] }}</span>
+              <button class="join-button" style="background-color: #333; color: white;" @click = "moveToCommunity(communities[n-1])">Join</button>
+            </li>
+        </ul>
       </section>
 
       <!-- Tag Search and List Section -->
@@ -32,6 +35,51 @@ Copy code
     </main>
   </div>
 </template>
+
+<script>
+import router from '@/router';
+import app from '../api/firebase';
+import {getFunctions, httpsCallable} from "firebase/functions";
+
+import { useCommunityName } from "@/stores/counter.js";
+
+
+export default {
+  setup(){
+    const communityNamestore = useCommunityName();
+
+    return { communityNamestore }
+  },
+
+  data() {
+    return {
+      communities:[],
+      refresher: 0
+    }
+  },
+  created() {
+    this.communityNames();
+  },
+  methods: {
+    communityNames() {
+      const functions = getFunctions(app);
+      const communityNames = httpsCallable(functions, 'communityNames');
+      communityNames().then((result) => {
+        console.log(result);
+        this.communities = result.data;
+      })
+      this.refresher++;
+    },
+
+    moveToCommunity(community){
+      this.communityNamestore.changeName(community);
+      router.push({path: "/community"});
+    }
+  }
+}
+
+
+</script>
 
 <style scoped>
 /* Scoped CSS styles go here */
