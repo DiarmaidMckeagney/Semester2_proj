@@ -44,7 +44,7 @@ export default {
     }
   },
   created() {
-    this.friendsNames();
+    //this.friendsNames();
   },
   methods: {
     friendsNames() {
