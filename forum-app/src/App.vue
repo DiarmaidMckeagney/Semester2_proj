@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <!-- Header component included at the top, so it appears on all pages -->
-    <AppHeader :message="store.name"/>
+     <!-- Pass the TogglePopup function as a prop to Header.vue -->
+    <AppHeader :TogglePopup="() => TogglePopup('buttonTrigger')"/>
 
     <main>
       <router-view></router-view>
+ 
     </main>
     <!-- Footer component included at the bottom, so it appears on all pages -->
     <TheFooter />
@@ -16,21 +18,42 @@
 <script>
 import AppHeader from './components/AppHeader.vue'; // Import the Header component
 import TheFooter from './components/TheFooter.vue'; // Import the Footer component
-import { useHeaderStore } from '@/stores/header.js'
+//import { useHeaderStore } from '@/stores/header.js';
+import Popup from './components/Popup.vue';
+import { ref } from 'vue'; //importing references
+import SignUpForm from './components/SignUpForm.vue';
 
 export default {
 
-  data() {
-    return {
-      store: useHeaderStore(), //Tip - dont use data() and setup() in the same export default
-    };
-  },
-  components: {
-    AppHeader,// Register the Header component
-    TheFooter
+  setup(){
+    const popupTriggers = ref({
+      buttonTrigger: false
+    });
+
+    const TogglePopup = (trigger) => {
+      popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+    }
+
+    return{
+      popupTriggers,
+      TogglePopup
+    }
   },
 
-  
+  components: {
+    AppHeader,// Register the Header component
+    TheFooter,
+    Popup,
+    SignUpForm
+  }
+
+  //Header store is no longer needed since we use a button light up thing now
+  //data() {
+  //  return {
+      //store: useHeaderStore(), //Tip - dont use data() and setup() in the same export default
+     // Popup
+  //  };
+ // },
 };
 </script>
 
