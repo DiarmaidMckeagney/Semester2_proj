@@ -72,6 +72,7 @@ export default {
       communityNames().then((result) => {
         this.communities = result.data;
       })
+      this.refresher++; 
     },
 
     displayPosts(){
