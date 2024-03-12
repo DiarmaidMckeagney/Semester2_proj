@@ -54,7 +54,6 @@ export default {
       const nameOfChatroom = this.chatroomNamestore.nameOfRoom;
       const auth = getAuth();
       const user = auth.currentUser;
-      user.displayName = "diarmaid";
       sendMessage({name: nameOfChatroom,username: user.displayName, message: this.messageBody}).then((result) => {
         console.log(result);
         this.displayMessages();

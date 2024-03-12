@@ -175,6 +175,7 @@ exports.communityNames = functions.https.onRequest((request, response) => {
            }
            snapshot.forEach(doc => {
                myData.push(doc.id);
+               console.log(doc.id);
            });
            response.send({data : myData});
        });
@@ -185,7 +186,7 @@ exports.newCommunity = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request,response, () => {
         const currentTime = admin.firestore.Timestamp.now();
-        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
+        const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name).set({isPublic: true});
         return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": "Alumn",
     "timestamp": currentTime, "content": "Welcome to your new community!"}).then(() => {
             response.send({
@@ -250,7 +251,7 @@ exports.startFriendList = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         admin.firestore().collection("Friends").doc(request.body.data.userId).set({numFriends: 0}).then(() => {
-            admin.firestore().collection("Friends").doc(request.body.data.userId).collection("FriendsList").doc("No_Friends").set({randVar: true}).then(() => {
+            admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").doc("No_Friends").set({randVar: true}).then(() => {
                 response.send({
                     status: "success",
                     data: null
