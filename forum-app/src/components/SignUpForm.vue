@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button @click="signUp" type="submit" class="btn btn-success" >Submit</button>
+          <button @click="signUp" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
         </div>
       </form>
     </div>
@@ -109,9 +109,9 @@
 </style>
 <script>
 import app from "../api/firebase"
-import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
-import router from "@/router.js";
+import {createUserWithEmailAndPassword, getAuth, updateProfile} from "firebase/auth";
 import {getFunctions, httpsCallable} from "firebase/functions";
+
 
 export default {
   name: "Registration",
@@ -124,21 +124,20 @@ export default {
   },
   methods: {
     signUp() {
-      console.log("function called");
+      console.debug(this.email);
+      console.debug(this.password);
+      console.debug(this.username);
       const auth = getAuth(app);
       createUserWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
         // Signed in
-        console.log(userCredential)
         const user = userCredential.user;
-        user.updateProfile({displayName: this.username});
         this.createFriends();
-        router.push({path: "/"});
-        console.log(user)
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode)
         console.log(errorMessage)
+// ..
       });
     },
     createFriends(){
@@ -146,6 +145,9 @@ export default {
       const friendsList = httpsCallable(functions, 'startFriendList');
       const auth = getAuth();
       const user = auth.currentUser;
+      updateProfile(user,{displayName: this.username}).then(() => {
+        console.log("set username");
+      });
       friendsList({userId: user.uid}).then(() =>{
         console.log("finished");
       });
