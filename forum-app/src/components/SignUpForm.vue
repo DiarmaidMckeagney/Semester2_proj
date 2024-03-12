@@ -21,7 +21,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="email1">Email address</label>
-            <input type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input v-model="email" type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
           </div>
           <div class="form-group">
@@ -30,11 +30,15 @@
           </div>
           <div class="form-group">
             <label for="password1">Confirm Password</label>
-            <input type="password" class="form-control" id="password2" placeholder="Confirm Password">
+            <input v-model="password" type="password" class="form-control" id="password2" placeholder="Confirm Password">
+          </div>
+          <div class="form-group">
+            <label for="username1">Username</label>
+            <input v-model="username" type="text" class="form-control" id="username1" aria-describedby="usernameHelp" placeholder="Enter username">
           </div>
         </div>
         <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button @click="signUp" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
         </div>
       </form>
     </div>
@@ -103,3 +107,51 @@
   display: block;
 }
 </style>
+<script>
+import app from "../api/firebase"
+import {createUserWithEmailAndPassword, getAuth, updateProfile} from "firebase/auth";
+import {getFunctions, httpsCallable} from "firebase/functions";
+
+
+export default {
+  name: "Registration",
+  data() {
+    return {
+      email: "",
+      password: "",
+      username: ""
+    }
+  },
+  methods: {
+    signUp() {
+      console.debug(this.email);
+      console.debug(this.password);
+      console.debug(this.username);
+      const auth = getAuth(app);
+      createUserWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        this.createFriends();
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+// ..
+      });
+    },
+    createFriends(){
+      const functions = getFunctions(app);
+      const friendsList = httpsCallable(functions, 'startFriendList');
+      const auth = getAuth();
+      const user = auth.currentUser;
+      updateProfile(user,{displayName: this.username}).then(() => {
+        console.log("set username");
+      });
+      friendsList({userId: user.uid}).then(() =>{
+        console.log("finished");
+      });
+    }
+  }
+}
+</script>
