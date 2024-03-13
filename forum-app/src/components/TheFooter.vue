@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer" >
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-auto">
+  <footer class="footer" style="background-color: #7b5740;" >
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center justify-contert-lg-start align-items-center mb-md-0 mx-auto text-center fs-auto mt-auto">
       <li :class="{ 'active': $route.path === '/support' }">
         <router-link to="/support">Support</router-link>
       </li> |
@@ -42,7 +42,7 @@ export default {
 
 .active {
   /* Add your active styles here */
-  color: #ffffff; /* Example text color for the active link */
+  color: #12674a; /* Example text color for the active link */
   font-weight: bold;
   text-decoration: underline;
   

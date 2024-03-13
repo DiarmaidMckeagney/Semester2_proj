@@ -9,7 +9,7 @@
  
     </main>
     <!-- Footer component included at the bottom, so it appears on all pages -->
-    <TheFooter />
+    <TheFooter class="mt-auto" id="main-footer" />
   </div>
 
 
@@ -65,16 +65,20 @@ footer {
   text-align: center;
   width: 100%;
   margin-top: auto; /* Push the footer to the bottom */
-  position: fixed;
+  position: static; /* Try syatic */
   bottom: 0;
   left: 0;
 }
-/* CONSIDER THIS
+
 main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-*/
 
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure at least the height of the viewport */
+}
 </style>

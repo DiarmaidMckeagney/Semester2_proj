@@ -1,21 +1,26 @@
 <template>
-  <header class="app-header">
+  <header class="app-header p-3">
 
     <!-- Logo Section -->
     <div class="container">
-
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
-        <div class="logo-section">
-          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Site Logo" class="logo" href="/"/>
-          </a>
-
-        </div>
-
+<!-- 
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+          <svg class="bi me-2" width="942" height="443" role="img" aria-label="Bootstrap"><use xlink:href="#alumn"></use></svg>
         </a>
+
+         
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="200" height="32" role="img" aria-label="Bootstrap">
+            <image href="@/assets/AlumnPSD-Back.png" width="100%" height="100%"/>
+          </svg>
+        </a> The idea here was to make it resizable but it just doesnt work ?--> 
+       
+          <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
+            <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
+          </a>
+   
+      
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
@@ -25,8 +30,13 @@
           <li  :class="{ 'active': $route.path === '/about' }">
             <router-link to="/about" class="nav-link px-2 text-white">About</router-link>
           </li>
+<<<<<<< Updated upstream
           <li :class="{ 'active': $route.path === '/community-finder' }">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Communities</router-link>
+=======
+          <li :class="{ 'active': $route.path === '/community-finder' } ">
+            <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
+>>>>>>> Stashed changes
           </li>
           <li :class="{ 'active': $route.path === '/topics' }">
             <router-link to="/topics" class="nav-link px-2 text-white">Topics</router-link>
@@ -38,15 +48,11 @@
             <router-link to="/quiz" class="nav-link px-2 text-white">Quiz</router-link>
           </li>
         </ul>
-        <LoginForm/>
-        <SignUpForm/>
 
-
-            <!-- Navigation Menu -->
-          <div class="menu-section">
-            <NavigationMenu/>
-
-          </div>
+        <div class="d-flex">
+          <LoginForm/>
+          <SignUpForm/>
+        </div>  
       </div>
     </div>
   </header>
@@ -74,13 +80,14 @@ export default {
  // },
   
 };
+
 </script>
 
 
 
 <style scoped>
 .app-header {
-  background-color: #333; /* Match TheFooter background color */
+  background-color: #7b5740 ; /* Match TheFooter background color */
   color: white;
   display: flex;
   justify-content: space-between;
@@ -92,18 +99,22 @@ export default {
 
 .active {
   /* Add your active styles here */
-  background-color: #1e1e1e; /* Example background color for the active link */
-  color: #ffffff; /* Example text color for the active link */
+  background-color: #12674a; /* Example background color for the active link */
+  color: #12674a; /* Example text color for the active link */
   border-radius: 15%; /* Make the background circular */
   padding: auto;
 
 }
-.nav
-{
 
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 16px; /* Adjust the padding for smaller screens */
+  }
+  
 }
+
 .logo-section .logo {
-  width: 100px ; /* Adjust as needed */
+  width: 30% ; /* Adjust as needed */
 }
 
 .menu-section {

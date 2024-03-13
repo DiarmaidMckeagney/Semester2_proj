@@ -1,11 +1,11 @@
 <template>
 
 <modal class="SignUp">
-  <div class="container">
-  <button type="button" class="btn btn-outline-light me-2" data-toggle="modal" data-target="#loginform">
+
+  <button type="button" class="btn btn-outline-light me-2 " data-toggle="modal" data-target="#loginform">
     Login
   </button>  
-</div>
+
 
 <div class="modal fade" id="loginform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -20,7 +20,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="email1">Email address</label>
-            <input type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="emailUsername" class="form-control" id="emailUsername1" aria-describedby="emailHelp" placeholder="Enter email or username">
           </div>
           <div class="form-group">
             <label for="password1">Password</label>
@@ -94,5 +94,12 @@
 /* Display the dropdown content when hovering over the dropdown button */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media (max-width: 576px) {
+  .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
 }
 </style>
