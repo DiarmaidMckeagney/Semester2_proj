@@ -27,16 +27,14 @@
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
            </li>
 
-          <li  :class="{ 'active': $route.path === '/about' }">
-            <router-link to="/about" class="nav-link px-2 text-white">About</router-link>
+          <li  :class="{ 'active': $route.path === '/profile' }">
+            <router-link to= "/profile" class="nav-link px-2 text-white">Profile</router-link>
           </li>
-<<<<<<< Updated upstream
-          <li :class="{ 'active': $route.path === '/community-finder' }">
-            <router-link to="/community-finder" class="nav-link px-2 text-white">Communities</router-link>
-=======
+          <li  :class="{ 'active': $route.path === '/friend-messages'}">
+            <router-link to=  "/friend-messages" class="nav-link px-2 text-white">Friends</router-link>
+          </li>
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
->>>>>>> Stashed changes
           </li>
           <li :class="{ 'active': $route.path === '/topics' }">
             <router-link to="/topics" class="nav-link px-2 text-white">Topics</router-link>

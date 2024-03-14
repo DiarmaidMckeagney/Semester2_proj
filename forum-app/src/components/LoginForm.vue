@@ -22,19 +22,25 @@
             <label for="email1">Email address</label>
             <input type="emailUsername" class="form-control" id="emailUsername1" aria-describedby="emailHelp" placeholder="Enter email or username">
           </div>
-          <div class="form-group">
-            <label for="password1">Password</label>
-            <input type="password" class="form-control" id="password1" placeholder="Password">
-          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="email1">Email address</label>
+                <input v-model="email" type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="password1">Password</label>
+                <input v-model="password" type="password" class="form-control" id="password1" placeholder="Password">
+              </div>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button @click="login" type="button" data-dismiss="modal" class="btn btn-success">Submit</button>
+            </div>
+          </form>
         </div>
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button type="submit" class="btn btn-success">Submit</button>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
-</modal>
+  </modal>
 </template>
 
 
@@ -103,3 +109,33 @@
   }
 }
 </style>
+<script>
+import app from "../api/firebase"
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: "",
+      password: ""
+    }
+  },
+  methods: {
+    login() {
+      const auth = getAuth(app);
+      signInWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
+        // Signed in
+        let user = userCredential.user;
+        console.log(user);
+      }).catch((error) => {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+      });
+    }
+  }
+}
+</script>
