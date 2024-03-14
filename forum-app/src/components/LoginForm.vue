@@ -1,20 +1,26 @@
 <template>
 
-  <modal class="SignUp">
-    <div class="container">
-      <button type="button" class="btn btn-outline-light me-2" data-toggle="modal" data-target="#loginform">
-        Login
-      </button>
-    </div>
+<modal class="SignUp">
 
-    <div class="modal fade" id="loginform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-bottom-0">
-            <h5 class="modal-title" id="exampleModalLabel"> Login </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+  <button type="button" class="btn btn-outline-light me-2 " data-toggle="modal" data-target="#loginform">
+    Login
+  </button>  
+
+
+<div class="modal fade" id="loginform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel"> Login </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="email1">Email address</label>
+            <input type="emailUsername" class="form-control" id="emailUsername1" aria-describedby="emailHelp" placeholder="Enter email or username">
           </div>
           <form>
             <div class="modal-body">
@@ -94,6 +100,13 @@
 /* Display the dropdown content when hovering over the dropdown button */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media (max-width: 576px) {
+  .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
 }
 </style>
 <script>
