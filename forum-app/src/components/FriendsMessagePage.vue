@@ -8,20 +8,15 @@
         <h2>Friends</h2>
         <div style="margin-bottom: 10px;">Search Placeholder</div>
         <div>
-          <ul v-for="n in 5" :key="refresher">
-            <li><button>Hello World </button></li>
+          <ul v-for="n in FriendsNames.length" :key="refresher">
+            <li><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
           </ul>
         </div>
       </aside>
 
       <!-- Placeholder for the Chat Box -->
       <section style="flex-grow: 1; background-color: #f0f0f0; padding: 20px;">
-        <div style="background-color: white; padding: 20px; margin-bottom: 10px;">Profile Pic Placeholder</div>
-        <div style="background-color: white; padding: 20px; margin-bottom: 10px;">Name / Bio Placeholder</div>
-        <!-- Placeholder for messages -->
-        <div style="background-color: white; padding: 20px; margin-bottom: 10px;">Message Box Placeholder</div>
-        <!-- Text Entry Box Placeholder -->
-        <div style="background-color: white; padding: 20px; margin-top: auto;">Text Entry Box Placeholder</div>
+        <FriendChat :friend-id="friendId" :key="chatRefresher"></FriendChat>
       </section>
     </main>
 
@@ -35,16 +30,22 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
+import FriendChat from "@/components/FriendChat.vue"; // Import the chat component
 
 export default {
+  components: {
+    FriendChat
+  },
   data() {
     return {
       FriendsNames: [],
-      refresher: 0
+      refresher: 0,
+      chatRefresher: 0,
+      friendId: ""
     }
   },
   created() {
-    //this.friendsNames();
+    this.friendsNames();
   },
   methods: {
     friendsNames() {
@@ -57,6 +58,10 @@ export default {
         this.FriendsNames = result.data;
       })
       this.refresher++;
+    },
+    openChat(id){
+      this.friendId = id;
+      this.chatRefresher++;
     }
   }
 }
