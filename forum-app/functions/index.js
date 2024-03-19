@@ -19,30 +19,31 @@ exports.userInfo = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        const docRef = admin.firestore().collection("Profiles").where("Uid", "==", request.body.data.Uid);
-        return docRef.get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
+        admin.firestore().collection("Profiles").doc(request.body.data.Uid).get().then((doc) => {
+            if (!doc.exists) {
+                console.log('No matching documents.');
+                response.send({data : 'No data in database'});
+                return;
+            }
+            else{
                 myData.push(doc.data());
-            });
+            };
             response.send({data : myData});
-        }).catch((error) => {
-                console.log("Error getting documents: ", error);
         });
     });
 });
 
 exports.createProfile = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
-    cors(request, response, () => {
-        return admin.firestore().collection("Profiles").add(request.body).then(() => {
+    cors(request,response, () => {
+        return admin.firestore().collection("Profiles").doc(request.body.data.Uid).set({ username: request.body.data.username, dob: request.body.data.dob, age: request.body.data.age}).then(() => {
             response.send({
                 status: "success",
                 data: null
             });
         });
     });
-});
+ });
 
 exports.chatroomMessages = functions.https.onRequest( (request, response) => {
     request.header("Access-Control-Allow-Origin: *");
@@ -241,8 +242,8 @@ exports.displayFriends = functions.https.onRequest((request, response) => {
                 return;
             }
             snapshot.forEach(doc => {
-
-                myData.push({id: doc.id, name: doc.data()});
+                
+                    myData.push({id: doc.id, name: doc.data()});
             });
             response.send({data : myData});
         });

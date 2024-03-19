@@ -1,3 +1,10 @@
+<script setup>
+  defineProps({
+    userID: String
+  })
+</script>
+
+
 <template>
   <div id="profile-page">
     <main style="display: flex; padding: 20px;">
@@ -23,19 +30,18 @@
               <div class="mb-3" v-if="isHidden">
                 <h3>Username</h3>
                 <div class="mb-3 d-flex flex-column">
-          
                   <label class="mb-3"> <b class="me-3" >Name:</b> 
-                      <span v-if="name">{{ name }}</span>
+                      <span v-if="name">{{ toRaw(profileInfo[0]).username }}</span>
                        <span v-else> <i> Not set</i></span>
                   </label> 
 
                   <label class="mb-3 me-3"><b class="me-3" >Age:</b> 
-                       <span v-if="age">{{ age }}</span>
+                       <span v-if="age">{{ profileInfo[0].age }}</span>
                        <span v-else> <i> Not set</i></span>
                   </label>
 
                   <label class="mb-3"> <b class="me-3" >Date of Birth:</b>
-                       <span v-if="dateOfBirth">{{ dateOfBirth }}</span>
+                       <span v-if="dateOfBirth">{{ profileInfo[0].dob }}</span>
                        <span v-else> <i> Not set</i></span>
                   </label>
                 </div>
@@ -112,6 +118,7 @@ import app from '../api/firebase';
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getAuth } from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
+import { toRaw } from 'vue';
 
 export default {
   name: "Users",
@@ -128,8 +135,12 @@ export default {
       isHidden: true,
       selectedFile: null,
       imageUrl: null,
-      finalUrl: null
+      finalUrl: null,
+      profileInfo:[]
     }
+  },
+  created() {
+    this.userInfo();
   },
   methods:{
     toggleVisibility() {
@@ -159,21 +170,25 @@ export default {
       this.finalUrl = this.imageUrl;
     },
     userInfo() {
+      const functions = getFunctions(app);
+      const userInfo = httpsCallable(functions, 'userInfo');
+
+      userInfo({ Uid: "B8MTbCHWw7YfjvrHIfwVb1fbv7p1" }).then((result) => {
+        console.log(result);
+        let result1 = result;
+        this.profileInfo = toRaw(result1);
+        console.log(toRaw(this.profileInfo));
+      });
+    },
+    add_Friend(){
+      const functions = getFunctions(app);
+      const addFriend = httpsCallable(functions, 'newFriend');
       const auth = getAuth();
       const user = auth.currentUser;
-      if (user) {
-        const functions = getFunctions(app);
-        const userInfo = httpsCallable(functions,'userInfo');
-        userInfo({Uid: user.uid}).then((result) => {
-          this.name = result.data.name;
-          this.dateOfBirth = result.data.dateOfBirth;
-          this.age = result.data.age;
-        });
-      } else {
-        this.router.push({path: '/login'});
-      }
+      addFriend({userId: user.uid, friendId: this.userID}).then(() => {
+          console.log("finished")
+      });
     }
-   
   }
 }
 
