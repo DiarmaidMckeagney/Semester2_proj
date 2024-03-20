@@ -20,14 +20,8 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="email1">Email address</label>
-            <input type="emailUsername" class="form-control" id="emailUsername1" aria-describedby="emailHelp" placeholder="Enter email or username">
+            <input type="emailUsername" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email or username">
           </div>
-          <form>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="email1">Email address</label>
-                <input v-model="email" type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
-              </div>
               <div class="form-group">
                 <label for="password1">Password</label>
                 <input v-model="password" type="password" class="form-control" id="password1" placeholder="Password">

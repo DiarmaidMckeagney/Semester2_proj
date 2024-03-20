@@ -26,13 +26,6 @@
           <li :class="{ 'active': $route.path === '/' }">
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
            </li>
-
-          <li  :class="{ 'active': $route.path === '/profile' }">
-            <router-link to= "/profile" class="nav-link px-2 text-white">Profile</router-link>
-          </li>
-          <li  :class="{ 'active': $route.path === '/friend-messages'}">
-            <router-link to=  "/friend-messages" class="nav-link px-2 text-white">Friends</router-link>
-          </li>
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
           </li>
@@ -47,12 +40,26 @@
           </li>
         </ul>
 
-        <div class="d-flex">
+        <div v-if="!userLoggedIn" class="d-flex">
           <LoginForm/>
           <SignUpForm/>
         </div>  
+          <div v-else class="dropdown">
+          <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li  :class="{ 'currHere': $route.path === '/profile' }">
+              <a class="dropdown-item"> <router-link to= "/profile" class="nav-link px-2">Profile</router-link> </a>
+            </li>
+            <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
+              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
+            </li>
+            <li :class="{ 'currHere': $route.path === '/friend-messages' }">
+              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2" @click="logout">Logout </router-link> </a>
+            </li>
+          </ul>
+          </div>
+        </div>
       </div>
-    </div>
   </header>
 </template>
 
@@ -61,22 +68,64 @@ import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
-
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default {
   
   props: ['TogglePopup'],
 
+  data() {
+    return {
+      userLoggedIn: false,
+      user: null,
+      userDisplayName: null
+    };
+  },
   components: {
     NavigationMenu,
     SignUpForm,
     LoginForm
-  }
-  //Props are no longer needed since we pass nothing into the header
-  //props: {
-   // message: String,
- // },
+  },
+  methods: {
+
+    logout() {
+      const auth = getAuth();
+
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          console.log('User signed out');
+          // Optionally, you can perform additional actions here, such as redirecting the user to a login page.
+           // No user is signed in
+          this.userLoggedIn = false;
+          this.user = null;
+          this.userDisplayName = user.displayName;
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error('Sign-out error:', error);
+        });
+    }
+  },
   
+  created() {
+    const auth = getAuth();
+
+    // Check user authentication state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        this.userLoggedIn = true;
+        this.user = user; // Set the user data
+        this.userDisplayName = user.displayName;
+      } else {
+        // No user is signed in
+        this.userLoggedIn = false;
+        this.user = null;
+        this.userDisplayName = user.displayName;
+      }
+    });
+  }
 };
 
 </script>
@@ -93,17 +142,29 @@ export default {
   padding: 1rem;
 }
 
+.img-fluid:hover {
+        filter: brightness(0.7); /* Darkens the image on hover */
+    }
 
 
 .active {
   /* Add your active styles here */
-  background-color: #12674a; /* Example background color for the active link */
+  background-color: #12674a; 
   color: #12674a; /* Example text color for the active link */
   border-radius: 15%; /* Make the background circular */
   padding: auto;
 
 }
+/*
+.currHere {
+  /* Add your active styles here 
 
+}
+
+.currHere:hover {
+        filter: brightness(0.7); /* Darkens the image on hover 
+    }
+    */
 @media (max-width: 768px) {
   .btn {
     padding: 8px 16px; /* Adjust the padding for smaller screens */
