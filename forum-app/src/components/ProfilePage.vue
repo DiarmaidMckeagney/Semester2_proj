@@ -100,9 +100,15 @@
 
       
       <aside style="width: 30%; background-color: #ddd; padding: 20px;">
-        <div style="margin-bottom: 20px;">communities</div>
-        <div style="margin-bottom: 20px;">friends</div>
-        <div>Community list and Friend list in different tabs of this are</div>
+        <div style="text-align: center; margin-bottom: 20px;">Friends</div>
+        <div :key="refresher">
+          <ul v-for="n in friends.length" :key="refresher">
+          <!-- List of Communities -->
+            <li style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
+              <span>{{friends[n-1].name.name}}</span>
+            </li>
+        </ul>
+        </div>
       </aside>
     </main>
   </div>
@@ -115,7 +121,6 @@ import app from '../api/firebase';
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getAuth } from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
-import { toRaw } from 'vue';
 
 export default {
   name: "Users",
@@ -133,14 +138,32 @@ export default {
       selectedFile: null,
       imageUrl: null,
       finalUrl: null,
-      profileInfo:[],
+      profileInfo: [],
+      friends: [],
       refresher: 0
     }
   },
   created() {
     this.userInfo();
+    this.friendsNames();
   },
   methods:{
+    friendsNames() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if(user){
+        const functions = getFunctions(app);
+        const friendsNames = httpsCallable(functions, 'displayFriends');
+        friendsNames({userId: user.uid}).then((result) => {
+        console.log(result);
+        this.friends = result.data;
+      })
+      } else {
+        this.friends[0] = "You must be logged in to view friends list";
+      }    
+      this.refresher++;
+    },
+
     toggleVisibility() {
       this.isHidden = !this.isHidden;  // Toggle visibility
     },
