@@ -3,7 +3,7 @@
 
     <!-- Logo Section -->
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" :key="refresher">
 <!-- 
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <svg class="bi me-2" width="942" height="443" role="img" aria-label="Bootstrap"><use xlink:href="#alumn"></use></svg>
@@ -27,7 +27,7 @@
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
            </li>
 
-          <li  :class="{ 'active': $route.path === '/profile' }">
+          <li :class="{ 'active': $route.path === '/profile' }">
             <router-link to= "/profile" class="nav-link px-2 text-white">Profile</router-link>
           </li>
           <li  :class="{ 'active': $route.path === '/friend-messages'}">
@@ -61,6 +61,7 @@ import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 export default {
@@ -71,13 +72,28 @@ export default {
     NavigationMenu,
     SignUpForm,
     LoginForm
+  },
+  data() {
+    return{
+      refresher: 0,
+      isLoggedIn: false
+    }
   }
-  //Props are no longer needed since we pass nothing into the header
-  //props: {
-   // message: String,
- // },
-  
 };
+function isAuth(){
+  const auth = getAuth();
+  const user = auth.currentUser;
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      this.refresher++;
+    }
+    else {
+      isLoggedIn = false;
+      userId = "";
+      this.refresher++;
+    }
+  });
+}
 
 </script>
 
