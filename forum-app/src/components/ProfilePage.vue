@@ -28,20 +28,16 @@
           
             <div> 
               <div class="mb-3" v-if="isHidden">
-                <h3>{{JSON.parse(JSON.stringify(this.profileInfo[0].username))}}</h3>
+                <h3>{{JSON.parse(JSON.stringify(profileInfo[0].username))}}</h3>
                 <div class="mb-3 d-flex flex-column">
-                  <label class="mb-3"> <b class="me-3" >Name:</b> 
-                      <span v-if="JSON.parse(JSON.stringify(this.profileInfo[0].username))">{{ JSON.parse(JSON.stringify(this.profileInfo[0].username)) }}</span>
-                       <span v-else> <i> Not set</i></span>
-                  </label> 
-
+                  
                   <label class="mb-3 me-3"><b class="me-3" >Age:</b> 
-                       <span v-if="JSON.parse(JSON.stringify(this.profileInfo[0].age))">{{ JSON.parse(JSON.stringify(this.profileInfo[0].age)) }}</span>
+                       <span v-if="JSON.parse(JSON.stringify(profileInfo[0].age))">{{ JSON.parse(JSON.stringify(profileInfo[0].age)) }}</span>
                        <span v-else> <i> Not set</i></span>
                   </label>
 
                   <label class="mb-3"> <b class="me-3" >Date of Birth:</b>
-                       <span v-if="JSON.parse(JSON.stringify(this.profileInfo[0].dob))">{{ JSON.parse(JSON.stringify(this.profileInfo[0].dob)) }}</span>
+                       <span v-if="JSON.parse(JSON.stringify(profileInfo[0].dob))">{{ JSON.parse(JSON.stringify(profileInfo[0].dob)) }}</span>
                        <span v-else> <i> Not set</i></span>
                   </label>
                 </div>
@@ -114,6 +110,7 @@
 
 
 <script>
+
 import app from '../api/firebase';
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getAuth } from "firebase/auth";
@@ -178,7 +175,6 @@ export default {
         console.log(result);
         let result1 = result;
         this.profileInfo = result.data;
-        console.log(JSON.parse(JSON.stringify(this.profileInfo[0].dob)));
       });
       this.refresher++;
     },
