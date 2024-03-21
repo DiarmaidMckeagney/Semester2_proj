@@ -20,7 +20,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="email1">Email address</label>
-            <input type="emailUsername" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email or username">
+            <input v-model="email" type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
               <div class="form-group">
                 <label for="password1">Password</label>
@@ -32,9 +32,7 @@
             </div>
           </form>
         </div>
-        </form>
       </div>
-    </div>
     </div>
   </modal>
 </template>
