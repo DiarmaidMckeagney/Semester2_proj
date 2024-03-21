@@ -1,122 +1,285 @@
+
 <template>
   <div id="quiz-page">
-    <!-- Main Content Section -->
-    <main style="display: flex; justify-content: space-around; padding: 20px;">
-      <!-- Category Selection Section -->
-      <aside style="width: 25%; background-color: #ddd; padding: 20px;">
-        <h2>Categories</h2>
-        <div style="display: flex; flex-direction: column;">
-          <button class="category-button" @click="setCategory('generalKnowledge')">General Knowledge</button>
-          <button class="category-button" @click="setCategory('computerScience')">Computer Science</button>
-          <button class="category-button" @click="setCategory('history')">History</button>
-          <button class="category-button" @click="setCategory('geography')">Geography</button>
-          <!-- Add more buttons for other quiz categories -->
+    <!-- Category Selection -->
+    <div v-if="!currentCategory" style="padding: 20px; text-align: center;">
+      <h2>Select a Category</h2>
+      <div class="category-button-container">
+        <div class="category-box" v-for="category in categories" :key="category.id">
+          <button @click="selectCategory(category.id)" class="category-button">
+            <img :src="category.imageUrl" :alt="category.name" class="category-image">
+            {{ category.name }}
+          </button>
         </div>
-      </aside>
+      </div>
+    </div>
 
-      <!-- Quiz Question Section -->
-      <section style="width: 70%; padding: 20px;">
-        <!-- Grey Box -->
-        <div style="background-color: #f0f0f0; padding: 20px; margin-bottom: 10px;" v-if="!currentCategory">
-          <h3>Please select a category to start the quiz.</h3>
-        </div>
 
-        <!-- Actual Quiz Content -->
-        <div v-else style="background-color: #f0f0f0; padding: 20px; margin-bottom: 10px;">
-          <h3>{{ questions[currentCategory][currentQuestion].questionText }}</h3>
-          <ul>
-            <li v-for="option in questions[currentCategory][currentQuestion].options" :key="option">
-              <button @click="selectAnswer(option)" style="width: 100%; padding: 5px;">
-                {{ option }}
-              </button>
-            </li>
-          </ul>
-          <p v-if="answerFeedback !== null">{{ answerFeedback }}</p>
+    <!-- Quiz Content -->
+    <main v-else-if="currentQuestion" style="padding: 20px; max-width: 800px; margin: 0 auto;">
+      <!-- Dynamic Categories as buttons above the Quiz Content -->
+      <div v-if="currentCategory" style="text-align: center; margin-top: 10px;">
+        <nav class="category-links">
+          <button
+              v-for="category in categories"
+              :key="category.id"
+              @click="selectCategory(category.id)"
+              :class="{'selected-category': currentCategory === category.id}"
+              class="category-nav-button">
+            {{ category.name }}
+          </button>
+        </nav>
+      </div>
+
+      <section>
+        <div style="background-color: lightblue; padding: 20px; margin-bottom: 10px; border-radius: 20px; margin-top: 70px; max-width: 1000px; min-height: 300px; max-height: 600px; overflow: hidden;">
+          <h2>{{ currentQuestion.questionText }}</h2>
+          <div>
+            <button
+                v-for="option in [currentQuestion.option1, currentQuestion.option2, currentQuestion.option3, currentQuestion.option4]"
+                :key="option"
+                @click="selectAnswer(option)"
+                :class="answerClass(option)"
+                class="option-button">
+              {{ option }}
+            </button>
+          </div>
+          <p v-if="answerFeedback">{{ answerFeedback }}</p>
           <p>Total Score: {{ totalScore }}</p>
-          <button @click="nextQuestion">Next Question</button>
+          <button style="border-radius: 20px;" @click="nextQuestion">Next Question</button>
         </div>
       </section>
     </main>
+    <p v-else>Loading question...</p>
   </div>
 </template>
-
 <script>
+import { ref, onMounted } from 'vue';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+import app from '../api/firebase';
+
 export default {
   name: 'QuizPage',
-  data() {
-    return {
-      currentCategory: null,
-      currentQuestion: 0,
-      answerFeedback: null,
-      questions: {
-        generalKnowledge: [
-          { questionText: "What is the hardest natural substance on Earth?", options: ["Gold", "Diamond", "Iron", "Quartz"], correctAnswer: "Diamond", score: 10 },
-          { questionText: "Which country has the oldest continuously used national flag?", options: ["Denmark", "Japan", "United Kingdom", "France"], correctAnswer: "Denmark", score: 10 },
-          { questionText: "What phenomenon explains the bending of light due to gravity?", options: ["Red Shift", "Quantum Entanglement", "Gravitational Lensing", "The Doppler Effect"], correctAnswer: "Gravitational Lensing", score: 10 },
-          { questionText: "Which of these elements is not a noble gas?", options: ["Neon", "Radon", "Hydrogen", "Argon"], correctAnswer: "Hydrogen", score: 10 },
-          { questionText: "The concept of \"Pangea\" is best associated with what?", options: ["Internet Infrastructure", "A phase in the development of early computing", "A supercontinent that existed during the late Paleozoic and early Mesozoic eras", "The theory of continental drift"], correctAnswer: "A supercontinent that existed during the late Paleozoic and early Mesozoic eras", score: 10 }
-        ],
-        computerScience: [
-          { questionText: "What is Big O notation used for?", options: ["Estimating the worst-case runtime of an algorithm", "Calculating the space complexity of a program", "Measuring the size of a database", "Determining the user interface complexity"], correctAnswer: "Estimating the worst-case runtime of an algorithm", score: 10 },
-          { questionText: "Which data structure uses a FIFO (First In, First Out) approach?", options: ["Array", "Stack", "Queue", "Tree"], correctAnswer: "Queue", score: 10 },
-          { questionText: "In object-oriented programming, what does 'inheritance' allow?", options: ["A class to pass on its properties and methods to a subclass", "A function to operate in multiple threads", "A database to expand dynamically", "An algorithm to run faster"], correctAnswer: "A class to pass on its properties and methods to a subclass", score: 10 },
-          { questionText: "What does the term \"API\" stand for?", options: ["Automated Programming Interface", "Application Programming Interface", "Advanced Peripheral Interface", "Application Peripheral Integration"], correctAnswer: "Application Programming Interface", score: 10 },
-          { questionText: "Which sorting algorithm is considered the fastest in practice for small data sets?", options: ["Merge Sort", "Bubble Sort", "QuickSort", "Heap Sort"], correctAnswer: "QuickSort", score: 10 }
-        ],
-        history: [
-          // Add history questions here
-        ],
-        geography: [
-          // Add geography questions here
-        ]
-        // Add more categories here if needed
+  setup() {
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const currentCategory = ref(null);
+    const currentQuestion = ref(null);
+    const answerFeedback = ref('');
+    const totalScore = ref(0);
+    const selectedOption = ref('');
+    const scoresByCategory = ref({}); // Object to store scores for each category
+
+    // Dynamically manage categories and their image URLs
+    const categories = ref([
+      { id: 'general', name: 'General Knowledge', imageUrl: 'QuizImages/general.jpg' },
+      { id: 'history', name: 'History', imageUrl: 'QuizImages/history.jpg' },
+      { id: 'biology', name: 'Biology', imageUrl: 'QuizImages/biology.jpg' },
+      { id: 'computerScience', name: 'Computer Science', imageUrl: 'QuizImages/computerScience.jpg' },
+      { id: 'geography', name: 'Geography', imageUrl: 'QuizImages/geography.jpg' },
+      { id: 'chemistry', name: 'Chemistry', imageUrl: 'QuizImages/chemistry.jpg' },
+    ]);
+
+    onMounted(async () => {
+      // Dynamically fetch image URLs for each category
+      for (const category of categories.value) {
+        try {
+          const imageUrl = await getDownloadURL(storageRef(storage, category.imageUrl));
+          category.imageUrl = imageUrl; // Update the imageUrl property with the fetched URL
+        } catch (error) {
+          console.error(`Failed to fetch image URL for ${category.name}:`, error);
+        }
+      }
+    });
+
+    const selectCategory = async (category) => {
+      currentCategory.value = category;
+      // Initialize the score for the new category if it hasn't been set yet
+      scoresByCategory.value[category] = scoresByCategory.value[category] || 0;
+      await loadQuestion('question1');
+    };
+
+    const loadQuestion = async (questionId) => {
+      const questionDocRef = doc(db, 'category', currentCategory.value, 'questions', questionId);
+      const docSnap = await getDoc(questionDocRef);
+
+      if (docSnap.exists()) {
+        currentQuestion.value = { id: questionId, ...docSnap.data() };
+        answerFeedback.value = '';
+        selectedOption.value = '';
+      } else {
+        console.error("Question not found");
       }
     };
-  },
-  computed: {
-    totalScore() {
-      // Calculate total score based on the number of correct answers
-      return this.questions[this.currentCategory]
-          .reduce((total, question) => {
-            if (question.correctAnswer === question.selectedAnswer) {
-              return total + question.score;
-            }
-            return total;
-          }, 0);
-    }
-  },
-  methods: {
-    setCategory(category) {
-      this.currentCategory = category;
-      this.currentQuestion = 0; // Reset to the first question of the selected category
-      this.answerFeedback = null; // Reset answer feedback
-    },
-    selectAnswer(option) {
-      // Update selected answer for the current question
-      this.questions[this.currentCategory][this.currentQuestion].selectedAnswer = option;
-      if (option === this.questions[this.currentCategory][this.currentQuestion].correctAnswer) {
-        this.answerFeedback = "Correct!";
+
+    const selectAnswer = (option) => {
+      selectedOption.value = option;
+      if (option === currentQuestion.value.answer) {
+        answerFeedback.value = 'Correct!';
+        totalScore.value += 10;
       } else {
-        this.answerFeedback = "Incorrect!";
+        answerFeedback.value = 'Incorrect!';
       }
-    },
-    nextQuestion() {
-      if (this.currentQuestion < this.questions[this.currentCategory].length - 1) {
-        this.currentQuestion++;
-        this.answerFeedback = null; // Reset answer feedback for next question
+    };
+
+    const answerClass = (option) => ({
+      'correct-answer': option === currentQuestion.value.answer && selectedOption.value === option,
+      'incorrect-answer': selectedOption.value === option && currentQuestion.value.answer !== option,
+    });
+
+    const nextQuestion = async () => {
+      let currentIdNumber = parseInt(currentQuestion.value.id.replace(/[^\d]/g, ''));
+      if (currentIdNumber < 5) {
+        const nextQuestionId = `question${currentIdNumber + 1}`;
+        await loadQuestion(nextQuestionId);
+        answerFeedback.value = '';
+        selectedOption.value = '';
       } else {
-        this.answerFeedback = "End of quiz!";
-        // Optionally reset or handle the end of quiz scenario
+        console.log("End of the quiz.");
       }
-    }
-  }
+    };
+
+    return {
+      categories, // Include categories in the returned object
+      currentCategory,
+      currentQuestion,
+      answerFeedback,
+      totalScore,
+      selectedOption,
+      selectCategory,
+      loadQuestion,
+      selectAnswer,
+      answerClass,
+      nextQuestion,
+    };
+  },
 };
 </script>
 
 <style scoped>
-.category-button {
-  width: 100%;
+#quiz-page {
+  min-height: 90vh;
+  background-color: #fcfcec;
+}
+
+#quiz-page > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 50px;
+  background-color: lightblue;
   padding: 10px;
-  margin-bottom: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.category-box:hover {
+  background-color: green;
+}
+
+.option-button {
+  display: block;
+  width: 100%;
+  margin: 10px auto;
+  padding: 15px 0;
+  font-size: 18px;
+  text-align: center;
+  color: #333;
+  background-color: #e7e7e7;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.option-button:hover {
+  background-color: #d0d0d0;
+  border-color: #aaa;
+}
+
+.correct-answer {
+  background-color: green !important;
+  color: white;
+}
+
+.incorrect-answer {
+  background-color: #f44336 !important;
+  color: white;
+}
+
+h3 {
+  text-align: center;
+}
+.category-nav-button {
+  margin: 0 5px 10px; /* Add bottom margin */
+  padding: 10px 15px;
+  background-color: lightblue;
+  border: 1px solid #dcdcdc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 170px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-nav-button:hover {
+  background-color: lightgrey;
+}
+
+.selected-category {
+  background-color: darkorange; /* Green background */
+  color: white; /* White text for better contrast */
+}
+
+
+/*.next-button {
+ display: block;
+ width: 100%;
+ margin-top: 20px;
+ padding: 15px 0;
+ font-size: 18px;
+ text-align: center;
+ color: white;
+ background-color: #007bff;
+ border: none;
+ border-radius: 20px;
+ cursor: pointer;
+ transition: background-color 0.2s;
+}
+
+.next-button:hover {
+ background-color: #0056b3;
+}
+*/
+.category-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-image {
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
 }
 </style>
