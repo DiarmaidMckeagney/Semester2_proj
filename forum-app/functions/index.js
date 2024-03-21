@@ -11,6 +11,7 @@ const {onRequest} = require("firebase-functions/v2/https");
 const cors = require('cors')({origin: true});
 const admin = require('firebase-admin');
 const {getAuth} = require("firebase-admin/auth");
+const {error} = require("firebase-functions/logger");
 admin.initializeApp();
 
 exports.userInfo = functions.https.onRequest((request, response) => {
@@ -18,30 +19,31 @@ exports.userInfo = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        const docRef = admin.firestore().collection("Profiles").where("Uid", "==", request.body.data.Uid);
-        return docRef.get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
+        admin.firestore().collection("Profiles").doc(request.body.data.Uid).get().then((doc) => {
+            if (!doc.exists) {
+                console.log('No matching documents.');
+                response.send({data : 'No data in database'});
+                return;
+            }
+            else{
                 myData.push(doc.data());
-            });
+            };
             response.send({data : myData});
-        }).catch((error) => {
-                console.log("Error getting documents: ", error);
         });
     });
 });
 
 exports.createProfile = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
-    cors(request, response, () => {
-        return admin.firestore().collection("Profiles").add(request.body).then(() => {
+    cors(request,response, () => {
+        return admin.firestore().collection("Profiles").doc(request.body.data.Uid).set({ username: request.body.data.username, dob: request.body.data.dob, age: request.body.data.age}).then(() => {
             response.send({
                 status: "success",
                 data: null
             });
         });
     });
-});
+ });
 
 exports.chatroomMessages = functions.https.onRequest( (request, response) => {
     request.header("Access-Control-Allow-Origin: *");
@@ -146,7 +148,7 @@ exports.displayFriendMessages = functions.https.onRequest((request, response) =>
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         let myData = [];
-        let docRef = admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").where(admin.firestore.FieldPath.documentId(), "!=", "1234");
+        let docRef = admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList/"+ request.body.data.friendId + "/posts").orderBy("timestamp", "asc");
         docRef.get().then((snapshot) => {
 
             if (snapshot.empty) {
@@ -204,6 +206,7 @@ exports.newCommunity = functions.https.onRequest((request, response) => {
         const communityDocRef = admin.firestore().collection("communities").doc(request.body.data.name);
         return admin.firestore().collection("communities").doc(request.body.data.name).collection("posts").add({"username": request.body.data.username,
     "timestamp": currentTime, "content": request.body.data.message}).then(() => {
+
             response.send({
                 status: "success",
                 data: null
@@ -216,7 +219,8 @@ exports.newFriendMessage = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         const currentTime = admin.firestore.Timestamp.now();
-        return admin.firestore().collection('Friends/' + request.body.data.username + "/FriendsList/" + request.body.data.friendId + "/Posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message}).then((
+        const friendMessageRef = admin.firestore().collection('Friends/' + request.body.data.friendId + "/FriendsList/" + request.body.data.userId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message});
+        return admin.firestore().collection('Friends/' + request.body.data.userId + "/FriendsList/" + request.body.data.friendId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message}).then((
         )=>{
             response.send({
                 status: "success",
@@ -238,9 +242,8 @@ exports.displayFriends = functions.https.onRequest((request, response) => {
                 return;
             }
             snapshot.forEach(doc => {
-                getAuth().getUser(doc.id).then((userResult) =>{
-                    myData.push(userResult.displayName);
-                });
+                
+                    myData.push({id: doc.id, name: doc.data()});
             });
             response.send({data : myData});
         });

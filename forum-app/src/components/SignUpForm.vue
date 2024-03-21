@@ -1,49 +1,79 @@
 <template>
+  <div>
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#signupform">
+      Sign-Up
+    </button>
+  </div>
+  <div class="modal fade" id="signupform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel"> Create Account </h5>
 
-<modal class="SignUp">
-  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#signupform">
-    Sign-Up
-  </button>  
-
-
-<div class="modal fade" id="signupform" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel"> Create Account </h5>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input v-model="email" type="email" class="form-control" id="emailinit" aria-describedby="emailHelp"
+                placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
+            </div>
+            <div class="form-group">
+              <label for="passwordinitial">Password</label>
+              <input type="password" class="form-control" id="passwordinit" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <label for="passwordConfirm">Confirm Password</label>
+              <input v-model="password" type="password" class="form-control" id="password2"
+                placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+              <label for="username1">Username</label>
+              <input v-model="username" type="text" class="form-control" id="username1" aria-describedby="usernameHelp"
+                placeholder="Enter username">
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
+                data-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <form>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="password1">Username</label>
-            <input type="text" class="form-control" id="username1" placeholder="Username">
-          </div>
-          <div class="form-group">
-            <label for="email1">Email address</label>
-            <input v-model="email" type="email" class="form-control" id="email1" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
-          </div>
-          <div class="form-group">
-            <label for="password1">Password</label>
-            <input type="password" class="form-control" id="password1" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <label for="password1">Confirm Password</label>
-            <input v-model="password" type="password" class="form-control" id="password2" placeholder="Confirm Password">
-          </div>
-        </div>
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button @click="signUp" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
-        </div>
-      </form>
     </div>
   </div>
-</div>
-</modal>
+  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel"> Profile details </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="Age">Age</label>
+              <input v-model="age" type="text" class="form-control" id="ageLabel" aria-describedby="NameHelp" placeholder="Enter Age">
+            </div>
+            <div class="form-group">
+              <label for="Dob">Date of Birth</label>
+              <input v-model="dob" type="text" class="form-control" id="Dob" placeholder="dd/mm/yyyy">
+            </div>
+          </div>
+          <div class="modal-footer border-top-0 d-flex justify-content-center">
+            <button @click="signUp" type="button" data-dismiss="modal" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 
@@ -125,7 +155,9 @@ export default {
     return {
       email: "",
       password: "",
-      username: ""
+      username: "",
+      age: "",
+      dob: ""
     }
   },
   methods: {
@@ -138,12 +170,22 @@ export default {
         // Signed in
         const user = userCredential.user;
         this.createFriends();
+        this.createProfile();
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode)
         console.log(errorMessage)
 // ..
+      });
+    },
+    createProfile(){
+      const functions = getFunctions(app);
+      const createProfile = httpsCallable(functions, 'createProfile');
+      const auth = getAuth();
+      const user = auth.currentUser;
+      createProfile({ Uid: user.uid, username: this.username, age: this.age, dob: this.dob }).then(() => {
+        console.log("finished");
       });
     },
     createFriends(){

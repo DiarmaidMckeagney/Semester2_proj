@@ -56,9 +56,8 @@ export default {
       const nameOfChatroom = this.chatroomNamestore.nameOfRoom;
       console.log(nameOfChatroom);
       chatroomMessages({name: nameOfChatroom}).then((result) => {
-        console.log(result)
         this.messages = result.data;
-      })
+      });
       this.refresher++;
     },
     sendMessage(){
@@ -68,20 +67,17 @@ export default {
       const auth = getAuth();
       const user = auth.currentUser;
       sendMessage({name: nameOfChatroom,username: user.displayName, message: this.messageBody}).then((result) => {
-        console.log(result);
         this.displayMessages();
-
       });
         this.messageBody = "";
       },
-        addEmoji(emoji)
-        {
+    addEmoji(emoji) {
         this.messageBody += emoji.native;
-        },
-
-        toggleEmojiPicker() {
+    },
+    
+    toggleEmojiPicker() {
         this.showEmojiPicker = !this.showEmojiPicker;
-        },
-      }
-    };
+    },
+  }
+};
 </script>

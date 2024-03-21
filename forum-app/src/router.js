@@ -23,7 +23,7 @@ import Chatroom from "@/components/Chatroom.vue";
 
 const routes = [
     { path: '/', component: HomePage, props: {customHeader: 'Hello world', }, },
-    { path: '/profile', component: ProfilePage },
+    { path: '/profile', component: ProfilePage},
     { path: '/community', component: CommunityPage },
     { path: '/post', component: PostPage },
     { path: '/quiz', component: QuizPage },

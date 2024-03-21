@@ -3,18 +3,7 @@
 
     <!-- Logo Section -->
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-<!-- 
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="942" height="443" role="img" aria-label="Bootstrap"><use xlink:href="#alumn"></use></svg>
-        </a>
-
-         
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="200" height="32" role="img" aria-label="Bootstrap">
-            <image href="@/assets/AlumnPSD-Back.png" width="100%" height="100%"/>
-          </svg>
-        </a> The idea here was to make it resizable but it just doesnt work ?--> 
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" :key="refresher">
        
           <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
             <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
@@ -53,8 +42,8 @@
             <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
               <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
             </li>
-            <li :class="{ 'currHere': $route.path === '/friend-messages' }">
-              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2" @click="logout">Logout </router-link> </a>
+            <li :class="{ 'currHere': $route.path === '/' }">
+              <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
             </li>
           </ul>
           </div>
@@ -69,6 +58,7 @@ import NavigationMenu from './NavigationMenu.vue';
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
 
 export default {
   
@@ -125,12 +115,30 @@ export default {
         this.userDisplayName = user.displayName;
       }
     });
+
+  data() {
+    return{
+      refresher: 0,
+      isLoggedIn: false
+    }
   }
 };
+function isAuth(){
+  const auth = getAuth();
+  const user = auth.currentUser;
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      this.refresher++;
+    }
+    else {
+      isLoggedIn = false;
+      userId = "";
+      this.refresher++;
+    }
+  });
+}
 
 </script>
-
-
 
 <style scoped>
 .app-header {

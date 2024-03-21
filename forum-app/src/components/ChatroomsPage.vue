@@ -4,7 +4,7 @@
     <!-- Main Content Section -->
     <main style="display: flex; flex-direction: row; padding: 20px;">
       <!-- Chatroom List Section -->
-      <section style="width: 66%; margin-right: 4%;">
+      <section style="width: 66%; margin-right: 4%; margin-bottom: 15px">
         <h2>What's New in Chatrooms</h2>
         <ul v-for="n in chatrooms.length" :key="refresher">
           <!-- List of Chatrooms -->
@@ -15,9 +15,39 @@
           <!-- Create New Chatroom -->
         </ul>
         <ul>
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
+          <li class="createchatroomlist" style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
             <span>Create New Chat</span>
-            <button class="join-button" style="background-color: #333; color: white;" @click="newChatroom">Create</button>
+            <modal class="CreateChat">
+              <div class="container">
+                <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                  Create
+                </button>
+              </div>
+
+              <div class="modal fade" id="createForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="chatroomName">Chatroom Name</label>
+                          <input v-model="chatroomName" type="text" class="form-control" id="chatroomLabel" aria-describedby="NameHelp" placeholder="Enter Name">
+                        </div>
+                      </div>
+                      <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button @click="newChatroom" type="button" data-dismiss="modal" class="btn btn-success">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </modal>
           </li>
         </ul>
       </section>
@@ -46,6 +76,7 @@ export default {
   data() {
     return {
       chatrooms:[],
+      chatroomName: "",
       refresher: 0
     }
   },
@@ -57,7 +88,6 @@ export default {
       const functions = getFunctions(app);
       const chatroomNames = httpsCallable(functions, 'chatroomNames');
       chatroomNames().then((result) => {
-        console.log(result);
         this.chatrooms = result.data;
       })
       this.refresher++;
@@ -65,7 +95,7 @@ export default {
     newChatroom() {
       const functions = getFunctions(app);
       const newChatroom = httpsCallable(functions, 'newChatroom');
-      newChatroom({name: "public21"}).then((result) => {
+      newChatroom({name: this.chatroomName}).then((result) => {
         this.chatroomNames();
       })
     },
@@ -79,5 +109,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add your CSS here */
+.createchatroomlist {
+  display: inline-flex;
+}
 </style>
