@@ -101,7 +101,7 @@ function isAuth(){
 
 <style scoped>
 .app-header {
-  background-color: #7b5740 ; /* Match TheFooter background color */
+  background-color: #121e67 ; /* Match TheFooter background color */
   color: white;
   display: flex;
   justify-content: space-between;
