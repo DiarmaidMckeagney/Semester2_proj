@@ -4,9 +4,10 @@
     <main style="display: flex; justify-content: space-between; padding: 20px;">
       <!-- Sidebar: List of Users Joined -->
       <aside style="width: 20%; background-color: #ddd; padding-right: 30px; padding-top: 20px;">
+        <router-link to="/community-finder" class="button-link" style="margin-left: 80px; padding: 10px 10px 10px 10px;">Back to Community Finder</router-link>
         <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
-          <li style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
+          <li style="border: 1px solid #ccc; margin: auto ;padding: 10px 10px 10px 28%;background-color: #f0f0f0; list-style-type: none;">
               <span></span>
               <button class="join-button" style="background-color: #333; color: white;" @click = "refreshCommunity(communities[n-1])">{{ communities[n-1] }}</button>
             </li>
@@ -14,22 +15,26 @@
       </aside>
 
       <!-- Community Posts -->
-      <section style="width: 58%; padding: 20px;">
-        <!-- Placeholder for Posts -->
+      <section style="width: 58%; padding: 20px;" @load="displayPosts">
         <ul v-for="n in posts.length" :key="refresher">
-          <div style="background-color: #f0f0f0; margin-bottom: 20px;" @load="displayPosts()">
-            <li style="list-style-type: none;">
-              <span>{{ posts[n-1].username }}:    </span> 
-              <span>{{ posts[n-1].content }}</span> 
+            <li style="list-style-type: none; background-color: #f0f0f0; margin-bottom: 20px;">
+              <h2><span>{{ posts[n-1].title }}</span></h2><br>
+              <h5><span>{{ posts[n-1].username }}</span></h5><br>
+              <span>{{ posts[n-1].mainText }}</span>
             </li>
-          </div>
         </ul>
       </section>
 
       <!-- Right Sidebar for Actions like Create Community -->
       <aside style="width: 20%; background-color: #ddd; padding: 20px;">
-        <router-link to="/community-finder" class="button-link">Community Finder</router-link>
-        <button @click="newCommunity">Create Community</button>
+        <h2 style="margin-left: 60px; margin-bottom: 20px">New Post</h2>
+        <div style="display: flex; flex-direction: row; align-items: flex-end; vertical-align: bottom; margin-bottom: 30px">
+          <input v-model="title" placeholder="enter title"/>
+        </div>
+        <div>
+          <textarea v-model="mainBodyOfText" placeholder="enter body of post"></textarea>
+        </div>
+        <div><button @click="sendPost" style= "margin-bottom: 10px" type="button" class="btn btn-success">Post</button></div>
       </aside>
     </main>
 
@@ -37,11 +42,11 @@
 </template>
 
 <script>
-import router from '@/router';
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import { useCommunityName } from '@/stores/counter';
-import { reload } from 'firebase/auth';
+import {getAuth} from "firebase/auth";
+
 
 
 export default {
@@ -55,7 +60,9 @@ export default {
     return {
       communities:[],
       posts:[],
-      refresher: 0
+      refresher: 0,
+      title: "",
+      mainBodyOfText: ""
     }
   },
 
@@ -83,20 +90,22 @@ export default {
         })
         this.refresher++; 
     },
-    newCommunity() {
-      const functions = getFunctions(app);
-      const newCommunity = httpsCallable(functions, 'newCommunity');
-      let comName = window.prompt("Please enter a community name", "community" + Math.floor(Math.random() * 10000));
-      if(comName != null){
-        newCommunity({name: comName}).then((result) => {
-        this.communityNames();
-        this.refreshCommunity(comName);
-        })
-      }
-    },
     refreshCommunity(community){
       this.communityNamestore.changeName(community);
       this.displayPosts();
+    },
+    sendPost(){
+      const functions = getFunctions(app);
+      const newPost = httpsCallable(functions, 'newPost');
+      const nameOfCommunity = this.communityNamestore.nameOfRoom;
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const userId = user.uid;
+      newPost({name:nameOfCommunity, uid: userId, title: this.title, mainText: this.mainBodyOfText, username: user.displayName}).then(() => {
+        this.displayPosts();
+      });
+      this.title = "";
+      this.mainBodyOfText = "";
     }
   }
 }
