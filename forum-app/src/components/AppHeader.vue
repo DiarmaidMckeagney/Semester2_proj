@@ -116,14 +116,7 @@ export default {
       }
     });
 
-  data() {
-    return{
-      refresher: 0,
-      isLoggedIn: false
-    }
-  }
-};
-function isAuth(){
+  function isAuth(){
   const auth = getAuth();
   const user = auth.currentUser;
   onAuthStateChanged(auth, (user) => {
@@ -136,7 +129,10 @@ function isAuth(){
       this.refresher++;
     }
   });
-}
+    }
+  }
+};
+
 
 </script>
 
