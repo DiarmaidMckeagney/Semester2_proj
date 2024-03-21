@@ -8,9 +8,6 @@
           <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
             <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
           </a>
-   
-      
-
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
@@ -123,21 +120,6 @@ export default {
     }
   }
 };
-function isAuth(){
-  const auth = getAuth();
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      this.refresher++;
-    }
-    else {
-      isLoggedIn = false;
-      userId = "";
-      this.refresher++;
-    }
-  });
-}
-
 </script>
 
 <style scoped>

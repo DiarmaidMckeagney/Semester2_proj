@@ -25,6 +25,42 @@ Copy code
           </div>
             </li>
         </ul>
+        <ul>
+          <li class="createCommunityList" style="display: inline-flex;list-style-type: none; border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
+            <span>Create New Community</span>
+            <modal class="CreateChat">
+              <div class="container">
+                <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                  Create
+                </button>
+              </div>
+
+              <div class="modal fade" id="createForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="communityName">Chatroom Name</label>
+                          <input v-model="communityName" type="text" class="form-control" id="communityLabel" aria-describedby="NameHelp" placeholder="Enter Name">
+                        </div>
+                      </div>
+                      <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button @click="newCommunity" type="button" data-dismiss="modal" class="btn btn-success">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </modal>
+          </li>
+        </ul>
       </section>
 
       <!-- Tag Search and List Section -->
@@ -60,7 +96,8 @@ export default {
   data() {
     return {
       communities:[],
-      refresher: 0
+      refresher: 0,
+      communityName: ""
     }
   },
   created() {
@@ -74,8 +111,14 @@ export default {
         this.communities = result.data;
         console.log(result.data);
       })
-      
       this.refresher++;
+    },
+    newCommunity() {
+      const functions = getFunctions(app);
+      const newCommunity = httpsCallable(functions, 'newCommunity');
+      newCommunity({name: this.communityName}).then((result) => {
+        this.communityNames();
+      })
     },
 
     moveToCommunity(community){
