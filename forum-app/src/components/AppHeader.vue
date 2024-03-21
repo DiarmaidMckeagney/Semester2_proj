@@ -77,7 +77,6 @@ export default {
 
     logout() {
       const auth = getAuth();
-
       signOut(auth)
         .then(() => {
           // Sign-out successful.
@@ -86,7 +85,7 @@ export default {
            // No user is signed in
           this.userLoggedIn = false;
           this.user = null;
-          this.userDisplayName = user.displayName;
+          this.userDisplayName = "";
         })
         .catch((error) => {
           // An error happened.
@@ -112,12 +111,6 @@ export default {
         this.userDisplayName = user.displayName;
       }
     });
-
-  data() {
-    return{
-      refresher: 0,
-      isLoggedIn: false
-    }
   }
 };
 </script>
