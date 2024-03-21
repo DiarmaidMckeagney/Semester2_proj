@@ -3,12 +3,19 @@
     <main style="display: flex; flex-direction: row; padding: 20px;">
       <section style="width: 66%; margin-right: 4%; margin-bottom: 45px">
         <ul v-for="n in messages.length" :key="refresher" style="list-style-type:none;">
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
-            <p>{{ messages[n-1].username }}</p>
+        <li style="position: relative; list-style: none; margin-bottom: 10px;">
+          <div style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
+            <strong>{{ messages[n-1].username }}</strong>
             <p>{{ messages[n-1].message }}</p>
-          </li>
-        </ul>
-        <div style="display: flex; align-items: flex-end; vertical-align: bottom;"><input v-model="messageBody" placeholder="enter message"/><button style="background-color: #333; display: flex; align-items: flex-end; color: white;" @click="sendMessage">Send</button></div>
+          </div>
+          <div style="position: absolute; top: 60px; left: -10px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 10px solid #e6f2ff;"></div>
+        </li>
+      </ul>
+        <div style=" border-radius: 10px; position: fixed; bottom: 65px; left: 0; width: 66%; margin-right: 4%; display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #f0f0f0;">
+         <img  @click="toggleEmojiPicker"  src="@/assets/emoji.png" alt="emoji icon" style="width: 40px; height: 40px; text-align: center;"> 
+         <Picker v-if="showEmojiPicker"  @emoji-click="addEmoji" />
+        <input v-model="messageBody" placeholder="Enter message"  @keyup.enter="sendMessage" style="flex: 1; margin-right: 10px;" >
+       </div>
       </section>
     </main>
   </div>
@@ -19,8 +26,12 @@ import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import { useChatroomName } from "@/stores/counter.js";
 import { getAuth } from "firebase/auth";
+import { Picker } from 'vue-emoji';
 
 export default {
+  components:{
+    Picker
+  },
   setup(){
     const chatroomNamestore = useChatroomName();
 
@@ -30,12 +41,14 @@ export default {
     return {
       messages:[],
       refresher: 0,
-      messageBody: ""
+      messageBody: "",
+      showEmojiPicker: false
     }
   },
   created() {
     this.displayMessages();
   },
+  
   methods: {
     displayMessages(){
       const functions = getFunctions(app);
@@ -44,7 +57,7 @@ export default {
       console.log(nameOfChatroom);
       chatroomMessages({name: nameOfChatroom}).then((result) => {
         this.messages = result.data;
-      })
+      });
       this.refresher++;
     },
     sendMessage(){
@@ -56,13 +69,15 @@ export default {
       sendMessage({name: nameOfChatroom,username: user.displayName, message: this.messageBody}).then((result) => {
         this.displayMessages();
       });
-      this.messageBody = "";
-    }
+        this.messageBody = "";
+      },
+    addEmoji(emoji) {
+        this.messageBody += emoji.native;
+    },
+    
+    toggleEmojiPicker() {
+        this.showEmojiPicker = !this.showEmojiPicker;
+    },
   }
-}
-
+};
 </script>
-
-<style scoped>
-
-</style>

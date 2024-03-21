@@ -15,8 +15,14 @@ Copy code
         <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
           <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;list-style-type: none;">
-              <span>{{ communities[n-1] }}</span>
-              <button class="join-button" style="background-color: #333; color: white;" @click = "moveToCommunity(communities[n-1])">Join</button>
+            <div class="row">
+              <div class="col">
+                  <span style="font-size: 18px;"> <strong>{{ communities[n-1] }}  </strong></span>
+              </div>
+              <div class="col-auto">
+                  <button class="btn btn-primary join-button" @click="moveToCommunity(communities[n-1])">Join</button>
+              </div>
+          </div>
             </li>
         </ul>
       </section>
