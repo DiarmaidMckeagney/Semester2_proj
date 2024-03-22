@@ -34,7 +34,7 @@
           <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
-              <a class="dropdown-item"> <router-link to= "/profile" class="nav-link px-2">Profile</router-link> </a>
+              <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
             </li>
             <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
               <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
@@ -54,7 +54,9 @@ import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
+import { useUserId } from "@/stores/counter.js";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from "@/router.js";
 
 
 export default {
@@ -68,13 +70,21 @@ export default {
       userDisplayName: null
     };
   },
+  setup(){
+    const userIdstore = useUserId();
+    
+    return { userIdstore }
+  },
   components: {
     NavigationMenu,
     SignUpForm,
     LoginForm
   },
   methods: {
-
+    moveToProfile(id){
+      this.userIdstore.changeName(id);
+      router.push({path: "/profile"});
+    },
     logout() {
       const auth = getAuth();
       signOut(auth)
