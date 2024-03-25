@@ -71,9 +71,9 @@ export default {
     };
   },
   setup(){
-    const userIdstore = useUserId();
+    const userIdStore = useUserId();
     
-    return { userIdstore }
+    return { userIdStore }
   },
   components: {
     NavigationMenu,
@@ -82,7 +82,8 @@ export default {
   },
   methods: {
     moveToProfile(id){
-      this.userIdstore.changeName(id);
+      this.userIdStore.changeName(id);
+      console.log(this.userIdStore.getUserId);
       router.push({path: "/profile"});
     },
     logout() {

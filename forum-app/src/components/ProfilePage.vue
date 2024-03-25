@@ -28,18 +28,16 @@
 
             <div>
               <div class="mb-3" v-if="isHidden">
-                <h3>{{JSON.parse(JSON.stringify(profileInfo[0].username))}}</h3>
+                <h3>{{ JSON.parse(JSON.stringify(profileInfo[0].username)) }}</h3>
                 <div class="mb-3 d-flex flex-column">
 
                   <label class="mb-3 me-3"><b class="me-3">Age:</b>
-                    <span v-if="JSON.parse(JSON.stringify(profileInfo[0].age))">{{
-                      JSON.parse(JSON.stringify(profileInfo[0].age)) }}</span>
+                    <span v-if="JSON.parse(JSON.stringify(profileInfo[0].age))">{{ JSON.parse(JSON.stringify(profileInfo[0].age)) }}</span>
                     <span v-else> <i> Not set</i></span>
                   </label>
 
                   <label class="mb-3"> <b class="me-3">Date of Birth:</b>
-                    <span v-if="JSON.parse(JSON.stringify(profileInfo[0].dob))">{{
-                      JSON.parse(JSON.stringify(profileInfo[0].dob)) }}</span>
+                    <span v-if="JSON.parse(JSON.stringify(profileInfo[0].dob))">{{ JSON.parse(JSON.stringify(profileInfo[0].dob)) }}</span>
                     <span v-else> <i> Not set</i></span>
                   </label>
                 </div>
@@ -139,15 +137,21 @@
 <script>
 
 import app from '../api/firebase';
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { getAuth } from "firebase/auth";
+import {getFunctions, httpsCallable} from "firebase/functions";
+import {getAuth} from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
 import router from "@/router.js";
+import {useUserId} from "@/stores/counter.js";
 
 export default {
   name: "Users",
   components: {
     EditProfileModal
+  },
+  setup(){
+    const userIdStore = useUserId();
+
+    return { userIdStore }
   },
   data() {
     return {
@@ -169,7 +173,6 @@ export default {
   },
   
   created() {
-    console.log(this.temp);
     this.userInfo();
     this.friendsNames();
     this.displayMessages();
@@ -243,7 +246,7 @@ export default {
     userInfo() {
       const functions = getFunctions(app);
       const userInfo = httpsCallable(functions, 'userInfo');
-      
+      this.id = this.userIdStore.getUserId;
 
       userInfo({ Uid: this.id}).then((result) => {
         console.log(result);
@@ -256,12 +259,12 @@ export default {
       const addFriend = httpsCallable(functions, 'newFriend');
       const auth = getAuth();
       const user = auth.currentUser;
-      addFriend({userId: user.uid, friendId: this.userID}).then(() => {
+      addFriend({userId: user.uid, friendId: this.id}).then(() => {
           console.log("finished")
       });
     },
     moveToProfile(id){
-      this.userIdstore.changeName(id);
+      this.userIdStore.changeName(id);
       router.push({path: "/profile"});
     }
   }
