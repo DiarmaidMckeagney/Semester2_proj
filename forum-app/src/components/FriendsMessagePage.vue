@@ -6,7 +6,6 @@
       <!-- Friends List Section -->
       <aside style="width: 20%; background-color: #ddd; padding: 20px;">
         <h2>Friends</h2>
-        <div style="margin-bottom: 10px;">Search Placeholder</div>
         <div>
           <ul v-for="n in FriendsNames.length" :key="refresher">
             <li><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>

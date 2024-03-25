@@ -45,12 +45,9 @@
 
 
               <div v-if="isHidden" class="d-flex justify-content-end" style="align-items: end; ">
-                <img src="@/assets/editPencil.png" @click="toggleVisibility" style="cursor: pointer" alt="Site Logo"
-                  class="logo img-fluid" href="/" width="80px" />
-                <button @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">
-                  Edit</button>
+                <button v-if="this.id == this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
+                <button v-else class="btn btn-sm ms-auto" style="background-color: #00FFFF; " @click="add_Friend">Add as friend</button>
               </div>
-
 
               <div class="mb-3" v-if="!isHidden">
                 <h3>Edit Profile</h3>
@@ -64,12 +61,12 @@
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="age" class="form-label me-3"><b>Age</b></label>
-                      <input type="number" id="age" v-model="formData.age" class="form-control" required>
+                      <input type="text" id="age" v-model="formData.age" class="form-control" required>
                     </div>
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="dateOfBirth" class="form-label me-3"><b>Date of Birth</b></label>
-                      <input type="date" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
+                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
                         class="form-control" required>
                     </div>
                     <div v-if="!isHidden" style="align-items: end;">
@@ -169,6 +166,7 @@ export default {
       friends: [],
       posts: [],
       refresher: 0,
+      currentUserId: ""
     }
   },
   
@@ -176,8 +174,19 @@ export default {
     this.userInfo();
     this.friendsNames();
     this.displayMessages();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    this.currentUserId = user.uid;
+
   },
   methods:{
+    editProfileInfo(){
+      const functions = getFunctions(app);
+      const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
+      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age}).then((result) => {
+        this.userInfo();
+      });
+    },
     displayMessages(){
       const functions = getFunctions(app);
       const chatroomMessages = httpsCallable(functions, 'profilePosts');
@@ -207,7 +216,7 @@ export default {
       if(user){
         const functions = getFunctions(app);
         const friendsNames = httpsCallable(functions, 'displayFriends');
-        friendsNames({userId: user.uid}).then((result) => {
+        friendsNames({userId: this.id}).then((result) => {
         console.log(result);
         this.friends = result.data;
       })
@@ -242,6 +251,10 @@ export default {
       // hide the form after submission
       this.isHidden = true;
       this.finalUrl = this.imageUrl;
+      console.log(this.name);
+      console.log(this.dateOfBirth);
+      console.log(this.age);
+      this.editProfileInfo();
     },
     userInfo() {
       const functions = getFunctions(app);
@@ -251,15 +264,17 @@ export default {
       userInfo({ Uid: this.id}).then((result) => {
         console.log(result);
         this.profileInfo = result.data;
+        this.name = JSON.parse(JSON.stringify(this.profileInfo[0].username)) ;
       });
       this.refresher++;
     },
     add_Friend(){
+      console.log(this.name);
       const functions = getFunctions(app);
       const addFriend = httpsCallable(functions, 'newFriend');
       const auth = getAuth();
       const user = auth.currentUser;
-      addFriend({userId: user.uid, friendId: this.id}).then(() => {
+      addFriend({userId: user.uid, friendId: this.id, friendName: this.name, username: user.displayName}).then(() => {
           console.log("finished")
       });
     },
