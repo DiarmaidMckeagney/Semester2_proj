@@ -150,7 +150,7 @@
             <!-- List of Communities -->
             <li
               style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
-              <button @click="moveToProfile(friends[n-1].id)">{{friends[n-1].name.name}}</button>
+              <button @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</button>
             </li>
           </ul>
         </div>
@@ -166,7 +166,7 @@ import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
 import router from "@/router.js";
-import {useUserId} from "@/stores/counter.js";
+import {useFriendId, useUserId} from "@/stores/counter.js";
 
 export default {
   name: "Users",
@@ -175,8 +175,8 @@ export default {
   },
   setup(){
     const userIdStore = useUserId();
-
-    return { userIdStore }
+    const friendIdStore = useFriendId();
+    return { userIdStore, friendIdStore };
   },
   data() {
     return {
@@ -308,9 +308,9 @@ export default {
           console.log("finished")
       });
     },
-    moveToProfile(id){
-      this.userIdStore.changeName(id);
-      router.push({path: "/profile"});
+    moveToFriendChat(id){
+      this.friendIdStore.changeFriendId(id);
+      router.push({path: "/friend-messages"});
     }
   }
 }
