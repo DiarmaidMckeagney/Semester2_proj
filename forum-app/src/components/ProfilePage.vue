@@ -232,9 +232,6 @@ export default {
       });
         this.messageBody = "";
       },
-    addEmoji(emoji) {
-        this.messageBody += emoji.native;
-    },
 
     friendsNames() {
       const auth = getAuth();
