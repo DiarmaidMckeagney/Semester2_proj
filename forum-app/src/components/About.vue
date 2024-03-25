@@ -1,9 +1,8 @@
 <template>
   <div id="about-page">
     <!-- Main Content Section -->
-    <main style="display: flex; justify-content: right ; padding: 20px; text-align: center; background-color: #;">
-      <!-- About Content Section -->
-      <section style="width: 70%; background-color: #f0f0f0; padding: 20px; margin-right: 20px;">
+    <main style="padding: 20px;">
+      <section style="background-color: #ADD8E6; padding: 20px; border-radius: 20px;text-align: center;"> <!-- Light blue background and border-radius -->
         <h2>About Us</h2>
         <p>Welcome to Alumn! We are a dynamic team of computer science and IT undergraduates from the University of Galway. In our second year, our team comprises youthful vigor and mature perspectives. Our common goal is to innovate and connect, bringing together varied experiences and expertise.</p>
 
@@ -24,21 +23,21 @@
 
         <h3>Join Our Community:</h3>
         <p>We invite you to be part of our community. As we progress with this exciting project, your participation, ideas, and feedback are crucial in shaping a vibrant and inclusive student community.</p>
-
-        <h3>{{ $route.params.message }}</h3>
       </section>
-
-      <!-- Contact Section -->
-      <aside style="width: 28%; background-color: #ddd; padding: 10px;">
-        <h2>Contact Us</h2>
-        <p>Email: example@example.com</p>
-        <p>Phone: 123 456 789</p>
-        <p>Address: Looney Tunes Corporation</p>
-      </aside>
     </main>
   </div>
 </template>
 
 <style scoped>
-/* Add your CSS here */
+/* Navy writing and light blue background with beige page background */
+#about-page {
+  color: navy; /* Navy writing */
+  background-color: beige; /* Beige page background */
+}
+
+section {
+  background-color: #ADD8E6; /* Light blue background */
+  padding: 20px;
+  border-radius: 20px;
+}
 </style>
