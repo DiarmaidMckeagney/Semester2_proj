@@ -62,8 +62,7 @@
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="dateOfBirth" class="form-label me-3"><b>Date of Birth</b></label>
-                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
-                        class="form-control" required>
+                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" class="form-control" required>
                     </div>
                     <div v-if="!isHidden" style="align-items: end;">
                       <button @click="toggleVisibility" class="btn me-3" style="background-color: red"> Cancel</button>
