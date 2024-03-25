@@ -40,9 +40,6 @@
 
 
               <div v-if="isHidden" class="d-flex justify-content-end" style="align-items: end; ">
-
-                <img src="@/assets/editPencil.png" @click="toggleVisibility" style="cursor: pointer" alt="Site Logo" class="logo img-fluid" href="/" width="80px" />
-                <button @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
                 <button v-if="this.id == this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
                 <button v-else class="btn btn-sm ms-auto" style="background-color: #00FFFF; " @click="add_Friend">Add as friend</button>
 
