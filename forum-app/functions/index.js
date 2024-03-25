@@ -266,3 +266,33 @@ exports.startFriendList = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.newProfilePost = functions.https.onRequest((request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, async () => {
+        const currentTime = admin.firestore.Timestamp.now();
+        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).collection("posts").add({ "username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message });
+        response.send({
+            status: "success",
+            data: null
+        });
+    });
+});
+
+exports.profilePosts = functions.https.onRequest( (request, response) => {
+    request.header("Access-Control-Allow-Origin: *");
+    cors(request, response, () => {
+        let myData = [];
+        admin.firestore().collection("Profiles/"+ request.body.data.Uid + "/posts").orderBy("timestamp",
+            "asc").get().then((snapshot) => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                response.send({data : 'No data in database'});
+                return;
+            }
+            snapshot.forEach(doc => {
+                myData.push(doc.data());
+            });
+            response.send({data : myData});
+        });
+    });
+});
