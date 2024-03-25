@@ -198,7 +198,7 @@ export default {
       posts: [],
       refresher: 0,
       title: "",
-      messageBody: ""
+      messageBody: "",
       currentUserId: ""
     }
   },
