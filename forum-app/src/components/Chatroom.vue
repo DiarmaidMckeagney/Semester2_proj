@@ -6,7 +6,7 @@
         <ul v-for="n in messages.length" :key="refresher" class="message-list">
           <li class="message-item">
             <div class="message-bubble">
-              <strong>{{ messages[n-1].username }}</strong>
+              <strong @click="moveToProfile(messages[n-1].uid)">{{ messages[n-1].username }}</strong>
               <p>{{ messages[n-1].message }}</p>
             </div>
           </li>
@@ -33,8 +33,10 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import { useChatroomName } from "@/stores/counter.js";
+import { useUserId } from "@/stores/counter.js";
 import { getAuth } from "firebase/auth";
 import { Picker } from 'vue-emoji';
+import router from "@/router.js";
 
 export default {
   components:{
@@ -42,6 +44,9 @@ export default {
   },
   setup(){
     const chatroomNamestore = useChatroomName();
+    const userIdStore = useUserId();
+    
+    return { chatroomNamestore, userIdStore };
 
     return { chatroomNamestore }
   },
@@ -58,6 +63,13 @@ export default {
   },
 
   methods: {
+    moveToProfile(id){
+      if(id != null){
+        this.userIdStore.changeName(id);
+        console.log(this.userIdStore.getUserId);
+        router.push({path: "/profile"});
+      }
+    },
     displayMessages(){
       const functions = getFunctions(app);
       const chatroomMessages = httpsCallable(functions, 'chatroomMessages');
