@@ -77,7 +77,6 @@ export default {
 
   methods: {
     moveToProfile(id){
-      console.log(id);
       if(id != null){
         this.userIdStore.changeName(id);
         console.log(this.userIdStore.getUserId);
