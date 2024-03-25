@@ -7,21 +7,16 @@
             <div v-if="isHidden" class="d-flex justify-content-center align-items-center bg-light"
               style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
 
-              <span v-if="finalUrl"> <img :src="finalUrl" alt="Custom Icon" style="width: 100px; height: 100px;">
-              </span>
-              <span v-else> <i> <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"
-                    style="width: 100px; height: 100px; text-align: center;"> </i></span>
+              <span v-if="finalUrl"> <img :src="finalUrl" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
+              <span v-else> <i> <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon" style="width: 100px; height: 100px; text-align: center;"> </i></span>
               <!--Put whatever u want in the src here-->
-
             </div>
 
-            <div v-if="!isHidden" class="d-flex justify-content-center align-items-center bg-light"
-              style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
+            <div v-if="!isHidden" class="d-flex justify-content-center align-items-center bg-light" style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
               <label for="fileInput">
                 <span v-if="imageUrl"> <img :src="imageUrl" alt="Custom Icon" style="width: 100px; height: 100px;">
                 </span>
-                <span v-else> <i> <img src="" alt="Select an Image"
-                      style="width: 100px; height: 100px; text-align: center; cursor: pointer;"> </i></span>
+                <span v-else> <i> <img src="" alt="Select an Image" style="width: 100px; height: 100px; text-align: center; cursor: pointer;"> </i></span>
               </label>
               <input id="fileInput" type="file" @change="onFileSelected" style="display: none;">
             </div>
@@ -45,8 +40,12 @@
 
 
               <div v-if="isHidden" class="d-flex justify-content-end" style="align-items: end; ">
+
+                <img src="@/assets/editPencil.png" @click="toggleVisibility" style="cursor: pointer" alt="Site Logo" class="logo img-fluid" href="/" width="80px" />
+                <button @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
                 <button v-if="this.id == this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
                 <button v-else class="btn btn-sm ms-auto" style="background-color: #00FFFF; " @click="add_Friend">Add as friend</button>
+
               </div>
 
               <div class="mb-3" v-if="!isHidden">
@@ -96,7 +95,8 @@
                 <div
                   style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
                   <strong>{{ posts[n - 1].username }}</strong>
-                  <p>{{ posts[n-1].message }}</p>
+                  <p>{{ posts[n-1].title }}</p>
+                  <p>{{ posts[n-1].messageBody }}</p>
                 </div>
                 <div
                   style="position: absolute; top: 60px; left: -10px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 10px solid #e6f2ff;">
@@ -105,10 +105,41 @@
             </ul>
           </div>
           <div class="mb-3 right">
-              <img @click="toggleEmojiPicker" src="@/assets/emoji.png" alt="emoji icon"
-                style="width: 40px; height: 40px; text-align: center;">
-              <Picker v-if="showEmojiPicker" @emoji-click="addEmoji" />
-              <input v-model="messageBody" placeholder="Enter message" @keyup.enter="sendMessage" style="flex: 1; margin-right: 10px;">
+            <modal class="CreateChat">
+              <div class="container">
+                <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                  New Post
+                </button>
+              </div>
+
+              <div class="modal fade" id="createForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="titleLabel">Title</label>
+                          <input v-model="title" type="text" class="form-control" id="titleLabel" aria-describedby="NameHelp" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="messageLabel">Message Body</label>
+                          <input v-model="messageBody" type="text" class="form-control" id="bodyLabel" aria-describedby="NameHelp" placeholder="Enter Name">
+                        </div>
+                      </div>
+                      <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button @click="sendMessage" type="button" data-dismiss="modal" class="btn btn-success">Post</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </modal>
           </div>
         </section>
       </div>
@@ -157,7 +188,7 @@ export default {
         dateOfBirth: "",
         age: ""
       },
-      id: "B8MTbCHWw7YfjvrHIfwVb1fbv7p1",
+      id: "",
       isHidden: true,
       selectedFile: null,
       imageUrl: null,
@@ -166,6 +197,8 @@ export default {
       friends: [],
       posts: [],
       refresher: 0,
+      title: "",
+      messageBody: ""
       currentUserId: ""
     }
   },
@@ -201,7 +234,7 @@ export default {
       const sendMessage = httpsCallable(functions, 'newProfilePost');
       const auth = getAuth();
       const user = auth.currentUser;
-      sendMessage({Uid: this.id,username: user.displayName, message: this.messageBody}).then((result) => {
+      sendMessage({Uid: this.id,username: user.displayName, messageBody: this.messageBody, title: this.title}).then((result) => {
         this.displayMessages();
       });
         this.messageBody = "";
