@@ -218,11 +218,8 @@ exports.newFriendMessage = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         const currentTime = admin.firestore.Timestamp.now();
-        const auth = getAuth();
-        const user = auth.currentUser;
-        const userId = user.uid;
-        const friendMessageRef = admin.firestore().collection('Friends/' + request.body.data.friendId + "/FriendsList/" + request.body.data.userId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message, "uid" : userId});
-        return admin.firestore().collection('Friends/' + request.body.data.userId + "/FriendsList/" + request.body.data.friendId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message, "uid" : userId}).then((
+        const friendMessageRef = admin.firestore().collection('Friends/' + request.body.data.friendId + "/FriendsList/" + request.body.data.userId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message, "uid" : request.body.data.userId});
+        return admin.firestore().collection('Friends/' + request.body.data.userId + "/FriendsList/" + request.body.data.friendId + "/posts").add({"username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message, "uid" : request.body.data.userId}).then((
         )=>{
             response.send({
                 status: "success",
@@ -270,7 +267,7 @@ exports.newProfilePost = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, async () => {
         const currentTime = admin.firestore.Timestamp.now();
-        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).collection("posts").add({ "username": request.body.data.username, "timestamp": currentTime, "message": request.body.data.message });
+        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).collection("posts").add({ "username": request.body.data.username, "timestamp": currentTime, "messageBody": request.body.data.messageBody, "title": request.body.data.title });
         response.send({
             status: "success",
             data: null
