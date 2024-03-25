@@ -19,7 +19,7 @@
         <ul v-for="n in posts.length" :key="refresher">
           <li>
             <h2>{{ posts[n-1].title }}</h2>
-            <h5>{{ posts[n-1].username }}</h5>
+            <h5 @click="moveToProfile(posts[n-1].uid)">{{ posts[n-1].username }}</h5>
             <span>{{ posts[n-1].mainText }}</span>
           </li>
         </ul>
@@ -47,12 +47,16 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import { useCommunityName } from '@/stores/counter';
+import { useUserId } from "@/stores/counter.js";
 import {getAuth} from "firebase/auth";
+import router from "@/router.js";
 
 export default {
   setup() {
     const communityNamestore = useCommunityName();
-    return { communityNamestore };
+    const userIdStore = useUserId();
+    
+    return { communityNamestore, userIdStore };
   },
 
   data() {
@@ -72,6 +76,14 @@ export default {
   },
 
   methods: {
+    moveToProfile(id){
+      console.log(id);
+      if(id != null){
+        this.userIdStore.changeName(id);
+        console.log(this.userIdStore.getUserId);
+        router.push({path: "/profile"});
+      }
+    },
     communityNames() {
       const functions = getFunctions(app);
       const communityNames = httpsCallable(functions, 'communityNames');
