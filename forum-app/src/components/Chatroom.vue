@@ -77,6 +77,7 @@ export default {
       console.log(nameOfChatroom);
       chatroomMessages({name: nameOfChatroom}).then((result) => {
         this.messages = result.data;
+        console.log(result.data);
       });
       this.refresher++;
     },
@@ -111,9 +112,9 @@ export default {
 .chat-section {
   width: 75%;
   margin-right: 2%; /* Optional spacing between sections */
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .message-list {
