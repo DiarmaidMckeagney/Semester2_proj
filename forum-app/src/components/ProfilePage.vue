@@ -57,12 +57,12 @@
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="age" class="form-label me-3"><b>Age</b></label>
-                      <input type="number" id="age" v-model="formData.age" class="form-control" required>
+                      <input type="text" id="age" v-model="formData.age" class="form-control" required>
                     </div>
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="dateOfBirth" class="form-label me-3"><b>Date of Birth</b></label>
-                      <input type="date" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
+                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
                         class="form-control" required>
                     </div>
                     <div v-if="!isHidden" style="align-items: end;">
@@ -205,6 +205,14 @@ export default {
     this.displayMessages();
   },
   methods:{
+    editProfileInfo(){
+      const functions = getFunctions(app);
+      const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
+      const auth = getAuth();
+      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age}).then((result) => {
+        this.userInfo();
+      });
+    },
     displayMessages(){
       const functions = getFunctions(app);
       const chatroomMessages = httpsCallable(functions, 'profilePosts');
@@ -269,6 +277,10 @@ export default {
       // hide the form after submission
       this.isHidden = true;
       this.finalUrl = this.imageUrl;
+      console.log(this.name);
+      console.log(this.dateOfBirth);
+      console.log(this.age);
+      this.editProfileInfo();
     },
     userInfo() {
       const functions = getFunctions(app);

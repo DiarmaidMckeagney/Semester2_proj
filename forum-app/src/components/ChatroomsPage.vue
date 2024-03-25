@@ -2,24 +2,34 @@
   <div id="chatrooms-page">
 
     <!-- Main Content Section -->
-    <main style="display: flex; flex-direction: row; padding: 20px;">
+    <main style="display: flex; flex-direction: row; ">
       <!-- Chatroom List Section -->
-      <section style="width: 66%; margin-right: 4%; margin-bottom: 15px">
-        <h2>What's New in Chatrooms</h2>
+      <section style="width: 75%;">
+        <h2 style="margin-top:20px;margin-left:30px;color:navy;"> What's New in Chatrooms</h2>
         <ul v-for="n in chatrooms.length" :key="refresher">
           <!-- List of Chatrooms -->
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
-            <span>{{ chatrooms[n-1] }}</span>
-            <button class="join-button" style="background-color: #333; color: white;" @click="moveToChatroom(chatrooms[n-1])">Join</button>
+          <li :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }" style="margin-top:10px;color: navy; margin-bottom: 10px; border-radius: 5px; padding: 20px; list-style-type: none; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center;">
+              <i class="bi bi-chat-square-text" style="font-size: 24px; margin-right: 10px;"></i>
+              <span>{{ chatrooms[n-1] }}</span>
+            </div>
+            <button class="join-button" style="margin-left: auto; background-color:navy; color: white;border-radius:5px;" @click="moveToChatroom(chatrooms[n-1])">Join</button>
           </li>
           <!-- Create New Chatroom -->
         </ul>
+
+      </section>
+
+      <!-- Box on the Right -->
+      <section style="width: 25%;margin-top:67px;margin-right:50px;">
+        <!-- Content moved from Create Chatroom Section -->
+        <!-- This content is now below "Topic 3" -->
         <ul>
-          <li class="createchatroomlist" style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
-            <span>Create New Chat</span>
+          <li class="createchatroomlist">
+            <span style="color:navy;">New Chatroom</span>
             <modal class="CreateChat">
               <div class="container">
-                <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                <button type="button" class="create-button" style="background-color:green; color: white;border-radius:5px;" data-toggle="modal" data-target="#createForm">
                   Create
                 </button>
               </div>
@@ -51,12 +61,6 @@
           </li>
         </ul>
       </section>
-
-      <!-- Box on the Right -->
-      <section style="width: 30%; background-color: #f0f0f0; padding: 10px;">
-        <!-- Content moved from Create Chatroom Section -->
-        <!-- This content is now below "Topic 3" -->
-      </section>
     </main>
   </div>
 </template>
@@ -77,7 +81,8 @@ export default {
     return {
       chatrooms:[],
       chatroomName: "",
-      refresher: 0
+      refresher: 0,
+      chatroomColors:["LightPink","LightBlue", "PaleGreen", "Lavender", "SkyBlue","LightSalmon", "LightGreen", "Gold",  "LightSteelblue", "Pink","LightGrey"]
     }
   },
   created() {
@@ -110,6 +115,17 @@ export default {
 
 <style scoped>
 .createchatroomlist {
-  display: inline-flex;
+  display: flex; /* Use flex to make it a flex container */
+  justify-content: space-between; /* This will place the text and button on opposite ends */
+  align-items: center; /* This will vertically center the items */
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: lightgreen;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+#chatrooms-page{
+  min-height:85vh ;
+  background-color: beige;
 }
 </style>
