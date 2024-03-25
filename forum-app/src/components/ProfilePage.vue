@@ -40,10 +40,13 @@
 
 
               <div v-if="isHidden" class="d-flex justify-content-end" style="align-items: end; ">
+
                 <img src="@/assets/editPencil.png" @click="toggleVisibility" style="cursor: pointer" alt="Site Logo" class="logo img-fluid" href="/" width="80px" />
                 <button @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
-              </div>
+                <button v-if="this.id == this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
+                <button v-else class="btn btn-sm ms-auto" style="background-color: #00FFFF; " @click="add_Friend">Add as friend</button>
 
+              </div>
 
               <div class="mb-3" v-if="!isHidden">
                 <h3>Edit Profile</h3>
@@ -196,6 +199,7 @@ export default {
       refresher: 0,
       title: "",
       messageBody: ""
+      currentUserId: ""
     }
   },
   
@@ -203,12 +207,15 @@ export default {
     this.userInfo();
     this.friendsNames();
     this.displayMessages();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    this.currentUserId = user.uid;
+
   },
   methods:{
     editProfileInfo(){
       const functions = getFunctions(app);
       const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
-      const auth = getAuth();
       editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age}).then((result) => {
         this.userInfo();
       });
@@ -242,7 +249,7 @@ export default {
       if(user){
         const functions = getFunctions(app);
         const friendsNames = httpsCallable(functions, 'displayFriends');
-        friendsNames({userId: user.uid}).then((result) => {
+        friendsNames({userId: this.id}).then((result) => {
         console.log(result);
         this.friends = result.data;
       })
@@ -290,15 +297,17 @@ export default {
       userInfo({ Uid: this.id}).then((result) => {
         console.log(result);
         this.profileInfo = result.data;
+        this.name = JSON.parse(JSON.stringify(this.profileInfo[0].username)) ;
       });
       this.refresher++;
     },
     add_Friend(){
+      console.log(this.name);
       const functions = getFunctions(app);
       const addFriend = httpsCallable(functions, 'newFriend');
       const auth = getAuth();
       const user = auth.currentUser;
-      addFriend({userId: user.uid, friendId: this.id}).then(() => {
+      addFriend({userId: user.uid, friendId: this.id, friendName: this.name, username: user.displayName}).then(() => {
           console.log("finished")
       });
     },
