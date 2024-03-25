@@ -6,13 +6,10 @@
       </li> |
       <li :class="{ 'active': $route.path === '/cookie-policy' }">
         <router-link to="/cookie-policy">Cookie Policy</router-link>
-    </li> |
-    <li :class="{ 'active': $route.path === '/terms-of-use' }">
-      <router-link to="/terms-of-use">Terms of Use</router-link>
-    </li>
-    
-     
-    
+      </li> |
+      <li :class="{ 'active': $route.path === '/terms-of-use' }">
+        <router-link to="/terms-of-use">Terms of Use</router-link>
+      </li>
   </ul>
   </footer>
 </template>
