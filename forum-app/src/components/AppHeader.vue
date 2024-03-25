@@ -18,9 +18,6 @@
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
           </li>
-          <li :class="{ 'active': $route.path === '/topics' }">
-            <router-link to="/topics" class="nav-link px-2 text-white">Topics</router-link>
-          </li>
           <li :class="{ 'active': $route.path === '/chatrooms' }">
             <router-link to="/chatrooms" class="nav-link px-2 text-white">Chatrooms</router-link>
           </li>
@@ -76,6 +73,7 @@ export default {
     SignUpForm,
     LoginForm
   },
+  
   methods: {
 
     logout() {
@@ -116,26 +114,8 @@ export default {
       }
     });
 
-  data() {
-    return{
-      refresher: 0,
-      isLoggedIn: false
-    }
+
   }
-};
-function isAuth(){
-  const auth = getAuth();
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      this.refresher++;
-    }
-    else {
-      isLoggedIn = false;
-      userId = "";
-      this.refresher++;
-    }
-  });
 }
 
 </script>

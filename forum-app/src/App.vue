@@ -2,14 +2,14 @@
   <div id="app">
     <!-- Header component included at the top, so it appears on all pages -->
      <!-- Pass the TogglePopup function as a prop to Header.vue -->
-    <AppHeader :TogglePopup="() => TogglePopup('buttonTrigger')"/>
+    <AppHeader  v-if="userLoggedIn" :TogglePopup="() => TogglePopup('buttonTrigger')"/>
 
     <main>
       <router-view></router-view>
  
     </main>
     <!-- Footer component included at the bottom, so it appears on all pages -->
-    <TheFooter class="mt-auto" id="main-footer" />
+    <TheFooter v-if="userLoggedIn" class="mt-auto" id="main-footer" />
   </div>
 
 
@@ -22,8 +22,29 @@ import TheFooter from './components/TheFooter.vue'; // Import the Footer compone
 import Popup from './components/Popup.vue';
 import { ref } from 'vue'; //importing references
 import SignUpForm from './components/SignUpForm.vue';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
+  data() {
+    return {
+      userLoggedIn: false
+    };
+  },
+
+  created() {
+    const auth = getAuth();
+
+    // Check user authentication state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        this.userLoggedIn = true;
+      } else {
+        // No user is signed in
+        this.userLoggedIn = false;
+      }
+    });
+  },
 
   setup(){
     const popupTriggers = ref({
