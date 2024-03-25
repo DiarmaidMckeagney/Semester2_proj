@@ -1,22 +1,30 @@
 <template>
-  <div>
-    <main style="display: flex; flex-direction: row; padding: 20px;">
-      <section style="width: 66%; margin-right: 4%; margin-bottom: 45px">
-        <ul v-for="n in messages.length" :key="refresher" style="list-style-type:none;">
-        <li style="position: relative; list-style: none; margin-bottom: 10px;">
-          <div style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
-            <strong>{{ messages[n-1].username }}</strong>
-            <p>{{ messages[n-1].message }}</p>
-          </div>
-          <div style="position: absolute; top: 60px; left: -10px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 10px solid #e6f2ff;"></div>
-        </li>
-      </ul>
-        <div style=" border-radius: 10px; position: fixed; bottom: 65px; left: 0; width: 66%; margin-right: 4%; display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #f0f0f0;">
-         <img  @click="toggleEmojiPicker"  src="@/assets/emoji.png" alt="emoji icon" style="width: 40px; height: 40px; text-align: center;"> 
-         <Picker v-if="showEmojiPicker"  @emoji-click="addEmoji" />
-        <input v-model="messageBody" placeholder="Enter message"  @keyup.enter="sendMessage" style="flex: 1; margin-right: 10px;" >
-       </div>
+  <div id="app">
+    <main class="main-content">
+      <!-- Chat Messages Section -->
+      <section class="chat-section">
+        <ul v-for="n in messages.length" :key="refresher" class="message-list">
+          <li class="message-item">
+            <div class="message-bubble">
+              <strong>{{ messages[n-1].username }}</strong>
+              <p>{{ messages[n-1].message }}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="input-section">
+          <img @click="toggleEmojiPicker" src="@/assets/emoji.png" alt="emoji icon" class="emoji-icon">
+          <Picker v-if="showEmojiPicker" @emoji-click="addEmoji" />
+          <input v-model="messageBody" placeholder="Enter message" @keyup.enter="sendMessage" class="message-input">
+        </div>
       </section>
+
+      <!-- Users List Section -->
+      <aside class="users-section">
+        <h3>Users</h3>
+        <ul>
+          <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+        </ul>
+      </aside>
     </main>
   </div>
 </template>
@@ -48,7 +56,7 @@ export default {
   created() {
     this.displayMessages();
   },
-  
+
   methods: {
     displayMessages(){
       const functions = getFunctions(app);
@@ -69,15 +77,93 @@ export default {
       sendMessage({name: nameOfChatroom,username: user.displayName, message: this.messageBody, uid: user.uid}).then((result) => {
         this.displayMessages();
       });
-        this.messageBody = "";
-      },
-    addEmoji(emoji) {
-        this.messageBody += emoji.native;
+      this.messageBody = "";
     },
-    
+    addEmoji(emoji) {
+      this.messageBody += emoji.native;
+    },
+
     toggleEmojiPicker() {
-        this.showEmojiPicker = !this.showEmojiPicker;
+      this.showEmojiPicker = !this.showEmojiPicker;
     },
   }
 };
 </script>
+<style scoped>
+.main-content {
+  display: flex;
+  padding: 20px;
+  height: calc(100vh - 40px); /* Adjust based on your header/footer */
+}
+
+.chat-section {
+  width: 75%;
+  margin-right: 2%; /* Optional spacing between sections */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.message-list {
+  overflow-y: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-item {
+  margin-bottom: 10px;
+}
+
+.message-bubble {
+  background-color: LightBlue;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid navy;
+  max-width: 80%;
+}
+
+.input-section {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+}
+
+.emoji-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.message-input {
+  flex: 1;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 2px solid #bbb;
+  padding: 10px;
+}
+
+.users-section {
+  width: 25%;
+  padding: 20px;
+  background-color: lightblue; /* Slight contrast to main chat area */
+  border:2px solid navy;
+  border-radius: 10px;
+  overflow-y: auto; /* For scrolling if many users */
+}
+
+h3 {
+  margin-top: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+</style>

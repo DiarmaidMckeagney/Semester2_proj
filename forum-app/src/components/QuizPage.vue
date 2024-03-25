@@ -3,7 +3,9 @@
   <div id="quiz-page">
     <!-- Category Selection -->
     <div v-if="!currentCategory" style="padding: 20px; text-align: center;">
-      <h2>Select a Category</h2>
+      <h2 style="color: Navy; font-size: 38px; margin-top: 20px;margin-bottom: 20px;">
+        Select Category
+      </h2>
       <div class="category-button-container">
         <div class="category-box" v-for="category in categories" :key="category.id">
           <button @click="selectCategory(category.id)" class="category-button">
@@ -32,7 +34,7 @@
       </div>
 
       <section>
-        <div style="background-color: lightblue; padding: 20px; margin-bottom: 10px; border-radius: 20px; margin-top: 70px; max-width: 1000px; min-height: 300px; max-height: 600px; overflow: hidden;">
+        <div style="background-color: lightblue; padding: 20px; margin-bottom: 10px; border-radius: 20px; margin-top: 20px; max-width: 1500px; min-height: 300px; max-height: 600px; overflow: hidden;">
           <h2>{{ currentQuestion.questionText }}</h2>
           <div>
             <button
@@ -79,8 +81,8 @@ export default {
       { id: 'computerScience', name: 'Computer Science', imageUrl: 'QuizImages/computerScience.jpg' },
       { id: 'geography', name: 'Geography', imageUrl: 'QuizImages/geography.jpg' },
       { id: 'chemistry', name: 'Chemistry', imageUrl: 'QuizImages/chemistry.jpg' },
+     { id: 'software', name: 'Software Engineering', imageUrl: 'QuizImages/software.jpg' },
     ]);
-
     onMounted(async () => {
       // Dynamically fetch image URLs for each category
       for (const category of categories.value) {
@@ -94,12 +96,13 @@ export default {
     });
 
     const selectCategory = async (category) => {
-      currentCategory.value = category;
-      // Initialize the score for the new category if it hasn't been set yet
-      scoresByCategory.value[category] = scoresByCategory.value[category] || 0;
+      if (currentCategory.value !== category) {
+        currentCategory.value = category;
+        // Reset the total score to the score of the selected category
+        totalScore.value = scoresByCategory.value[category] || 0;
+      }
       await loadQuestion('question1');
     };
-
     const loadQuestion = async (questionId) => {
       const questionDocRef = doc(db, 'category', currentCategory.value, 'questions', questionId);
       const docSnap = await getDoc(questionDocRef);
@@ -117,7 +120,10 @@ export default {
       selectedOption.value = option;
       if (option === currentQuestion.value.answer) {
         answerFeedback.value = 'Correct!';
-        totalScore.value += 10;
+        // Increment the score for the current category
+        scoresByCategory.value[currentCategory.value] = (scoresByCategory.value[currentCategory.value] || 0) + 10;
+        // Update the totalScore to reflect the score for the current category
+        totalScore.value = scoresByCategory.value[currentCategory.value];
       } else {
         answerFeedback.value = 'Incorrect!';
       }
@@ -159,8 +165,8 @@ export default {
 
 <style scoped>
 #quiz-page {
-  min-height: 90vh;
-  background-color: #fcfcec;
+  min-height: 85vh;
+  background-color: beige;
 }
 
 #quiz-page > div {
@@ -232,10 +238,10 @@ h3 {
   padding: 10px 15px;
   background-color: lightblue;
   border: 1px solid #dcdcdc;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.2s;
-  width: 170px;
+  width: 190px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -243,7 +249,7 @@ h3 {
 }
 
 .category-nav-button:hover {
-  background-color: lightgrey;
+  background-color: lightgreen;
 }
 
 .selected-category {
@@ -251,8 +257,8 @@ h3 {
   color: white; /* White text for better contrast */
 }
 
-
-/*.next-button {
+/*
+.next-button {
  display: block;
  width: 100%;
  margin-top: 20px;
