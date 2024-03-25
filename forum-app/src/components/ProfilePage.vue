@@ -79,15 +79,11 @@
 
           </div>
 
-
-
-
         </section>
-
 
         <section style="background-color: #f0f0f0; padding: 20px; margin-top: 20px;">
           <div>
-            <ul v-for="n in posts.length" :key="refresher" style="list-style-type:none;">
+            <ul v-if="posts.length !== 19" v-for="n in posts.length" :key="refresher" style="list-style-type:none;">
               <li style="position: relative; list-style: none; margin-bottom: 10px;">
                 <div
                   style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
@@ -113,7 +109,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
+                      <h5 class="modal-title" id="exampleModalLabel"> Create Post </h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -146,11 +142,11 @@
       <aside style="width: 30%; background-color: #ddd; padding: 20px;">
         <div style="text-align: center; margin-bottom: 20px;">Friends</div>
         <div :key="refresher">
-          <ul v-for="n in friends.length" :key="refresher">
+          <ul v-for="n in friends.length-1" :key="refresher">
             <!-- List of Communities -->
             <li
               style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
-              <button @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</button>
+              <button @click="moveToFriendChat(friends[n].id)">{{friends[n].name.name}}</button>
             </li>
           </ul>
         </div>

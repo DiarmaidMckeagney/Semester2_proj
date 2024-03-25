@@ -4,18 +4,18 @@
     <!-- Main Content Section -->
     <main style="display: flex; padding: 20px;">
       <!-- Friends List Section -->
-      <aside style="width: 20%; background-color: #ddd; padding: 20px;">
+      <aside style="width: 20%; background-color:lightblue; margin-right:10px;border-radius:20px;padding: 20px;">
         <h2>Friends</h2>
         <div>
-          <ul v-for="n in FriendsNames.length" :key="refresher">
-            <li><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
+          <ul v-if="FriendsNames.length !== 1" v-for="n in FriendsNames.length-1" :key="refresher">
+            <li style="list-style-type:none;"><button @click="openChat(FriendsNames[n].id)">{{ FriendsNames[n].name.name }}</button></li>
           </ul>
         </div>
       </aside>
 
       <!-- Placeholder for the Chat Box -->
-      <section style="flex-grow: 1; background-color: #f0f0f0; padding: 20px;">
-        <FriendChat :key="chatRefresher"></FriendChat>
+      <section style="flex-grow: 1; background-color: lightblue;border-radius:20px; padding: 20px;list-style-type:none;">
+        <FriendChat :key="chatRefresher" ></FriendChat>
       </section>
     </main>
 
