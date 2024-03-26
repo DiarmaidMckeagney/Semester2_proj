@@ -22,7 +22,7 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
-import {useFriendId} from "@/stores/counter.js";
+import {useFriendId} from "@/stores/counter.js"; // Import the chat component
 
 export default {
   setup(){
@@ -32,15 +32,16 @@ export default {
   data() {
     return {
       FriendsMessages: [],
-      friendId: "",
       refresher: 0,
-      messageBody: ""
+      messageBody: "",
+      friendId: ""
     }
   },
   created() {
     this.friendId = this.friendIdStore.getFriendId;
     this.friendsMessages();
   },
+  
   methods: {
     friendsMessages() {
       const functions = getFunctions(app);

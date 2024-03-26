@@ -36,7 +36,7 @@ exports.userInfo = functions.https.onRequest((request, response) => {
 exports.createProfile = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request,response, () => {
-        return admin.firestore().collection("Profiles").doc(request.body.data.Uid).set({ username: request.body.data.username, dob: request.body.data.dob, age: request.body.data.age}).then(() => {
+        return admin.firestore().collection("Profiles").doc(request.body.data.Uid).set({ username: request.body.data.username, dob: request.body.data.dob, age: request.body.data.age, url: "null"}).then(() => {
             response.send({
                 status: "success",
                 data: null
@@ -249,11 +249,11 @@ exports.displayFriends = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.startFriendList = functions.https.onRequest((request, response) => {
+/*exports.startFriendList = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         admin.firestore().collection("Friends").doc(request.body.data.userId).set({numFriends: 0}).then(() => {
-            admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").doc("No_Friends").set({randVar: true}).then(() => {
+            admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").add.then(() => {
                 response.send({
                     status: "success",
                     data: null
@@ -261,7 +261,7 @@ exports.startFriendList = functions.https.onRequest((request, response) => {
             });
         });
     });
-});
+});*/
 
 exports.newProfilePost = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
@@ -297,7 +297,7 @@ exports.profilePosts = functions.https.onRequest( (request, response) => {
 exports.editProfileInfo = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, async () => {
-        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).set({ "username": request.body.data.username, "dob": request.body.data.dob, "age": request.body.data.age });
+        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).set({ "username": request.body.data.username, "dob": request.body.data.dob, "age": request.body.data.age, "url": request.body.data.url});
         response.send({
             status: "success",
             data: null

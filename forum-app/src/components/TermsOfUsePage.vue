@@ -2,11 +2,11 @@
   <div id="terms-of-use-page">
     <!-- Main Content Section -->
     <main style="padding: 20px;">
-      <section style="background-color: #ADD8E6; padding: 20px;border-radius:20px;"> <!-- Changed to light blue background -->
+      <section style="background-color: #f0f0f0; padding: 20px;">
         <h2>Terms of Use Content</h2>
 
         <!-- Terms of Use Content -->
-
+        <h3>Introduction:</h3>
         <p>Welcome to Alumn, a forum application created for students to engage in real-time chat, create and join communities, share resources, and form connections. This Terms of Use document governs your access to and use of Alumn and its various features.</p>
 
         <h3>1. Acceptance of Terms:</h3>
@@ -48,13 +48,5 @@
 </template>
 
 <style scoped>
-/* Navy writing and light blue background */
-#terms-of-use-page {
-  color: navy; /* Navy writing */
-  background-color: beige;
-}
-
-section {
-  background-color: #ADD8E6; /* Light blue background */
-}
+/* Add your CSS here */
 </style>
