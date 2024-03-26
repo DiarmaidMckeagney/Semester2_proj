@@ -7,8 +7,10 @@
       <aside style="width: 20%; background-color: #ddd; padding: 20px;">
         <h2>Friends</h2>
         <div>
-          <ul v-for="n in FriendsNames.length" :key="refresher">
-            <li><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
+
+          <ul v-if="FriendsNames.length !== 0" v-for="n in FriendsNames.length" :key="refresher">
+            <li style="list-style-type:none;"><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
+
           </ul>
         </div>
       </aside>

@@ -1,21 +1,15 @@
 <template>
   <footer class="footer" style="background-color: #121e67;" >
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center justify-contert-lg-start align-items-center mb-md-0 mx-auto text-center fs-auto mt-auto">
-      <li :class="{ 'active': $route.path === '/support' }">
-        <router-link to="/support">Support</router-link>
-      </li> |
       <li :class="{ 'active': $route.path === '/about' }">
         <router-link to="/about">About Us </router-link>
       </li> |
       <li :class="{ 'active': $route.path === '/cookie-policy' }">
         <router-link to="/cookie-policy">Cookie Policy</router-link>
-    </li> |
-    <li :class="{ 'active': $route.path === '/terms-of-use' }">
-      <router-link to="/terms-of-use">Terms of Use</router-link>
-    </li>
-    
-     
-    
+      </li> |
+      <li :class="{ 'active': $route.path === '/terms-of-use' }">
+        <router-link to="/terms-of-use">Terms of Use</router-link>
+      </li>
   </ul>
   </footer>
 </template>
