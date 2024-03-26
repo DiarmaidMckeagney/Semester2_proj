@@ -143,8 +143,7 @@
         <div :key="refresher">
           <ul v-for="n in friends.length" :key="refresher">
             <!-- List of Communities -->
-            <li
-              style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
+            <li style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
               <button @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</button>
             </li>
           </ul>
