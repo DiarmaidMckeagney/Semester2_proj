@@ -1,14 +1,14 @@
 <template>
   <div v-if="friendId !== ''" >
-    <main style="display: flex; flex-direction: row; padding: 20px;">
-      <section style="width: 66%; margin-right: 4%; margin-bottom: 45px">
+    <main style="display: flex; flex-direction: row; padding: 20px;color:navy;">
+      <section style="width: 66%; margin-right: 4%; margin-bottom: 45px;color:navy;">
         <ul v-for="n in FriendsMessages.length" :key="refresher" style="list-style-type:none;">
           <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
             <p>{{ FriendsMessages[n-1].username }}</p>
             <p>{{ FriendsMessages[n-1].message }}</p>
           </li>
         </ul>
-        <div style="display: flex; align-items: flex-end; vertical-align: bottom;"><input v-model="messageBody" placeholder="enter message"/><button style="background-color: #333; display: flex; align-items: flex-end; color: white;" @click="sendMessage">Send</button></div>
+        <div style="display: flex; align-items: flex-end; margin-left:30px; vertical-align: bottom;"><input v-model="messageBody" placeholder="enter message"/><button style="background-color: #333;display: flex;align-items: flex-end; color: white;" @click="sendMessage">Send</button></div>
       </section>
     </main>
   </div>
