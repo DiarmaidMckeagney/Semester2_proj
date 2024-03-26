@@ -297,7 +297,7 @@ exports.profilePosts = functions.https.onRequest( (request, response) => {
 exports.editProfileInfo = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, async () => {
-        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).set({ "username": request.body.data.username, "dob": request.body.data.dob, "age": request.body.data.age, "url": request.data.body.url});
+        await admin.firestore().collection('Profiles').doc(request.body.data.Uid).set({ "username": request.body.data.username, "dob": request.body.data.dob, "age": request.body.data.age, "url": request.body.data.url});
         response.send({
             status: "success",
             data: null

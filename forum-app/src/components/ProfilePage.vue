@@ -7,7 +7,7 @@
             <div v-if="isHidden" class="d-flex justify-content-center align-items-center bg-light"
               style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
 
-              <span v-if="finalUrl"> <img :src="finalUrl" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
+              <span v-if="this.profileInfo[0].url"> <img :src="this.profileInfo[0].url" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
               <span v-else> <i> <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon" style="width: 100px; height: 100px; text-align: center;"> </i></span>
               <!--Put whatever u want in the src here-->
             </div>
@@ -199,7 +199,8 @@ export default {
       refresher: 0,
       title: "",
       messageBody: "",
-      currentUserId: ""
+      currentUserId: "",
+      lockVar: false
     }
   },
 
@@ -216,7 +217,6 @@ export default {
   methods:{
     editProfileInfo(){
       console.log("Has called editProfileInfo");
-      console.log(this.finalUrl);
       const functions = getFunctions(app);
       const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
       console.log(this.finalUrl);
@@ -288,8 +288,7 @@ export default {
       // hide the form after submission
       this.isHidden = true;
       this.uploadImage();
-      console.log(this.finalUrl);
-      this.editProfileInfo();
+      setTimeout(() => {this.editProfileInfo();}, 1000);
       
     },
     userInfo() {
@@ -301,7 +300,7 @@ export default {
         console.log(result);
         this.profileInfo = result.data;
         this.name = JSON.parse(JSON.stringify(this.profileInfo[0].username)) ;
-        this.finalUrl = JSON.parse(JSON.stringify(this.profileInfo[0].url)) ;
+        console.log(this.profileInfo[0].url);
       });
       this.refresher++;
     },
@@ -319,18 +318,21 @@ export default {
       this.userIdStore.changeName(id);
       router.push({path: "/profile"});
     },
-    async uploadImage() {
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    uploadImage() {
       console.log("Has entered the upload image function");
       // Creates a folder images (if it doesn't already exist)
       const storageRef = ref(storage, 'profilePictures/'+ this.id + '/' + this.$refs.file.value);
-      await Promise.all( uploadBytes(storageRef, this.$refs.file.files[0]).then((snapshot) => {
+      uploadBytes(storageRef, this.$refs.file.files[0]).then((snapshot) => {
         console.log("Has entered uploadBytes");
         getDownloadURL(snapshot.ref).then((downloadURL) => {
           console.log("Has entered getDownloadUrl");
           // Log the URL to the console for testing
           this.finalUrl = downloadURL;
         });
-      }));
+      });
     },
   }
 }
