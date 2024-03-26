@@ -2,10 +2,11 @@
   <div id="cookie-policy-page">
     <!-- Main Content Section -->
     <main style="padding: 20px;">
-      <section style="background-color: #ADD8E6; padding: 20px; border-radius: 20px;"> <!-- Light blue background and border-radius added -->
+      <section style="background-color: #f0f0f0; padding: 20px;">
         <h2>Cookie Policy Content</h2>
 
         <!-- Cookie Policy Content -->
+        <h3>Introduction:</h3>
         <p>At Alumn, we believe in enhancing your experience on our interactive platform, designed for real-time student communication, community building, and knowledge sharing. This Cookie Policy explains how we use cookies to support these functionalities and your rights under the General Data Protection Regulation (GDPR).</p>
 
         <h3>Functional and Analytical Use:</h3>
@@ -28,16 +29,5 @@
 </template>
 
 <style scoped>
-/* Navy writing, light blue background, and border-radius for rounded corners */
-#cookie-policy-page {
-  color: navy; /* Navy writing */
-  background-color: beige;
-  min-height: 80vh;
-}
-
-section {
-  background-color: #ADD8E6; /* Light blue background */
-  border-radius: 20px; /* Rounded corners */
-
-}
+/* Add your CSS here */
 </style>

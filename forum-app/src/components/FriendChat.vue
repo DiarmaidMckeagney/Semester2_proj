@@ -1,3 +1,9 @@
+<script setup>
+defineProps({
+  friendId: String
+})
+</script>
+
 <template>
   <div v-if="friendId !== ''" >
     <main style="display: flex; flex-direction: row; padding: 20px;">
@@ -22,24 +28,18 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
-import {useFriendId} from "@/stores/counter.js";
-
 export default {
-  setup(){
-    const friendIdStore = useFriendId();
-    return { friendIdStore };
-  },
   data() {
     return {
       FriendsMessages: [],
-      friendId: "",
       refresher: 0,
       messageBody: ""
     }
   },
   created() {
-    this.friendId = this.friendIdStore.getFriendId;
-    this.friendsMessages();
+    if (this.friendId !== ""){
+      this.friendsMessages();
+    }
   },
   methods: {
     friendsMessages() {

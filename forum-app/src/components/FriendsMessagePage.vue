@@ -4,18 +4,20 @@
     <!-- Main Content Section -->
     <main style="display: flex; padding: 20px;">
       <!-- Friends List Section -->
-      <aside style="width: 20%; background-color:lightblue; margin-right:10px;border-radius:20px;padding: 20px;">
+      <aside style="width: 20%; background-color: #ddd; padding: 20px;">
         <h2>Friends</h2>
         <div>
+
           <ul v-if="FriendsNames.length !== 0" v-for="n in FriendsNames.length" :key="refresher">
             <li style="list-style-type:none;"><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
+
           </ul>
         </div>
       </aside>
 
       <!-- Placeholder for the Chat Box -->
-      <section style="flex-grow: 1; background-color: lightblue;border-radius:20px; padding: 20px;list-style-type:none;">
-        <FriendChat :key="chatRefresher" ></FriendChat>
+      <section style="flex-grow: 1; background-color: #f0f0f0; padding: 20px;">
+        <FriendChat :friend-id="friendId" :key="chatRefresher"></FriendChat>
       </section>
     </main>
 
@@ -29,22 +31,18 @@
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
-import FriendChat from "@/components/FriendChat.vue";
-import {useFriendId} from "@/stores/counter.js"; // Import the chat component
+import FriendChat from "@/components/FriendChat.vue"; // Import the chat component
 
 export default {
   components: {
     FriendChat
-  },
-  setup(){
-    const friendIdStore = useFriendId();
-    return { friendIdStore };
   },
   data() {
     return {
       FriendsNames: [],
       refresher: 0,
       chatRefresher: 0,
+      friendId: ""
     }
   },
   created() {
@@ -63,7 +61,7 @@ export default {
       this.refresher++;
     },
     openChat(id){
-      this.friendIdStore.changeFriendId(id);
+      this.friendId = id;
       this.chatRefresher++;
     }
   }

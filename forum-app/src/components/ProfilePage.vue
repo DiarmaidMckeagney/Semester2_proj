@@ -7,7 +7,7 @@
             <div v-if="isHidden" class="d-flex justify-content-center align-items-center bg-light"
               style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
 
-              <span v-if="finalUrl"> <img :src="finalUrl" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
+              <span v-if="this.profileInfo[0].url"> <img :src="this.profileInfo[0].url" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
               <span v-else> <i> <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon" style="width: 100px; height: 100px; text-align: center;"> </i></span>
               <!--Put whatever u want in the src here-->
             </div>
@@ -18,7 +18,7 @@
                 </span>
                 <span v-else> <i> <img src="" alt="Select an Image" style="width: 100px; height: 100px; text-align: center; cursor: pointer;"> </i></span>
               </label>
-              <input id="fileInput" type="file" @change="onFileSelected" style="display: none;">
+              <input ref="file" id="fileInput" accept="image/png, image/jpeg" type="file" @change="onFileSelected" style="display: none;">
             </div>
 
             <div>
@@ -78,11 +78,15 @@
 
           </div>
 
+
+
+
         </section>
+
 
         <section style="background-color: #f0f0f0; padding: 20px; margin-top: 20px;">
           <div>
-            <ul v-if="posts.length !== 19" v-for="n in posts.length" :key="refresher" style="list-style-type:none;">
+            <ul v-for="n in posts.length" :key="refresher" style="list-style-type:none;">
               <li style="position: relative; list-style: none; margin-bottom: 10px;">
                 <div
                   style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
@@ -108,7 +112,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                      <h5 class="modal-title" id="exampleModalLabel"> Create Post </h5>
+                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -157,11 +161,14 @@
 <script>
 
 import app from '../api/firebase';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
 import router from "@/router.js";
-import {useFriendId, useUserId} from "@/stores/counter.js";
+import {useUserId} from "@/stores/counter.js";
+
+const storage = getStorage(app);
 
 export default {
   name: "Users",
@@ -170,8 +177,8 @@ export default {
   },
   setup(){
     const userIdStore = useUserId();
-    const friendIdStore = useFriendId();
-    return { userIdStore, friendIdStore };
+
+    return { userIdStore }
   },
   data() {
     return {
@@ -191,24 +198,28 @@ export default {
       refresher: 0,
       title: "",
       messageBody: "",
-      currentUserId: ""
+      currentUserId: "",
+      lockVar: false
     }
   },
-  
+
   created() {
     this.userInfo();
+    //this.getProfilePic();
     this.friendsNames();
     this.displayMessages();
     const auth = getAuth();
     const user = auth.currentUser;
     this.currentUserId = user.uid;
-
   },
+
   methods:{
     editProfileInfo(){
+      console.log("Has called editProfileInfo");
       const functions = getFunctions(app);
       const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
-      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age}).then((result) => {
+      console.log(this.finalUrl);
+      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age, url: this.finalUrl}).then((result) => {
         this.userInfo();
       });
     },
@@ -272,11 +283,9 @@ export default {
       this.age = this.formData.age;
       // hide the form after submission
       this.isHidden = true;
-      this.finalUrl = this.imageUrl;
-      console.log(this.name);
-      console.log(this.dateOfBirth);
-      console.log(this.age);
-      this.editProfileInfo();
+      this.uploadImage();
+      setTimeout(() => {this.editProfileInfo();}, 1000);
+      
     },
     userInfo() {
       const functions = getFunctions(app);
@@ -287,6 +296,7 @@ export default {
         console.log(result);
         this.profileInfo = result.data;
         this.name = JSON.parse(JSON.stringify(this.profileInfo[0].username)) ;
+        console.log(this.profileInfo[0].url);
       });
       this.refresher++;
     },
@@ -300,10 +310,26 @@ export default {
           console.log("finished")
       });
     },
-    moveToFriendChat(id){
-      this.friendIdStore.changeFriendId(id);
-      router.push({path: "/friend-messages"});
-    }
+    moveToProfile(id){
+      this.userIdStore.changeName(id);
+      router.push({path: "/profile"});
+    },
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    uploadImage() {
+      console.log("Has entered the upload image function");
+      // Creates a folder images (if it doesn't already exist)
+      const storageRef = ref(storage, 'profilePictures/'+ this.id + '/' + this.$refs.file.value);
+      uploadBytes(storageRef, this.$refs.file.files[0]).then((snapshot) => {
+        console.log("Has entered uploadBytes");
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          console.log("Has entered getDownloadUrl");
+          // Log the URL to the console for testing
+          this.finalUrl = downloadURL;
+        });
+      });
+    },
   }
 }
 
