@@ -166,7 +166,9 @@ import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
 import router from "@/router.js";
-import {useUserId} from "@/stores/counter.js";
+import {useFriendId, useUserId} from "@/stores/counter.js";
+
+
 
 const storage = getStorage(app);
 
@@ -177,8 +179,8 @@ export default {
   },
   setup(){
     const userIdStore = useUserId();
-
-    return { userIdStore }
+    const friendIdStore = useFriendId();
+    return { userIdStore, friendIdStore };
   },
   data() {
     return {
@@ -310,9 +312,9 @@ export default {
           console.log("finished")
       });
     },
-    moveToProfile(id){
-      this.userIdStore.changeName(id);
-      router.push({path: "/profile"});
+    moveToFriendChat(id){
+      this.friendIdStore.changeFriendId(id);
+      router.push({path: "/friend-messages"});
     },
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));

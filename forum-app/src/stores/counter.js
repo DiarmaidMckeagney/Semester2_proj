@@ -66,4 +66,20 @@ export const useChatroomName = defineStore('nameOfRoom', {
 
 })
 
-
+export const useFriendId = defineStore('friendId', {
+  state: () => {
+    return {
+      friendId: "id"
+    }
+  },
+  getters: {
+    getFriendId(){
+      return this.friendId;
+    }
+  },
+  actions: {
+    changeFriendId(newFriendId){
+      this.friendId = newFriendId;
+    }
+  }
+})
