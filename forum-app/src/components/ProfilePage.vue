@@ -18,7 +18,7 @@
                 </span>
                 <span v-else> <i> <img src="" alt="Select an Image" style="width: 100px; height: 100px; text-align: center; cursor: pointer;"> </i></span>
               </label>
-              <input id="fileInput" type="file" @change="onFileSelected" style="display: none;">
+              <input ref="file" id="fileInput" accept="image/png, image/jpeg" type="file" @change="onFileSelected" style="display: none;">
             </div>
 
             <div>
@@ -162,11 +162,14 @@
 <script>
 
 import app from '../api/firebase';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
 import EditProfileModal from './EditProfileModal.vue'; // Ensure this path is correct
 import router from "@/router.js";
 import {useUserId} from "@/stores/counter.js";
+
+const storage = getStorage(app);
 
 export default {
   name: "Users",
@@ -199,21 +202,25 @@ export default {
       currentUserId: ""
     }
   },
-  
+
   created() {
     this.userInfo();
+    //this.getProfilePic();
     this.friendsNames();
     this.displayMessages();
     const auth = getAuth();
     const user = auth.currentUser;
     this.currentUserId = user.uid;
-
   },
+
   methods:{
     editProfileInfo(){
+      console.log("Has called editProfileInfo");
+      console.log(this.finalUrl);
       const functions = getFunctions(app);
       const editProfileInfo = httpsCallable(functions, 'editProfileInfo');
-      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age}).then((result) => {
+      console.log(this.finalUrl);
+      editProfileInfo({Uid: this.id,username: this.name, dob: this.dateOfBirth, age: this.age, url: this.finalUrl}).then((result) => {
         this.userInfo();
       });
     },
@@ -280,11 +287,10 @@ export default {
       this.age = this.formData.age;
       // hide the form after submission
       this.isHidden = true;
-      this.finalUrl = this.imageUrl;
-      console.log(this.name);
-      console.log(this.dateOfBirth);
-      console.log(this.age);
+      this.uploadImage();
+      console.log(this.finalUrl);
       this.editProfileInfo();
+      
     },
     userInfo() {
       const functions = getFunctions(app);
@@ -295,6 +301,7 @@ export default {
         console.log(result);
         this.profileInfo = result.data;
         this.name = JSON.parse(JSON.stringify(this.profileInfo[0].username)) ;
+        this.finalUrl = JSON.parse(JSON.stringify(this.profileInfo[0].url)) ;
       });
       this.refresher++;
     },
@@ -311,7 +318,20 @@ export default {
     moveToProfile(id){
       this.userIdStore.changeName(id);
       router.push({path: "/profile"});
-    }
+    },
+    async uploadImage() {
+      console.log("Has entered the upload image function");
+      // Creates a folder images (if it doesn't already exist)
+      const storageRef = ref(storage, 'profilePictures/'+ this.id + '/' + this.$refs.file.value);
+      await Promise.all( uploadBytes(storageRef, this.$refs.file.files[0]).then((snapshot) => {
+        console.log("Has entered uploadBytes");
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          console.log("Has entered getDownloadUrl");
+          // Log the URL to the console for testing
+          this.finalUrl = downloadURL;
+        });
+      }));
+    },
   }
 }
 
