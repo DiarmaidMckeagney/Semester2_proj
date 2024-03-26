@@ -21,8 +21,8 @@
       <!-- Users List Section -->
       <aside class="users-section">
         <h3>Users</h3>
-        <ul>
-          <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+        <ul v-for="n in usersList.length" :key="refresher">
+          <li><strong @click="moveToProfile(usersList[n-1].uid)">{{ usersList[n -1].username }}</strong></li>
         </ul>
       </aside>
     </main>
@@ -47,14 +47,13 @@ export default {
     const userIdStore = useUserId();
     
     return { chatroomNamestore, userIdStore };
-
-    return { chatroomNamestore }
   },
   data() {
     return {
       messages:[],
       refresher: 0,
       messageBody: "",
+      usersList: [],
       showEmojiPicker: false
     }
   },
@@ -66,7 +65,6 @@ export default {
     moveToProfile(id){
       if(id != null){
         this.userIdStore.changeName(id);
-        console.log(this.userIdStore.getUserId);
         router.push({path: "/profile"});
       }
     },
@@ -79,6 +77,7 @@ export default {
         this.messages = result.data;
         console.log(result.data);
       });
+      this.userList();
       this.refresher++;
     },
     sendMessage(){
@@ -91,6 +90,23 @@ export default {
         this.displayMessages();
       });
       this.messageBody = "";
+    },
+    userList(){
+      console.log("function started");
+      for (let i = 0; i < this.messages.length; i++) {
+        let isUnique = true;
+        if(this.usersList.find(this.messages[i].username) !== undefined){
+          isUnique = false;
+          break;
+        }
+        console.log("function started");
+        console.log(isUnique);
+        if (isUnique){
+          console.log(this.usersList.push({name: this.messages[i].username, id: this.messages[i].uid}));
+          console.log(this.userList);
+        }
+        console.log(this.userList);
+      }
     },
     addEmoji(emoji) {
       this.messageBody += emoji.native;
