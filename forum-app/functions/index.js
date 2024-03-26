@@ -249,11 +249,11 @@ exports.displayFriends = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.startFriendList = functions.https.onRequest((request, response) => {
+/*exports.startFriendList = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");
     cors(request, response, () => {
         admin.firestore().collection("Friends").doc(request.body.data.userId).set({numFriends: 0}).then(() => {
-            admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").doc("No_Friends").set({randVar: true}).then(() => {
+            admin.firestore().collection("Friends/" + request.body.data.userId + "/FriendsList").add.then(() => {
                 response.send({
                     status: "success",
                     data: null
@@ -261,7 +261,7 @@ exports.startFriendList = functions.https.onRequest((request, response) => {
             });
         });
     });
-});
+});*/
 
 exports.newProfilePost = functions.https.onRequest((request, response) => {
     request.header("Access-Control-Allow-Origin: *");

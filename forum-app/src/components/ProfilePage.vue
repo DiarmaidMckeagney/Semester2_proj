@@ -62,8 +62,7 @@
 
                     <div class="mb-3 d-flex align-items-center ">
                       <label for="dateOfBirth" class="form-label me-3"><b>Date of Birth</b></label>
-                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" style="width: 100"
-                        class="form-control" required>
+                      <input type="text" id="dateOfBirth" v-model="formData.dateOfBirth" class="form-control" required>
                     </div>
                     <div v-if="!isHidden" style="align-items: end;">
                       <button @click="toggleVisibility" class="btn me-3" style="background-color: red"> Cancel</button>
@@ -142,11 +141,11 @@
       <aside style="width: 30%; background-color: #ddd; padding: 20px;">
         <div style="text-align: center; margin-bottom: 20px;">Friends</div>
         <div :key="refresher">
-          <ul v-for="n in friends.length-1" :key="refresher">
+          <ul v-for="n in friends.length" :key="refresher">
             <!-- List of Communities -->
             <li
               style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
-              <button @click="moveToFriendChat(friends[n].id)">{{friends[n].name.name}}</button>
+              <button @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</button>
             </li>
           </ul>
         </div>
@@ -232,9 +231,6 @@ export default {
       });
         this.messageBody = "";
       },
-    addEmoji(emoji) {
-        this.messageBody += emoji.native;
-    },
 
     friendsNames() {
       const auth = getAuth();
