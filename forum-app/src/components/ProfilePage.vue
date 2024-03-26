@@ -2,7 +2,7 @@
   <div id="profile-page">
     <main style="display: flex; padding: 20px;">
       <div style="width: 70%; margin-right: 20px;">
-        <section :key="refresher" style="background-color: #f0f0f0; padding: 20px;">
+        <section :key="refresher" style="background-color: lightblue; border-radius:10px;padding: 20px;">
           <div style="display: flex; gap: 20px; align-items: flex-start;">
             <div v-if="isHidden" class="d-flex justify-content-center align-items-center bg-light"
               style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
@@ -40,7 +40,7 @@
 
 
               <div v-if="isHidden" class="d-flex justify-content-end" style="align-items: end; ">
-                <button v-if="this.id == this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
+                <button v-if="this.id === this.currentUserId" @click="toggleVisibility" class="btn btn-sm ms-auto" style="background-color: #00FFFF">Edit</button>
                 <button v-else class="btn btn-sm ms-auto" style="background-color: #00FFFF; " @click="add_Friend">Add as friend</button>
 
               </div>
@@ -84,14 +84,16 @@
         </section>
 
 
-        <section style="background-color: #f0f0f0; padding: 20px; margin-top: 20px;">
+        <section style="background-color: lightblue; padding: 20px; margin-top: 20px;border-radius:10px;color:navy;">
           <div>
-            <ul v-for="n in posts.length" :key="refresher" style="list-style-type:none;">
-              <li style="position: relative; list-style: none; margin-bottom: 10px;">
+            <div style="margin-left: 37%; margin-bottom:20px"><H1>Blog</H1></div>
+            <ul v-if="posts.length !== 19" v-for="n in posts.length" :key="refresher" style="list-style-type:none;color:navy;">
+              <li style="position: relative; list-style: none; margin-bottom: 10px;color:navy;">
+
                 <div
                   style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
-                  <strong>{{ posts[n - 1].username }}</strong>
-                  <p>{{ posts[n-1].title }}</p>
+
+                  <strong>{{ posts[n-1].title }}</strong>
                   <p>{{ posts[n-1].messageBody }}</p>
                 </div>
                 <div
@@ -142,14 +144,14 @@
 
 
 
-      <aside style="width: 30%; background-color: #ddd; padding: 20px;">
-        <div style="text-align: center; margin-bottom: 20px;">Friends</div>
-        <div :key="refresher">
-          <ul v-for="n in friends.length" :key="refresher">
+
+      <aside style="width: 30%; background-color: lightblue; border-radius: 10px; padding: 20px; display: flex; flex-direction: column;">
+        <div style="text-align: center; margin-bottom: 20px;"><h5>Friends</h5></div>
+        <div :key="refresher" style="flex-grow: 1; overflow-y: auto;">
+          <ul v-for="n in friends.length" :key="refresher" style="margin: 0; padding: 0;">
             <!-- List of Communities -->
-            <li
-              style="border: 1px solid #ccc; margin: auto ;padding: 10px;padding-left: 28%; background-color: #f0f0f0; list-style-type: none;">
-              <button @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</button>
+            <li style="border: 1px solid #ccc; margin: 10px auto; padding: 10px; background-color: #e6f2ff; list-style-type: none; border-radius: 10px;">
+              <p style="color: navy; margin: 0; padding-left: 20px; cursor: pointer;" @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</p>
             </li>
           </ul>
         </div>
@@ -341,4 +343,10 @@ export default {
 
 <style scoped>
 /* Add your CSS here, and replace inline styles when you're ready */
+#profile-page{
+  min-height: 85vh;
+  background-color: beige;
+  color: navy; /* Set the text color to navy */
+}
+
 </style>

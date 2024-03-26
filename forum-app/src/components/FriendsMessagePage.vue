@@ -3,13 +3,13 @@
 
     <!-- Main Content Section -->
     <main style="display: flex; padding: 20px;">
-      <!-- Friends List Section -->
-      <aside style="width: 20%; background-color: #ddd; padding: 20px;">
-        <h2>Friends</h2>
-        <div>
 
+      <aside style="width: 20%; background-color: lightblue; margin-right: 5%; border-radius: 20px; padding: 20px; display: flex; flex-direction: column;">
+        <h4 style="color: navy;margin-left:20%; margin-bottom: 20px;">Friends</h4>
+        <div>
           <ul v-if="FriendsNames.length !== 0" v-for="n in FriendsNames.length" :key="refresher">
             <li style="list-style-type:none;"><button @click="openChat(FriendsNames[n-1].id)">{{ FriendsNames[n-1].name.name }}</button></li>
+
 
           </ul>
         </div>
@@ -24,9 +24,7 @@
   </div>
 </template>
 
-<style scoped>
-/* Add your CSS here, and replace inline styles when you're ready */
-</style>
+
 <script>
 import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
@@ -72,3 +70,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+#friends-message-page{
+  min-height: 85vh;
+  background-color: beige;
+  color: navy; /* Set the text color to navy */
+}
+/* Add your CSS here, and replace inline styles when you're ready */
+</style>
