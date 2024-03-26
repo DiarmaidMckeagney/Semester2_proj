@@ -15,9 +15,6 @@
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
           </li>
-          <li :class="{ 'active': $route.path === '/topics' }">
-            <router-link to="/topics" class="nav-link px-2 text-white">Topics</router-link>
-          </li>
           <li :class="{ 'active': $route.path === '/chatrooms' }">
             <router-link to="/chatrooms" class="nav-link px-2 text-white">Chatrooms</router-link>
           </li>
@@ -35,9 +32,6 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
               <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
-            </li>
-            <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
-              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
             </li>
             <li :class="{ 'currHere': $route.path === '/' }">
               <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
