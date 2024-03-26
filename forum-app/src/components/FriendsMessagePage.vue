@@ -17,7 +17,7 @@
 
       <!-- Placeholder for the Chat Box -->
       <section style="flex-grow: 1; background-color: #f0f0f0; padding: 20px;">
-        <FriendChat :friend-id="friendId" :key="chatRefresher"></FriendChat>
+        <FriendChat :key="chatRefresher"></FriendChat>
       </section>
     </main>
 
@@ -32,10 +32,15 @@ import app from '../api/firebase';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import {getAuth} from "firebase/auth";
 import FriendChat from "@/components/FriendChat.vue"; // Import the chat component
+import {useFriendId} from "@/stores/counter.js"; // Import the chat component
 
 export default {
   components: {
     FriendChat
+  },
+  setup(){
+    const friendIdStore = useFriendId();
+    return { friendIdStore };
   },
   data() {
     return {
@@ -61,7 +66,7 @@ export default {
       this.refresher++;
     },
     openChat(id){
-      this.friendId = id;
+      this.friendIdStore.changeFriendId(id);
       this.chatRefresher++;
     }
   }
