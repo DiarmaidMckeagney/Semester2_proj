@@ -3,23 +3,22 @@
       <form @submit.prevent="signUp">
             <div class="form-group">
                 <label for="signupUsername">Username</label>
-                <input v-model="signupUsername" type="text" class="form-control" id="signupUsername" aria-describedby="usernameHelp"
+                <input v-model="username" type="text" class="form-control" id="signupUsername" aria-describedby="usernameHelp"
                     placeholder="Enter username">
             </div>
             <div class="form-group">
                 <label for="signupEmail">Email address</label>
-                <input v-model="signupEmail" type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
+                <input v-model="email" type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
                     placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">Your information is safe with us.</small>
             </div>
             <div class="form-group">
                 <label for="signupPassword">Password</label>
-                <input v-model="signupPassword" type="password" class="form-control" id="signupPassword" placeholder="Password">
+                <input type="password" class="form-control" id="signupPassword" placeholder="Password">
             </div>
             <div class="form-group">
                 <label for="signupConfirmPassword">Confirm Password</label>
-                <input v-model="signupConfirmPassword" type="password" class="form-control" id="signupConfirmPassword"
-                    placeholder="Confirm Password">
+                <input v-model="password" type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm Password">
             </div>
             <div class="form-group">
               <label for="Age">Age</label>
@@ -30,7 +29,7 @@
               <input v-model="dob" type="date" class="form-control" id="Dob" placeholder="dd/mm/yyyy">
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center mt-2">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button @click="signUp" type="button" class="btn btn-success">Submit</button>
             </div>
         </form>
   </div>
@@ -123,14 +122,10 @@ export default {
   },
   methods: {
     signUp() {
-      console.debug(this.email);
-      console.debug(this.password);
-      console.debug(this.username);
       const auth = getAuth(app);
       createUserWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        this.createFriends();
         this.createProfile();
       }).catch((error) => {
         const errorCode = error.code;
@@ -148,17 +143,8 @@ export default {
       createProfile({ Uid: user.uid, username: this.username, age: this.age, dob: this.dob }).then(() => {
         console.log("finished");
       });
-    },
-    createFriends(){
-      const functions = getFunctions(app);
-      const friendsList = httpsCallable(functions, 'startFriendList');
-      const auth = getAuth();
-      const user = auth.currentUser;
       updateProfile(user,{displayName: this.username}).then(() => {
         console.log("set username");
-      });
-      friendsList({userId: user.uid}).then(() =>{
-        console.log("finished");
       });
     }
   }
