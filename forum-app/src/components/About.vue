@@ -1,9 +1,9 @@
 <template>
   <div id="about-page">
     <!-- Main Content Section -->
-    <main style="display: flex; justify-content: right ; padding: 20px; text-align: center; background-color: #;">
+    <main style="display: flex; justify-content: right ; padding: 20px; text-align: center;">
       <!-- About Content Section -->
-      <section style="width: 70%; background-color: #f0f0f0; padding: 20px; margin-right: 20px;">
+      <section style="width: 70%; background-color: lightblue; padding: 20px; margin-right: 20px;color:navy;border-radius:10px;">
         <h2>About Us</h2>
         <p>Welcome to Alumn! We are a dynamic team of computer science and IT undergraduates from the University of Galway. In our second year, our team comprises youthful vigor and mature perspectives. Our common goal is to innovate and connect, bringing together varied experiences and expertise.</p>
 
@@ -23,7 +23,7 @@
       </section>
 
       <!-- Contact Section -->
-      <aside style="width: 28%; background-color: #ddd; padding: 10px;">
+      <aside style="width: 28%; background-color: lightblue;color:navy;padding: 10px;">
         <h2>Contact Us</h2>
         <p>Email: example@example.com</p>
         <p>Phone: 123 456 789</p>
@@ -34,5 +34,10 @@
 </template>
 
 <style scoped>
+
 /* Add your CSS here */
+#about-page{
+  min-height: 80vh;
+  background:beige;
+}
 </style>
