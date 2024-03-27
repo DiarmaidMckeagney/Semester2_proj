@@ -4,7 +4,7 @@
      <!-- Pass the TogglePopup function as a prop to Header.vue -->
     <AppHeader  v-if="userLoggedIn" :TogglePopup="() => TogglePopup('buttonTrigger')"/>
 
-    <main>
+    <main style="background-color: beige;">
       <router-view></router-view>
 
     </main>
