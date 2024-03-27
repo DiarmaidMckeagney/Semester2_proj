@@ -1,14 +1,13 @@
-
 <template>
   <div id="quiz-page">
     <!-- Category Selection -->
     <div v-if="!currentCategory" style="padding: 20px; text-align: center;">
-      <h2 style="color: Navy; font-size: 38px; margin-top: 20px;margin-bottom: 20px;">
+      <h2 style="color:Navy; font-size: 38px; margin-top: 20px;margin-bottom: 20px;">
         Select Category
       </h2>
       <div class="category-button-container">
         <div class="category-box" v-for="category in categories" :key="category.id">
-          <button @click="selectCategory(category.id)" class="category-button">
+          <button style="color:navy;" @click="selectCategory(category.id)" class="category-button">
             <img :src="category.imageUrl" :alt="category.name" class="category-image">
             {{ category.name }}
           </button>
@@ -18,9 +17,9 @@
 
 
     <!-- Quiz Content -->
-    <main v-else-if="currentQuestion" style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <main v-else-if="currentQuestion" style="padding: 20px;color:navy; max-width: 800px; margin: 0 auto;">
       <!-- Dynamic Categories as buttons above the Quiz Content -->
-      <div v-if="currentCategory" style="text-align: center; margin-top: 10px;">
+      <div v-if="currentCategory" style="text-align: center;color:navy; margin-top: 10px;">
         <nav class="category-links">
           <button
               v-for="category in categories"
@@ -34,7 +33,7 @@
       </div>
 
       <section>
-        <div style="background-color: lightblue; padding: 20px; margin-bottom: 10px; border-radius: 20px; margin-top: 20px; max-width: 1500px; min-height: 300px; max-height: 600px; overflow: hidden;">
+        <div style="background-color: lightblue; padding: 20px;color:navy; margin-bottom: 10px; border-radius: 20px; margin-top: 10px; max-width: 1500px; min-height: 300px; max-height: 600px; overflow: hidden;">
           <h2>{{ currentQuestion.questionText }}</h2>
           <div>
             <button
@@ -48,7 +47,8 @@
           </div>
           <p v-if="answerFeedback">{{ answerFeedback }}</p>
           <p>Total Score: {{ totalScore }}</p>
-          <button style="border-radius: 20px;" @click="nextQuestion">Next Question</button>
+          <button v-if="showNextButton" style="border-radius: 20px;" @click="nextQuestion">Next Question</button>
+
         </div>
       </section>
     </main>
@@ -72,6 +72,8 @@ export default {
     const totalScore = ref(0);
     const selectedOption = ref('');
     const scoresByCategory = ref({}); // Object to store scores for each category
+    const maxQuestions = 2; // Maximum number of questions
+    const showNextButton = ref(true); // Variable to control the visibility of the "Next Question" button
 
     // Dynamically manage categories and their image URLs
     const categories = ref([
@@ -81,7 +83,7 @@ export default {
       { id: 'computerScience', name: 'Computer Science', imageUrl: 'QuizImages/computerScience.jpg' },
       { id: 'geography', name: 'Geography', imageUrl: 'QuizImages/geography.jpg' },
       { id: 'chemistry', name: 'Chemistry', imageUrl: 'QuizImages/chemistry.jpg' },
-     { id: 'software', name: 'Software Engineering', imageUrl: 'QuizImages/software.jpg' },
+      { id: 'software', name: 'Software Engineering', imageUrl: 'QuizImages/software.jpg' },
     ]);
     onMounted(async () => {
       // Dynamically fetch image URLs for each category
@@ -97,12 +99,17 @@ export default {
 
     const selectCategory = async (category) => {
       if (currentCategory.value !== category) {
+        // Reset the total score to zero
+        totalScore.value = 0;
+        // Reset the score for the current category
+        scoresByCategory.value[currentCategory.value] = 0;
         currentCategory.value = category;
-        // Reset the total score to the score of the selected category
-        totalScore.value = scoresByCategory.value[category] || 0;
       }
+      // Set showNextButton back to true
+      showNextButton.value = true;
       await loadQuestion('question1');
     };
+
     const loadQuestion = async (questionId) => {
       const questionDocRef = doc(db, 'category', currentCategory.value, 'questions', questionId);
       const docSnap = await getDoc(questionDocRef);
@@ -136,13 +143,15 @@ export default {
 
     const nextQuestion = async () => {
       let currentIdNumber = parseInt(currentQuestion.value.id.replace(/[^\d]/g, ''));
-      if (currentIdNumber < 5) {
+      if (currentIdNumber < maxQuestions) {
         const nextQuestionId = `question${currentIdNumber + 1}`;
         await loadQuestion(nextQuestionId);
         answerFeedback.value = '';
         selectedOption.value = '';
       } else {
         console.log("End of the quiz.");
+        // Hide the "Next Question" button
+        showNextButton.value = false;
       }
     };
 
@@ -158,14 +167,16 @@ export default {
       selectAnswer,
       answerClass,
       nextQuestion,
+      showNextButton // Expose the variable to the template
     };
   },
 };
 </script>
 
+
 <style scoped>
 #quiz-page {
-  min-height: 85vh;
+  min-height: 70vh;
   background-color: beige;
 }
 
@@ -179,6 +190,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  color:navy;
 }
 
 .category-box {
@@ -187,6 +199,7 @@ export default {
   justify-content: center;
   width: fit-content;
   margin: 50px;
+  color:navy;
   background-color: lightblue;
   padding: 10px;
   border-radius: 20px;
@@ -206,7 +219,7 @@ export default {
   padding: 15px 0;
   font-size: 18px;
   text-align: center;
-  color: #333;
+  color: navy;
   background-color: #e7e7e7;
   border: 2px solid transparent;
   border-radius: 20px;
@@ -232,6 +245,7 @@ export default {
 
 h3 {
   text-align: center;
+  color:navy;
 }
 .category-nav-button {
   margin: 0 5px 10px; /* Add bottom margin */
@@ -240,6 +254,7 @@ h3 {
   border: 1px solid #dcdcdc;
   border-radius: 10px;
   cursor: pointer;
+  color:navy;
   transition: background-color 0.2s;
   width: 190px;
   text-align: center;
@@ -249,12 +264,12 @@ h3 {
 }
 
 .category-nav-button:hover {
-  background-color: lightgreen;
+  background-color: orange;
 }
 
 .selected-category {
-  background-color: darkorange; /* Green background */
-  color: white; /* White text for better contrast */
+  background-color: lightgreen; /* Green background */
+  color: navy; /* White text for better contrast */
 }
 
 /*
@@ -284,8 +299,9 @@ h3 {
 }
 
 .category-image {
-  width: 150px;
+  width: 140px;
   height: auto;
   margin-bottom: 10px;
+  color:navy;
 }
 </style>
