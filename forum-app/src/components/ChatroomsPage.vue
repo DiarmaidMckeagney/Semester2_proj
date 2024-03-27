@@ -26,10 +26,10 @@
         <!-- This content is now below "Topic 3" -->
         <ul>
           <li class="createchatroomlist">
-            <span style="color:navy;">New Chatroom</span>
+            <span style="color:navy;margin-left:-10px;">New Chatroom</span>
             <modal class="CreateChat">
               <div class="container">
-                <button type="button" class="create-button" style="background-color:green; color: white;border-radius:5px;" data-toggle="modal" data-target="#createForm">
+                <button type="button" class="create-button" style="background-color:green;margin-left:-10px; color: white;border-radius:5px;" data-toggle="modal" data-target="#createForm">
                   Create
                 </button>
               </div>
