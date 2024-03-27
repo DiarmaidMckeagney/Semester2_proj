@@ -3,6 +3,7 @@
     <!-- Main Content Section -->
     <main class="row" style="margin-top: 20px">
       <!-- Topics List Section -->
+<<<<<<< Updated upstream
       <aside v-if="userLoggedIn" class="col-md-3" style="background-color: #ddd; padding: 2vh;">
         <h2>Topics List </h2>
         <ul>
@@ -19,6 +20,30 @@
         </ul>
       </aside>
 
+=======
+      <aside v-if="userLoggedIn" class="col-md-3 users-section d-flex flex-column align-items-center" style="padding: 2vh; min-height: 91vh;">
+        <h1 style="font-size: 3vw; margin-left: 10px; justify-content: center">Communities</h1>
+        <ul v-for="n in communities.length" style="list-style: none;">
+          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center" @click="moveToCommunity(communities[n-1])">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
+        </ul>
+      </aside>
+
+      <section class="col-md-9 d-flex flex-column justify-content-between">
+        <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
+          <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
+          <p style="font-size: 40px">You are successfully logged in! <br> Enjoy your stay! </p>
+        </div>
+
+          <ul v-for="n in posts.length" :key="refresher">
+        <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
+              <h2>{{ JSON.parse(JSON.stringify(posts[n-1].title)) }}</h2>
+              <h5 @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
+              <span>{{ JSON.parse(JSON.stringify(posts[n-1].mainText)) }}</span>
+          </div>
+          </ul>
+      </section>
+
+>>>>>>> Stashed changes
       <section class="col-md-8  d-flex flex-column justify-content-between">
         <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px; min-height: 91vh; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 

@@ -31,13 +31,17 @@
           <SignUpForm/>
         </div>  
           <div v-else class="dropdown">
-          <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
+          <img :class="{ 'active': $route.path === '/profile'}" src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
+<<<<<<< Updated upstream
               <a class="dropdown-item"> <router-link to= "/profile" class="nav-link px-2">Profile</router-link> </a>
             </li>
             <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
               <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
+=======
+              <a class="dropdown-item">  <router-link to= '/profile' @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</router-link></a>
+>>>>>>> Stashed changes
             </li>
             <li :class="{ 'currHere': $route.path === '/' }">
               <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
@@ -75,7 +79,15 @@ export default {
   },
   
   methods: {
+<<<<<<< Updated upstream
 
+=======
+    moveToProfile(id){
+      this.userIdStore.changeName(id);
+      console.log(this.userIdStore.getUserId);
+     // router.push({path: "/profile"});
+    },
+>>>>>>> Stashed changes
     logout() {
       const auth = getAuth();
 
