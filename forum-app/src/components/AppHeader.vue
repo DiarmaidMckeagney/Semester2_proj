@@ -28,7 +28,7 @@
           <SignUpForm/>
         </div>  
           <div v-else class="dropdown d-flex">
-          <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
+          <img v-if="this.profileInfo[0].url != 'null'" :src="this.profileInfo[0].url" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
               <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
@@ -45,13 +45,13 @@
 
 <script>
 import NavigationMenu from './NavigationMenu.vue';
-
+import {getFunctions, httpsCallable} from "firebase/functions";
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
 import { useUserId } from "@/stores/counter.js";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from "@/router.js";
-
+import app from '../api/firebase';
 
 export default {
   
@@ -61,7 +61,9 @@ export default {
     return {
       userLoggedIn: false,
       user: null,
-      userDisplayName: null
+      userDisplayName: null,
+      id: "",
+      profileInfo: []
     };
   },
   setup(){
@@ -74,7 +76,24 @@ export default {
     SignUpForm,
     LoginForm
   },
+  
   methods: {
+        userInfo() {
+      console.log("called userInfo");
+      const functions = getFunctions(app);
+      const userInfo = httpsCallable(functions, 'userInfo');
+      const auth = getAuth();
+      const user = auth.currentUser
+      this.id = user.uid;
+
+      userInfo({ Uid: this.id}).then((result) => {
+        console.log(result);
+        this.profileInfo = result.data;
+        console.log(this.profileInfo[0].url);
+      });
+      this.refresher++;
+    },
+
     moveToProfile(id){
       this.userIdStore.changeName(id);
       console.log(this.userIdStore.getUserId);
@@ -102,7 +121,9 @@ export default {
     }
   },
   
+  
   created() {
+    this.userInfo();
     const auth = getAuth();
 
     // Check user authentication state

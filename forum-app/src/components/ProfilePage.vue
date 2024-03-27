@@ -207,7 +207,6 @@ export default {
 
   created() {
     this.userInfo();
-    //this.getProfilePic();
     this.friendsNames();
     this.displayMessages();
     const auth = getAuth();
