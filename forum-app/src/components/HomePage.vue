@@ -1,6 +1,15 @@
 
 <template>
   <div id="home-page" class="container-fluid">
+    <main class="row" style="margin-top: 20px">
+      <aside v-if="userLoggedIn" class="col-md-3 users-section d-flex flex-column align-items-center" style="padding: 2vh; min-height: 91vh;">
+        <h1 style="font-size: 3vw; margin-left: 10px; justify-content: center">Communities</h1>
+        <ul v-for="n in communities.length" style="list-style: none;">
+          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center" @click="moveToCommunity(communities[n-1])">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
+        </ul>
+      </aside>
+
+      <section class="col-md-9 d-flex flex-column justify-content-between">
      
        <!-- Code for modal -->
   <div class="modal fade display-flex" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -38,23 +47,19 @@
         </ul>
       </aside>
 
-      <section class="col-md-6  d-flex flex-column justify-content-between" style="width: 66%">
+      <section class="col-md-8  d-flex flex-column justify-content-between">
         <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
           <p style="font-size: 40px">You are successfully logged in! <br> Enjoy your stay! </p>
         </div>
-      </section>
-
-      <section class="col-md-6  d-flex flex-column justify-content-between" style="width: 66%">
-        <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px;">
           <ul v-for="n in posts.length" :key="refresher">
-            <li>
+            <div v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
               <h2>{{ JSON.parse(JSON.stringify(posts[n-1].title)) }}</h2>
               <h5 @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
               <span>{{ JSON.parse(JSON.stringify(posts[n-1].mainText)) }}</span>
-            </li>
+            </div>
           </ul>
-        </div>
+      </section>
       </section>
 
       <section class="col-md-8  d-flex flex-column justify-content-between">
@@ -92,13 +97,12 @@
            <LoginFormMain/>
         </div>
       </aside>
-
-     
     </main>
   </div>
 </template>
 
 <script>
+
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import LoginFormMain from './LoginFormMain.vue';
 import SignUpFormMain from './SignUpFormMain.vue';
@@ -131,7 +135,6 @@ export default {
   },
   created() {
     const auth = getAuth();
-
     // Check if the cookie modal has been shown before
     const cookieShown = localStorage.getItem('cookieShown');
 
