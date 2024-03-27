@@ -18,6 +18,11 @@
         <form>
           <div class="modal-body">
             <div class="form-group">
+              <label for="username1">Username</label>
+              <input v-model="username" type="text" class="form-control" id="username1" aria-describedby="usernameHelp"
+                placeholder="Enter username">
+            </div>
+            <div class="form-group">
               <label for="email">Email address</label>
               <input v-model="email" type="email" class="form-control" id="emailinit" aria-describedby="emailHelp"
                 placeholder="Enter email">
@@ -31,11 +36,6 @@
               <label for="passwordConfirm">Confirm Password</label>
               <input v-model="password" type="password" class="form-control" id="password2"
                 placeholder="Confirm Password">
-            </div>
-            <div class="form-group">
-              <label for="username1">Username</label>
-              <input v-model="username" type="text" class="form-control" id="username1" aria-describedby="usernameHelp"
-                placeholder="Enter username">
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
               <button type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"

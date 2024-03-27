@@ -1,4 +1,3 @@
-
 <template>
   <div id="community-finder-page">
 
@@ -10,6 +9,7 @@
         <div style="display: flex; align-items: center; background-color: lightblue; margin-top: 30px; margin-bottom: 20px; padding: 15px; border-radius: 20px; margin-left: 30px;">
           <input v-model="searchTerm" type="text" placeholder="Search for communities..." style="flex-grow: 1; padding: 10px; margin-right: 10px;"/>
           <button @click="searchForCommunity" style="padding: 10px; color: navy; white-space: nowrap;">Search</button>
+
         </div>
 
 
@@ -17,26 +17,27 @@
         <div v-if="searchedCommunity" style="padding: 30px; margin-left: 25px;">
           <p>Found Community: <a href="#" @click.prevent="moveToCommunity(searchedCommunity)" style="color: blue; cursor: pointer;">{{ searchedCommunity }}</a></p>
         </div>
-        <ul v-for="n in communities.length" :key="refresher">
+        <ul>
           <!-- List of Communities -->
-          <li style=" margin-bottom: 10px;color:Navy; padding: 15px; border-radius: 20px; background-color: lightblue; list-style-type: none;">
+          <li v-for="(community, index) in filteredCommunities" :key="index" style=" margin-bottom: 10px;color:Navy; padding: 15px; border-radius: 20px; background-color: lightblue; list-style-type: none;">
             <div class="row">
               <div class="col">
-                <!-- Check if the community is 'Gaming' and display the controller icon -->
-                <i v-if="communities[n-1] === 'Gaming'" class="bi bi-controller" style="margin-right: 10px;font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Chemistry'" class="bi bi-funnel" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Biology'" class="bi bi-bug" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Geography'" class="bi bi-globe" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Computer Science'" class="bi bi-laptop" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Maths'" class="bi bi-infinity" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Physics'" class="bi bi-lightbulb" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'History'" class="bi bi-book" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Music'" class="bi bi-earbuds" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Homework'" class="bi bi-clipboard" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'English'" class="bi bi-blockquote-left" style="margin-right: 10px; font-size: 24px;"></i>
-                <i v-if="communities[n-1] === 'Code'" class="bi bi-code-square" style="margin-right: 10px; font-size: 24px;"></i>
-
-                <span style="font-size: 18px; cursor: pointer;" @click="moveToCommunity(communities[n-1])"><strong>{{ communities[n-1] }}</strong></span>
+                <!-- Display the appropriate icon based on the community name -->
+                <i v-if="community=== 'Gaming'" class="bi bi-controller" style="margin-right: 10px;font-size: 24px;"></i>
+                <i v-else-if="community === 'Chemistry'" class="bi bi-funnel" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community=== 'Biology'" class="bi bi-bug" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Geography'" class="bi bi-globe" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Computer Science'" class="bi bi-laptop" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Maths'" class="bi bi-infinity" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Physics'" class="bi bi-lightbulb" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'History'" class="bi bi-book" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Music'" class="bi bi-earbuds" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'Homework'" class="bi bi-clipboard" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community === 'English'" class="bi bi-blockquote-left" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="community=== 'Code'" class="bi bi-code-square" style="margin-right: 10px; font-size: 24px;"></i>
+                
+                <!-- Display the community name -->
+                <span style="font-size: 18px; cursor: pointer;" @click="moveToCommunity(community)"><strong>{{ community }}</strong></span>
               </div>
             </div>
           </li>
@@ -92,26 +93,32 @@
 <script>
 import router from '@/router';
 import app from '../api/firebase';
-import {getFunctions, httpsCallable} from "firebase/functions";
-
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { useCommunityName } from "@/stores/counter.js";
 
-
 export default {
-  setup(){
+  setup() {
     const communityNamestore = useCommunityName();
-
     return { communityNamestore }
   },
 
   data() {
     return {
-      communities:[],
+      communities: [],
       refresher: 0,
       communityName: "",
       searchTerm: "", // This will hold the value from the search input
       searchedCommunity: null,
-
+    }
+  },
+  computed: {
+    filteredCommunities() {
+      if (!this.searchTerm) {
+        return this.communities; // If search term is empty, return all communities
+      } else {
+        const searchTermLower = this.searchTerm.toLowerCase();
+        return this.communities.filter(community => community.toLowerCase().startsWith(searchTermLower));
+      }
     }
   },
   created() {
@@ -137,25 +144,23 @@ export default {
     newCommunity() {
       const functions = getFunctions(app);
       const newCommunity = httpsCallable(functions, 'newCommunity');
-      newCommunity({name: this.communityName}).then((result) => {
+      newCommunity({ name: this.communityName }).then((result) => {
         this.communityNames();
       })
     },
 
-    moveToCommunity(community){
+    moveToCommunity(community) {
       this.communityNamestore.changeName(community);
-      router.push({path: "/community"});
+      router.push({ path: "/community" });
     }
   }
 }
-
-
 </script>
 
 <style scoped>
 /* Scoped CSS styles go here */
 #community-finder-page {
-min-height:95vh;
+  min-height:95vh;
   background-color: beige;
 }
 .createCommunityList{
@@ -168,6 +173,12 @@ min-height:95vh;
   background-color: lightblue;
   border-radius: 10px;
   flex-wrap: wrap;
+}
+
+.create-button {
+  background-color: navy;
+  color: white;
+
 }
 </style>
 <script setup>

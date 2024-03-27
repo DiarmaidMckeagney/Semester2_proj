@@ -16,7 +16,6 @@
         <h3>Our Passion:</h3>
         <p>Our passion lies in our love for technology. United by this, we leverage our skills in computer science and IT to enrich the student experience. This project is more than an academic venture; it's our commitment to the future of education and community building.</p>
 
-
         <h3>Join Our Community:</h3>
         <p>We invite you to be part of our community. As we progress with this exciting project, your participation, ideas, and feedback are crucial in shaping a vibrant and inclusive student community.</p>
 
