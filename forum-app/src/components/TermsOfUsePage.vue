@@ -2,7 +2,7 @@
   <div id="terms-of-use-page">
     <!-- Main Content Section -->
     <main style="padding: 20px;">
-      <section style="background-color: #f0f0f0; padding: 20px;">
+      <section style="background-color: lightblue; padding: 20px;border-radius:10px;color:navy;">
         <h2>Terms of Use Content</h2>
 
         <!-- Terms of Use Content -->
@@ -41,12 +41,16 @@
         <p>These Terms of Use are governed by and construed in accordance with the laws of the jurisdiction in which Alumn operates.</p>
 
         <h3>Contact Us:</h3>
-        <p>For any questions or concerns regarding these Terms of Use, please contact us through the support channels provided on our platform.</p>
+        <p>For any questions or concerns regarding these Terms of Use, please contact us.</p>
       </section>
     </main>
   </div>
 </template>
 
 <style scoped>
+#terms-of-use-page{
+  min-height:80vh;
+  background:beige;
+}
 /* Add your CSS here */
 </style>
