@@ -16,10 +16,9 @@
         </div>
         <form>
           <div class="modal-body">
-           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="modal">Cookie Policy</router-link></p>
+           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="cookieModal">Cookie Policy</router-link></p>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
-              <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="modal">Submit</button>
+              <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal" data-dismiss="cookieModal">Accept</button>
                 <button @click="hideModal" type="button" class="btn btn-danger" data-target="#profileModal" data-toggle="modal"
                 data-dismiss="modal">Reject</button>
             </div>
@@ -38,7 +37,7 @@
         </ul>
       </aside>
 
-      <section class="col-md-6  d-flex flex-column justify-content-between" style="width: 66%">
+      <section class="col-md-6  d-flex flex-column justify-content-between" style="width: 66%" @load="showModal">
         <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
           <p style="font-size: 40px">You are successfully logged in! <br> Enjoy your stay! </p>
@@ -164,7 +163,11 @@ export default {
     CookieModal
   },
   methods: {
-
+    showModal(){
+      $('#cookieModal').modal('show');
+      console.log(this.showCookie);
+      // Set a flag in local storage indicating that the cookie modal has been shown
+    },
     recentCommunityPosts(){
       const functions = getFunctions(app);
       const recentCommunityPosts = httpsCallable(functions, 'mostRecentCommunityPosts');
