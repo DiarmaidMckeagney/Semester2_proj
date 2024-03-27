@@ -4,14 +4,14 @@
     <!-- Logo Section -->
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" :key="refresher">
-       
-          <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
-            <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
-          </a>
+
+        <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
+          <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
+        </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
-           </li>
+          </li>
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
           </li>
@@ -26,10 +26,10 @@
         <div v-if="!userLoggedIn" class="d-flex">
           <LoginForm/>
           <SignUpForm/>
-        </div>  
-
-          <div v-else class="dropdown d-flex">
-          <img v-if="this.profileInfo[0].url != 'null'" :src="this.profileInfo[0].url" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
+        </div>
+        <div v-else class="dropdown d-flex">
+          <img v-if="this.profileInfo[0].url === 'null'" src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;">
+          <img v-if="this.profileInfo[0].url !== 'null'" :src="this.profileInfo[0].url" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;">
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
               <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
@@ -38,9 +38,9 @@
               <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
             </li>
           </ul>
-          </div>
         </div>
       </div>
+    </div>
   </header>
 </template>
 
@@ -55,7 +55,7 @@ import router from "@/router.js";
 import app from '../api/firebase';
 
 export default {
-  
+
   props: ['TogglePopup'],
 
   data() {
@@ -69,7 +69,7 @@ export default {
   },
   setup(){
     const userIdStore = useUserId();
-    
+
     return { userIdStore }
   },
   components: {
@@ -77,9 +77,9 @@ export default {
     SignUpForm,
     LoginForm
   },
-  
+
   methods: {
-        userInfo() {
+    userInfo() {
       console.log("called userInfo");
       const functions = getFunctions(app);
       const userInfo = httpsCallable(functions, 'userInfo');
@@ -103,26 +103,25 @@ export default {
     logout() {
       const auth = getAuth();
       signOut(auth)
-        .then(() => {
-          // Sign-out successful.
-          console.log('User signed out');
-          // Optionally, you can perform additional actions here, such as redirecting the user to a login page.
-           // No user is signed in
-          this.userLoggedIn = false;
-          this.user = null;
-          const cookieShown = localStorage.getItem('cookieShown');
-          localStorage.setItem('cookieShown', false);
+          .then(() => {
+            // Sign-out successful.
+            console.log('User signed out');
+            // Optionally, you can perform additional actions here, such as redirecting the user to a login page.
+            // No user is signed in
+            this.userLoggedIn = false;
+            this.user = null;
+            const cookieShown = localStorage.getItem('cookieShown');
+            localStorage.setItem('cookieShown', false);
 
-          this.userDisplayName = "";
-        })
-        .catch((error) => {
-          // An error happened.
-          console.error('Sign-out error:', error);
-        });
+            this.userDisplayName = "";
+          })
+          .catch((error) => {
+            // An error happened.
+            console.error('Sign-out error:', error);
+          });
     }
   },
-  
-  
+
   created() {
     this.userInfo();
     const auth = getAuth();
@@ -143,7 +142,6 @@ export default {
     });
   }
 };
-
 </script>
 
 <style scoped>
@@ -157,13 +155,13 @@ export default {
 }
 
 .img-fluid:hover {
-        filter: brightness(0.7); /* Darkens the image on hover */
-    }
+  filter: brightness(0.7); /* Darkens the image on hover */
+}
 
 
 .active {
   /* Add your active styles here */
-  background-color: #12674a; 
+  background-color: #12674a;
   color: #12674a; /* Example text color for the active link */
   border-radius: 15%; /* Make the background circular */
   padding: auto;
@@ -187,7 +185,7 @@ export default {
   {
     max-width: 20vh;
   }
-  
+
 }
 
 .logo-section .logo {
