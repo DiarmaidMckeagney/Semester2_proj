@@ -31,8 +31,8 @@
   <div id="home-page" class="container-fluid">
 
     <main class="row" style="margin-top: 20px">
-        <aside class="sidebar col-md-4 d-flex flex-column justify-content-between" style="width: 33.3%">
-        <h1 class="font-center " style="margin-left: 16%; font-weight: 200px;"> Communities</h1>
+        <aside v-if="userLoggedIn" class="sidebar col-md-4 d-flex flex-column justify-content-between" style="width: 33.3%">
+        <h2 class="font-center " style="display: flex; font-weight: 4000; justify-content: center; align-items: center;"> Community</h2>
         <ul class="ul-side" v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
           <li  :class="{ 'btn-selected': selectedCommunity === communities[n-1] }" class="li-side" :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }">
@@ -40,14 +40,14 @@
           </li>
         </ul>
          </aside> 
-      <section class="col-md-8 d-flex flex-column" style="width: 66.6%">
+      <section v-if="userLoggedIn" class="col-md-8 d-flex flex-column" style="width: 66.6%">
     
         <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
           <p style="font-size: 40px">You are successfully logged in! <br> Enjoy your stay! </p>
         </div>
         <div class="form-group text-center users-section">
-            <div v-for="n in posts.length" :key="refresher" v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; background-color: lightgreen; filter:brightness(1.2); padding: 20px; font-size: 20px; font-weight: bold; ">
+            <div v-for="n in posts.length" :key="refresher" v-if="userLoggedIn" class="form-group users-section"  style="margin-bottom: 20px; background-color: lightgreen; filter:brightness(1.2); padding: 20px; font-size: 20px; font-weight: bold; color:Navy ">
               <h2>{{ JSON.parse(JSON.stringify(posts[n-1].title)) }}</h2>
               <h5 class="text-left" @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
               <span>{{ JSON.parse(JSON.stringify(posts[n-1].mainText)) }}</span>
