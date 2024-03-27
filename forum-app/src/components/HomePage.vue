@@ -6,7 +6,7 @@
       <aside v-if="userLoggedIn" class="col-md-3 users-section d-flex flex-column align-items-center" style="padding: 2vh; min-height: 91vh; width: 33%">
         <h1 style="font-size: 3vw; margin-left: 10px; justify-content: center">Communities</h1>
         <ul v-for="n in communities.length" style="list-style: none;">
-          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
+          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center" @click="moveToCommunity(communities[n-1])">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
         </ul>
       </aside>
 
@@ -22,7 +22,7 @@
           <ul v-for="n in posts.length" :key="refresher">
             <li>
               <h2>{{ JSON.parse(JSON.stringify(posts[n-1].title)) }}</h2>
-              <h5>{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
+              <h5 @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
               <span>{{ JSON.parse(JSON.stringify(posts[n-1].mainText)) }}</span>
             </li>
           </ul>
@@ -76,7 +76,15 @@ import LoginFormMain from './LoginFormMain.vue';
 import SignUpFormMain from './SignUpFormMain.vue';
 import {getFunctions, httpsCallable} from "firebase/functions";
 import app from "@/api/firebase.js";
+import router from "@/router.js";
+import {useCommunityName, useUserId} from "@/stores/counter.js";
 export default {
+  setup(){
+    const communityNamestore = useCommunityName();
+    const userIdStore = useUserId();
+
+    return { communityNamestore, userIdStore };
+  },
   data() {
     return {
       communities: [],
@@ -117,6 +125,17 @@ export default {
         this.posts = result.data;
         console.log(this.posts);
       });
+    },
+    moveToProfile(id){
+      if(id != null){
+        this.userIdStore.changeName(id);
+        console.log(this.userIdStore.getUserId);
+        router.push({path: "/profile"});
+      }
+    },
+    moveToCommunity(community){
+      this.communityNamestore.changeName(community);
+      router.push({path: "/community"});
     },
     communityNames() {
       const functions = getFunctions(app);
