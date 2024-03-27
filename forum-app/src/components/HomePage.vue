@@ -1,5 +1,33 @@
+
 <template>
   <div id="home-page" class="container-fluid">
+     
+       <!-- Code for modal -->
+  <div class="modal fade display-flex" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" style="position: fixed;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel"> Cookie Policy </h5>
+
+          <button  @click="hideModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="modal">Cookie Policy</router-link></p>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
+                data-dismiss="modal">Submit</button>
+                <button @click="hideModal" type="button" class="btn btn-danger" data-target="#profileModal" data-toggle="modal"
+                data-dismiss="modal">Reject</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
     <!-- Main Content Section -->
     <main class="row" style="margin-top: 20px">
       <!-- Topics List Section -->
@@ -75,6 +103,7 @@
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import LoginFormMain from './LoginFormMain.vue';
 import SignUpFormMain from './SignUpFormMain.vue';
+import CookieModal from './CookieModal.vue';
 export default {
   data() {
     return {
@@ -83,16 +112,28 @@ export default {
       password: "",
       username: "",
       age: "",
-      dob: ""
+      dob: "",
+      showCookie: false,
     };
   },
   created() {
     const auth = getAuth();
+    // Check if the cookie modal has been shown before
+    const cookieShown = localStorage.getItem('cookieShown');
     // Check user authentication state
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
         this.userLoggedIn = true;
+        this.showCookie = true;
+        if(!cookieShown)
+        {
+          $('#cookieModal').modal('show');
+           console.log(this.showCookie);
+           // Set a flag in local storage indicating that the cookie modal has been shown
+          localStorage.setItem('cookieShown', true);
+        }
+        
       } else {
         // No user is signed in
         this.userLoggedIn = false;
@@ -101,40 +142,10 @@ export default {
   },
   components: {
     LoginFormMain,
-    SignUpFormMain
+    SignUpFormMain,
+    CookieModal
   },
   methods: {
-    signUp() {
-      console.debug(this.email);
-      console.debug(this.password);
-      console.debug(this.username);
-      const auth = getAuth(app);
-      createUserWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        this.createFriends();
-        this.createProfile();
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
-// ..
-      });
-    },
-    login() {
-      const auth = getAuth(app);
-      signInWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
-        // Signed in
-        let user = userCredential.user;
-        console.log(user);
-      }).catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
-      });
-    },
     createProfile(){
       const functions = getFunctions(app);
       const createProfile = httpsCallable(functions, 'createProfile');
@@ -143,6 +154,9 @@ export default {
       createProfile({ Uid: user.uid, username: this.username, age: this.age, dob: this.dob }).then(() => {
         console.log("finished");
       });
+    },
+    hideModal(){
+      $('#cookieModal').modal('hide');
     },
     createFriends(){
       const functions = getFunctions(app);
@@ -165,6 +179,14 @@ export default {
   background-color: #ffffe0;
 }
 
+@media (max-width: 1280px) {
+  img {
+    /* Styles for smaller screens */
+    width: 50%; /* Or a smaller width for lower resolutions */
+  }
+
+
+}
 
 .users-section {
   padding: 20px;
