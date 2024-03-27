@@ -1,14 +1,14 @@
 <template>
   <div v-if="friendId !== ''" >
-    <main style="display: flex; flex-direction: row; padding: 20px;color:navy;">
-      <section style="width: 66%; margin-right: 4%; margin-bottom: 45px;color:navy;">
-        <ul v-for="n in FriendsMessages.length" :key="refresher" style="list-style-type:none;">
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;">
+    <main style="display: flex; flex-direction: column; padding: 20px;color:navy;">
+      <section style="width: 66%; margin-right: 4%; margin-bottom: 45px;color:navy;flex-grow: 1;">
+        <ul v-for="n in FriendsMessages.length" :key="refresher" style="list-style-type:none;flex-grow: 1;">
+          <li style="border: 1px solid #ccc;flex-grow: 1; margin-bottom: 10px; padding: 10px; background-color: lightcyan;border-radius:10px;">
             <p>{{ FriendsMessages[n-1].username }}</p>
             <p>{{ FriendsMessages[n-1].message }}</p>
           </li>
         </ul>
-        <div style="display: flex; align-items: flex-end; margin-left:30px; vertical-align: bottom;"><input v-model="messageBody" placeholder="enter message"/><button style="background-color: #333;display: flex;align-items: flex-end; color: white;" @click="sendMessage">Send</button></div>
+        <div style="display: flex; align-items:flex-end; margin-left:30px;vertical-align: bottom;"><input v-model="messageBody" placeholder="enter message"/><button style="background-color: lightgreen;display: flex;align-items: flex-end; color: lightcyan;border-radius:10px;" @click="sendMessage">Send</button></div>
       </section>
     </main>
   </div>
@@ -41,7 +41,7 @@ export default {
     this.friendId = this.friendIdStore.getFriendId;
     this.friendsMessages();
   },
-  
+
   methods: {
     friendsMessages() {
       const functions = getFunctions(app);
