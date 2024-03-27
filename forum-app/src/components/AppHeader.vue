@@ -8,9 +8,6 @@
           <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
             <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
           </a>
-   
-      
-
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
@@ -30,18 +27,12 @@
           <LoginForm/>
           <SignUpForm/>
         </div>  
-          <div v-else class="dropdown">
-          <img :class="{ 'active': $route.path === '/profile'}" src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
+
+          <div v-else class="dropdown d-flex">
+          <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
-<<<<<<< Updated upstream
-              <a class="dropdown-item"> <router-link to= "/profile" class="nav-link px-2">Profile</router-link> </a>
-            </li>
-            <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
-              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
-=======
-              <a class="dropdown-item">  <router-link to= '/profile' @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</router-link></a>
->>>>>>> Stashed changes
+              <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
             </li>
             <li :class="{ 'currHere': $route.path === '/' }">
               <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
@@ -58,7 +49,9 @@ import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
+import { useUserId } from "@/stores/counter.js";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from "@/router.js";
 
 
 export default {
@@ -72,6 +65,11 @@ export default {
       userDisplayName: null
     };
   },
+  setup(){
+    const userIdStore = useUserId();
+    
+    return { userIdStore }
+  },
   components: {
     NavigationMenu,
     SignUpForm,
@@ -79,18 +77,13 @@ export default {
   },
   
   methods: {
-<<<<<<< Updated upstream
-
-=======
     moveToProfile(id){
       this.userIdStore.changeName(id);
       console.log(this.userIdStore.getUserId);
-     // router.push({path: "/profile"});
+      router.push({path: "/profile"});
     },
->>>>>>> Stashed changes
     logout() {
       const auth = getAuth();
-
       signOut(auth)
         .then(() => {
           // Sign-out successful.
@@ -99,7 +92,10 @@ export default {
            // No user is signed in
           this.userLoggedIn = false;
           this.user = null;
-          this.userDisplayName = user.displayName;
+          const cookieShown = localStorage.getItem('cookieShown');
+          localStorage.setItem('cookieShown', false);
+
+          this.userDisplayName = "";
         })
         .catch((error) => {
           // An error happened.
@@ -125,16 +121,14 @@ export default {
         this.userDisplayName = user.displayName;
       }
     });
-
-
   }
-}
+};
 
 </script>
 
 <style scoped>
 .app-header {
-  background-color: #7b5740 ; /* Match TheFooter background color */
+  background-color: #121e67 ; /* Match TheFooter background color */
   color: white;
   display: flex;
   justify-content: space-between;
@@ -168,6 +162,10 @@ export default {
 @media (max-width: 768px) {
   .btn {
     padding: 8px 16px; /* Adjust the padding for smaller screens */
+  }
+  img
+  {
+    max-width: 20vh;
   }
   
 }

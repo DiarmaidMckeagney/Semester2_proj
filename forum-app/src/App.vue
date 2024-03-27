@@ -4,9 +4,9 @@
      <!-- Pass the TogglePopup function as a prop to Header.vue -->
     <AppHeader  v-if="userLoggedIn" :TogglePopup="() => TogglePopup('buttonTrigger')"/>
 
-    <main>
+    <main style="background-color: beige;">
       <router-view></router-view>
- 
+
     </main>
     <!-- Footer component included at the bottom, so it appears on all pages -->
     <TheFooter v-if="userLoggedIn" class="mt-auto" id="main-footer" />
@@ -14,7 +14,6 @@
 
 
 </template>
-
 <script>
 import AppHeader from './components/AppHeader.vue'; // Import the Header component
 import TheFooter from './components/TheFooter.vue'; // Import the Footer component
@@ -33,7 +32,6 @@ export default {
 
   created() {
     const auth = getAuth();
-
     // Check user authentication state
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -50,24 +48,20 @@ export default {
     const popupTriggers = ref({
       buttonTrigger: false
     });
-
     const TogglePopup = (trigger) => {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger]
     }
-
     return{
       popupTriggers,
       TogglePopup
     }
   },
-
   components: {
     AppHeader,// Register the Header component
     TheFooter,
     Popup,
     SignUpForm
   }
-
   //Header store is no longer needed since we use a button light up thing now
   //data() {
   //  return {
@@ -77,9 +71,7 @@ export default {
  // },
 };
 </script>
-
 <style scoped>
-
 footer {
   background-color: #333; /* Set your desired background color */
   padding: 20px;
@@ -90,13 +82,11 @@ footer {
   bottom: 0;
   left: 0;
 }
-
 main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-
 #app {
   display: flex;
   flex-direction: column;
