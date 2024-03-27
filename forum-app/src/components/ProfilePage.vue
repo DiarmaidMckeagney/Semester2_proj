@@ -142,7 +142,6 @@
 
 
 
-
       <aside style="width: 30%; background-color: lightblue; border-radius: 10px; padding: 20px; display: flex; flex-direction: column;">
         <div style="text-align: center; margin-bottom: 20px;"><h5>Friends</h5></div>
         <div :key="refresher" style="flex-grow: 1; overflow-y: auto;">
