@@ -92,6 +92,7 @@ export default {
       this.messageBody = "";
     },
     userList(){
+      this.usersList = [];
       console.log(this.messages);
       console.log("length: " + this.messages.length);
       for (let i = 0; i < this.messages.length; i++) {
