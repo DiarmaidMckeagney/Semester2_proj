@@ -1,4 +1,3 @@
-User
 
 <template>
   <div id="community-finder-page">
@@ -7,11 +6,12 @@ User
     <main style="display: flex; justify-content: space-between;margin-top:20px;">
       <!-- Community Search and Details Section -->
       <section style="width: 75%;">
-        <!-- Search Bar and Button -->
-        <div style="background-color: lightblue; margin-top:30px;margin-bottom: 20px; padding: 15px; border-radius:20px;margin-left: 30px;">
-          <input v-model="searchTerm" type="text" placeholder="Search for communities..." style="width: 80%; padding: 10px;"/>
-          <button @click="searchForCommunity" style="padding: 10px;color:navy; width: 19%;">Search</button>
+        <!-- Adjusted Search Bar and Button -->
+        <div style="display: flex; align-items: center; background-color: lightblue; margin-top: 30px; margin-bottom: 20px; padding: 15px; border-radius: 20px; margin-left: 30px;">
+          <input v-model="searchTerm" type="text" placeholder="Search for communities..." style="flex-grow: 1; padding: 10px; margin-right: 10px;"/>
+          <button @click="searchForCommunity" style="padding: 10px; color: navy; white-space: nowrap;">Search</button>
         </div>
+
 
         <!-- Display the search result as a link if a community is found -->
         <div v-if="searchedCommunity" style="padding: 30px; margin-left: 25px;">
@@ -46,14 +46,14 @@ User
       </section>
 
       <!-- Tag Search and List Section -->
-      <aside style="width:25%; margin-top:27px;margin-right:50px;">
+      <aside style="width:27.5%; margin-top:27px;margin-right:50px;">
 
         <ul>
           <li class="createCommunityList">
-            <span style="color:navy;">New Community</span>
+            <span style="color:navy;margin-left:-10px;">New Community</span>
             <modal class="CreateChat">
               <div class="container">
-                <button type="button" class="create-button" style="background-color:navy; border-radius:5px;color: white;" data-toggle="modal" data-target="#createForm">
+                <button type="button" class="create-button" style="background-color:navy;margin-left:-10px; border-radius:5px;color: white;" data-toggle="modal" data-target="#createForm">
                   Create
                 </button>
               </div>
@@ -155,7 +155,7 @@ export default {
 <style scoped>
 /* Scoped CSS styles go here */
 #community-finder-page {
-
+min-height:95vh;
   background-color: beige;
 }
 .createCommunityList{
