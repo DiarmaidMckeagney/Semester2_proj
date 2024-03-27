@@ -8,18 +8,12 @@
           <a href="/" class="flex-width align-items-center mb-3 mb-lg-0 text-white text-decoration-none">
             <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo" class="logo img-fluid" href="/" width="200px"/>
           </a>
-   
-      
-
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0 mx-auto text-center fs-4">
           <li :class="{ 'active': $route.path === '/' }">
             <router-link to="/" class="nav-link px-2 text-white ">Home</router-link>
            </li>
           <li :class="{ 'active': $route.path === '/community-finder' } ">
             <router-link to="/community-finder" class="nav-link px-2 text-white">Community Finder</router-link>
-          </li>
-          <li :class="{ 'active': $route.path === '/topics' }">
-            <router-link to="/topics" class="nav-link px-2 text-white">Topics</router-link>
           </li>
           <li :class="{ 'active': $route.path === '/chatrooms' }">
             <router-link to="/chatrooms" class="nav-link px-2 text-white">Chatrooms</router-link>
@@ -37,10 +31,7 @@
           <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
-              <a class="dropdown-item"> <router-link to= "/profile" class="nav-link px-2">Profile</router-link> </a>
-            </li>
-            <li  :class="{ 'currHere': $route.path === '/friend-messages' }">
-              <a class="dropdown-item"> <router-link to= "/friend-messages" class="nav-link px-2">Friends</router-link> </a>
+              <a class="dropdown-item"> <button @click="moveToProfile(this.user.uid)" class="nav-link px-2">Profile</button> </a>
             </li>
             <li :class="{ 'currHere': $route.path === '/' }">
               <a class="dropdown-item"> <router-link to= "/" class="nav-link px-2" @click="logout">Logout </router-link> </a>
@@ -57,7 +48,9 @@ import NavigationMenu from './NavigationMenu.vue';
 
 import SignUpForm from './SignUpForm.vue';
 import LoginForm from './LoginForm.vue';
+import { useUserId } from "@/stores/counter.js";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import router from "@/router.js";
 
 
 export default {
@@ -71,16 +64,24 @@ export default {
       userDisplayName: null
     };
   },
+  setup(){
+    const userIdStore = useUserId();
+    
+    return { userIdStore }
+  },
   components: {
     NavigationMenu,
     SignUpForm,
     LoginForm
   },
   methods: {
-
+    moveToProfile(id){
+      this.userIdStore.changeName(id);
+      console.log(this.userIdStore.getUserId);
+      router.push({path: "/profile"});
+    },
     logout() {
       const auth = getAuth();
-
       signOut(auth)
         .then(() => {
           // Sign-out successful.
@@ -89,7 +90,7 @@ export default {
            // No user is signed in
           this.userLoggedIn = false;
           this.user = null;
-          this.userDisplayName = user.displayName;
+          this.userDisplayName = "";
         })
         .catch((error) => {
           // An error happened.
@@ -115,30 +116,13 @@ export default {
         this.userDisplayName = user.displayName;
       }
     });
-
-  function isAuth(){
-  const auth = getAuth();
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      this.refresher++;
-    }
-    else {
-      isLoggedIn = false;
-      userId = "";
-      this.refresher++;
-    }
-  });
-    }
   }
 };
-
-
 </script>
 
 <style scoped>
 .app-header {
-  background-color: #7b5740 ; /* Match TheFooter background color */
+  background-color: #121e67 ; /* Match TheFooter background color */
   color: white;
   display: flex;
   justify-content: space-between;

@@ -1,42 +1,89 @@
+User
 
-For the "Community Finder" page, if you wish to have a header similar to other pages, centered and without additional decorative shapes, here's the updated code:
-
-vue
-Copy code
 <template>
   <div id="community-finder-page">
 
     <!-- Main Content Section -->
-    <main style="display: flex; justify-content: space-between; padding: 20px;">
+    <main style="display: flex; justify-content: space-between;margin-top:20px;">
       <!-- Community Search and Details Section -->
-      <section style="width: 70%; padding: 10px;">
-        <!-- Search Bar -->
-        <div style="background-color: #f0f0f0; margin-bottom: 20px; padding: 20px;">Search Bar Placeholder</div>
+      <section style="width: 75%;">
+        <!-- Search Bar and Button -->
+        <div style="background-color: lightblue; margin-top:30px;margin-bottom: 20px; padding: 15px; border-radius:20px;margin-left: 30px;">
+          <input v-model="searchTerm" type="text" placeholder="Search for communities..." style="width: 80%; padding: 10px;"/>
+          <button @click="searchForCommunity" style="padding: 10px;color:navy; width: 19%;">Search</button>
+        </div>
+
+        <!-- Display the search result as a link if a community is found -->
+        <div v-if="searchedCommunity" style="padding: 30px; margin-left: 25px;">
+          <p>Found Community: <a href="#" @click.prevent="moveToCommunity(searchedCommunity)" style="color: blue; cursor: pointer;">{{ searchedCommunity }}</a></p>
+        </div>
         <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
-          <li style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0;list-style-type: none;">
+          <li style=" margin-bottom: 10px;color:Navy; padding: 15px; border-radius: 20px; background-color: lightblue; list-style-type: none;">
             <div class="row">
               <div class="col">
-                  <span style="font-size: 18px;"> <strong>{{ communities[n-1] }}  </strong></span>
+                <!-- Check if the community is 'Gaming' and display the controller icon -->
+                <i v-if="communities[n-1] === 'Gaming'" class="bi bi-controller" style="margin-right: 10px;font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Chemistry'" class="bi bi-funnel" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Biology'" class="bi bi-bug" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Geography'" class="bi bi-globe" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Computer Science'" class="bi bi-laptop" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Maths'" class="bi bi-infinity" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Physics'" class="bi bi-lightbulb" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'History'" class="bi bi-book" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Music'" class="bi bi-earbuds" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Homework'" class="bi bi-clipboard" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'English'" class="bi bi-blockquote-left" style="margin-right: 10px; font-size: 24px;"></i>
+                <i v-if="communities[n-1] === 'Code'" class="bi bi-code-square" style="margin-right: 10px; font-size: 24px;"></i>
+
+                <span style="font-size: 18px; cursor: pointer;" @click="moveToCommunity(communities[n-1])"><strong>{{ communities[n-1] }}</strong></span>
               </div>
-              <div class="col-auto">
-                  <button class="btn btn-primary join-button" @click="moveToCommunity(communities[n-1])">Join</button>
-              </div>
-          </div>
-            </li>
+            </div>
+          </li>
         </ul>
+
+
       </section>
 
       <!-- Tag Search and List Section -->
-      <aside style="width: 28%; background-color: #ddd; padding: 10px;">
-        <div>
-          <h2>Tag Search</h2>
-          <div>Tag Search Placeholder</div>
-        </div>
-        <div style="margin-top: 20px;">
-          <h2>Tag List</h2>
-          <div>Tag List Placeholder</div>
-        </div>
+      <aside style="width:25%; margin-top:27px;margin-right:50px;">
+
+        <ul>
+          <li class="createCommunityList">
+            <span style="color:navy;">New Community</span>
+            <modal class="CreateChat">
+              <div class="container">
+                <button type="button" class="create-button" style="background-color:navy; border-radius:5px;color: white;" data-toggle="modal" data-target="#createForm">
+                  Create
+                </button>
+              </div>
+
+              <div class="modal fade" id="createForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                      <h5 class="modal-title" id="exampleModalLabel"> Create Community</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="communityName">Community Name</label>
+                          <input v-model="communityName" type="text" class="form-control" id="communityLabel" aria-describedby="NameHelp" placeholder="Enter Name">
+                        </div>
+                      </div>
+                      <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button @click="newCommunity" type="button" data-dismiss="modal" class="btn btn-success">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </modal>
+          </li>
+        </ul>
       </aside>
     </main>
   </div>
@@ -60,7 +107,11 @@ export default {
   data() {
     return {
       communities:[],
-      refresher: 0
+      refresher: 0,
+      communityName: "",
+      searchTerm: "", // This will hold the value from the search input
+      searchedCommunity: null,
+
     }
   },
   created() {
@@ -74,8 +125,21 @@ export default {
         this.communities = result.data;
         console.log(result.data);
       })
-      
       this.refresher++;
+    },
+
+    searchForCommunity() {
+      const searchResult = this.communities.find((community) =>
+          community.toLowerCase() === this.searchTerm.toLowerCase()
+      );
+      this.searchedCommunity = searchResult || null;
+    },
+    newCommunity() {
+      const functions = getFunctions(app);
+      const newCommunity = httpsCallable(functions, 'newCommunity');
+      newCommunity({name: this.communityName}).then((result) => {
+        this.communityNames();
+      })
     },
 
     moveToCommunity(community){
@@ -90,6 +154,21 @@ export default {
 
 <style scoped>
 /* Scoped CSS styles go here */
+#community-finder-page {
+
+  background-color: beige;
+}
+.createCommunityList{
+  display: flex; /* Use flex to make it a flex container */
+  justify-content: space-between; /* This will place the text and button on opposite ends */
+  align-items: center; /* This will vertically center the items */
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 20px;
+  background-color: lightblue;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
 </style>
 <script setup>
 </script>
