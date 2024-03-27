@@ -103,7 +103,7 @@
           <div class="mb-3 right">
             <modal class="CreatePosts">
               <div class="container">
-                <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                <button v-if="this.id === this.currentUserId" type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
                   New Post
                 </button>
               </div>
@@ -207,7 +207,6 @@ export default {
 
   created() {
     this.userInfo();
-    //this.getProfilePic();
     this.friendsNames();
     this.displayMessages();
     const auth = getAuth();
