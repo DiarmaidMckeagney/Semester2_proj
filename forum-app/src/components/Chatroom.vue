@@ -22,7 +22,7 @@
       <aside class="users-section">
         <h3>Users</h3>
         <ul v-for="n in usersList.length" :key="refresher">
-          <li><strong @click="moveToProfile(usersList[n-1].uid)">{{ usersList[n -1].username }}</strong></li>
+          <li><strong @click="moveToProfile(usersList[n-1].id)">{{ usersList[n -1].name }}</strong></li>
         </ul>
       </aside>
     </main>
@@ -75,9 +75,9 @@ export default {
       console.log(nameOfChatroom);
       chatroomMessages({name: nameOfChatroom}).then((result) => {
         this.messages = result.data;
-        console.log(result.data);
+        console.log(this.messages);
       });
-      this.userList();
+      setTimeout(() => {this.userList();}, 1000);
       this.refresher++;
     },
     sendMessage(){
@@ -92,21 +92,15 @@ export default {
       this.messageBody = "";
     },
     userList(){
-      console.log("function started");
+      console.log(this.messages);
+      console.log("length: " + this.messages.length);
       for (let i = 0; i < this.messages.length; i++) {
-        let isUnique = true;
-        if(this.usersList.find(this.messages[i].username) !== undefined){
-          isUnique = false;
-          break;
+        console.log({name: this.messages[i].username, id: this.messages[i].uid});
+        if(this.usersList.map(function(e) { return e.name; }).indexOf(this.messages[i].username) <= 0){
+          this.usersList.push({name: this.messages[i].username, id: this.messages[i].uid});
         }
-        console.log("function started");
-        console.log(isUnique);
-        if (isUnique){
-          console.log(this.usersList.push({name: this.messages[i].username, id: this.messages[i].uid}));
-          console.log(this.userList);
-        }
-        console.log(this.userList);
       }
+      console.log(this.usersList);
     },
     addEmoji(emoji) {
       this.messageBody += emoji.native;
