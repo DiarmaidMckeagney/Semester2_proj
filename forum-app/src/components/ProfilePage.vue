@@ -5,9 +5,9 @@
         <section :key="refresher" style="background-color: lightblue; border-radius:10px;padding: 20px;">
           <div style="display: flex; gap: 20px; align-items: flex-start;">
             <div v-if="isHidden" class="d-flex justify-content-center align-items-center bg-light"
-              style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
+                 style="width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #333;">
 
-              <span v-if="this.profileInfo[0].url"> <img :src="this.profileInfo[0].url" alt="Custom Icon" style="width: 100px; height: 100px;"></span>
+              <img v-if="this.profileInfo[0].url != 'null'" :src="this.profileInfo[0].url" alt="Custom Icon" style="width: 100px; height: 100px;">
               <span v-else> <i> <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon" style="width: 100px; height: 100px; text-align: center;"> </i></span>
               <!--Put whatever u want in the src here-->
             </div>
@@ -90,8 +90,7 @@
             <ul v-if="posts.length !== 19" v-for="n in posts.length" :key="refresher" style="list-style-type:none;color:navy;">
               <li style="position: relative; list-style: none; margin-bottom: 10px;color:navy;">
 
-                <div
-                  style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
+                <div style="position: relative; padding: 10px; background-color: #e6f2ff; border-radius: 10px; max-width: 80%; overflow: hidden;">
 
                   <strong>{{ posts[n-1].title }}</strong>
                   <p>{{ posts[n-1].messageBody }}</p>
@@ -253,12 +252,12 @@ export default {
         const functions = getFunctions(app);
         const friendsNames = httpsCallable(functions, 'displayFriends');
         friendsNames({userId: this.id}).then((result) => {
-        console.log(result);
-        this.friends = result.data;
-      })
+          console.log(result);
+          this.friends = result.data;
+        })
       } else {
         this.friends[0] = "You must be logged in to view friends list";
-      }    
+      }
       this.refresher++;
     },
 
@@ -288,7 +287,7 @@ export default {
       this.isHidden = true;
       this.uploadImage();
       setTimeout(() => {this.editProfileInfo();}, 1000);
-      
+
     },
     userInfo() {
       const functions = getFunctions(app);
@@ -310,7 +309,7 @@ export default {
       const auth = getAuth();
       const user = auth.currentUser;
       addFriend({userId: user.uid, friendId: this.id, friendName: this.name, username: user.displayName}).then(() => {
-          console.log("finished")
+        console.log("finished")
       });
     },
     moveToFriendChat(id){
