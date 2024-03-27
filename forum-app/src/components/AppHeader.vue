@@ -27,6 +27,7 @@
           <LoginForm/>
           <SignUpForm/>
         </div>  
+
           <div v-else class="dropdown d-flex">
           <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -74,6 +75,7 @@ export default {
     SignUpForm,
     LoginForm
   },
+  
   methods: {
     moveToProfile(id){
       this.userIdStore.changeName(id);
@@ -121,6 +123,7 @@ export default {
     });
   }
 };
+
 </script>
 
 <style scoped>

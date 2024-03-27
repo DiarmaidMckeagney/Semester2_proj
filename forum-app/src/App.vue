@@ -22,12 +22,14 @@ import Popup from './components/Popup.vue';
 import { ref } from 'vue'; //importing references
 import SignUpForm from './components/SignUpForm.vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 export default {
   data() {
     return {
       userLoggedIn: false
     };
   },
+
   created() {
     const auth = getAuth();
     // Check user authentication state
@@ -41,6 +43,7 @@ export default {
       }
     });
   },
+
   setup(){
     const popupTriggers = ref({
       buttonTrigger: false
