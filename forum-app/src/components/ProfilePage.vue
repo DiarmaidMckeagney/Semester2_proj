@@ -94,14 +94,13 @@
                   <p>{{ posts[n-1].title }}</p>
                   <p>{{ posts[n-1].messageBody }}</p>
                 </div>
-                <div
-                  style="position: absolute; top: 60px; left: -10px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 10px solid #e6f2ff;">
+                <div style="position: absolute; top: 60px; left: -10px; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 10px solid #e6f2ff;">
                 </div>
               </li>
             </ul>
           </div>
           <div class="mb-3 right">
-            <modal class="CreateChat">
+            <modal class="CreatePosts">
               <div class="container">
                 <button type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
                   New Post
@@ -112,7 +111,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                      <h5 class="modal-title" id="exampleModalLabel"> Create New Chatroom </h5>
+                      <h5 class="modal-title" id="exampleModalLabel"> Create New Blog Post </h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
