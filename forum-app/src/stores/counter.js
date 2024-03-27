@@ -10,23 +10,6 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
-export const useFriendId = defineStore('friendId', {
-  state: () => {
-    return {
-      friendId: "id"
-    }
-  },
-  getters: {
-    getFriendId(){
-      return this.friendId;
-    }
-  },
-  actions: {
-    changeFriendId(newFriendId){
-      this.friendId = newFriendId;
-    }
-  }
-})
 
 export const useUserId = defineStore('userId', {
   state: () => {
@@ -83,4 +66,20 @@ export const useChatroomName = defineStore('nameOfRoom', {
 
 })
 
-
+export const useFriendId = defineStore('friendId', {
+  state: () => {
+    return {
+      friendId: "id"
+    }
+  },
+  getters: {
+    getFriendId(){
+      return this.friendId;
+    }
+  },
+  actions: {
+    changeFriendId(newFriendId){
+      this.friendId = newFriendId;
+    }
+  }
+})

@@ -26,8 +26,8 @@
       <!-- Users List Section -->
       <aside class="users-section">
         <h3>Users</h3>
-        <ul>
-          <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+        <ul v-for="n in usersList.length" :key="refresher">
+          <li><strong @click="moveToProfile(usersList[n-1].id)">{{ usersList[n -1].name }}</strong></li>
         </ul>
       </aside>
     </main>
@@ -58,6 +58,7 @@ export default {
       messages:[],
       refresher: 0,
       messageBody: "",
+      usersList: [],
       showEmojiPicker: false
     }
   },
@@ -69,7 +70,6 @@ export default {
     moveToProfile(id){
       if(id != null){
         this.userIdStore.changeName(id);
-        console.log(this.userIdStore.getUserId);
         router.push({path: "/profile"});
       }
     },
@@ -86,8 +86,9 @@ export default {
       console.log(nameOfChatroom);
       chatroomMessages({name: nameOfChatroom}).then((result) => {
         this.messages = result.data;
-        console.log(result.data);
+        console.log(this.messages);
       });
+      setTimeout(() => {this.userList();}, 1000);
       this.refresher++;
     },
     sendMessage(){
@@ -101,7 +102,21 @@ export default {
       });
       this.messageBody = "";
     },
-    insert(emoji) {
+
+    userList(){
+      this.usersList = [];
+      console.log(this.messages);
+      console.log("length: " + this.messages.length);
+      for (let i = 0; i < this.messages.length; i++) {
+        console.log({name: this.messages[i].username, id: this.messages[i].uid});
+        if(this.usersList.map(function(e) { return e.name; }).indexOf(this.messages[i].username) <= 0){
+          this.usersList.push({name: this.messages[i].username, id: this.messages[i].uid});
+        }
+      }
+      console.log(this.usersList);
+    },
+    addEmoji(emoji) {
+
       this.messageBody += emoji.native;
     },
 

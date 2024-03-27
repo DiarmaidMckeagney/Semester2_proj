@@ -169,7 +169,6 @@ export default {
       createUserWithEmailAndPassword(auth, this.email, this.password).then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        this.createFriends();
         this.createProfile();
       }).catch((error) => {
         const errorCode = error.code;
@@ -187,19 +186,20 @@ export default {
       createProfile({ Uid: user.uid, username: this.username, age: this.age, dob: this.dob }).then(() => {
         console.log("finished");
       });
+      updateProfile(user,{displayName: this.username}).then(() => {
+        console.log("set username");
+      });
     },
-    createFriends(){
+    /*createFriends(){
       const functions = getFunctions(app);
       const friendsList = httpsCallable(functions, 'startFriendList');
       const auth = getAuth();
       const user = auth.currentUser;
-      updateProfile(user,{displayName: this.username}).then(() => {
-        console.log("set username");
-      });
+
       friendsList({userId: user.uid}).then(() =>{
         console.log("finished");
       });
-    }
+    }*/
   }
 }
 </script>
