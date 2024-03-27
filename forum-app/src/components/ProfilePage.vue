@@ -149,7 +149,8 @@
           <ul v-for="n in friends.length" :key="refresher" style="margin: 0; padding: 0;">
             <!-- List of Communities -->
             <li style="border: 1px solid #ccc; margin: 10px auto; padding: 10px; background-color: #e6f2ff; list-style-type: none; border-radius: 10px;">
-              <p style="color: navy; margin: 0; padding-left: 20px; cursor: pointer;" @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</p>
+              <!-- Adjusted padding-left here -->
+              <p style="color: navy; margin: 0; padding-left: 5px; cursor: pointer;" @click="moveToFriendChat(friends[n-1].id)">{{friends[n-1].name.name}}</p>
             </li>
           </ul>
         </div>
