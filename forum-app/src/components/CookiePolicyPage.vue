@@ -2,7 +2,7 @@
   <div id="cookie-policy-page">
     <!-- Main Content Section -->
     <main style="padding: 20px;">
-      <section style="background-color: #f0f0f0; padding: 20px;">
+      <section style="background-color: lightblue; padding: 20px;color:navy;border-radius:10px;">
         <h2>Cookie Policy Content</h2>
 
         <!-- Cookie Policy Content -->
@@ -30,4 +30,8 @@
 
 <style scoped>
 /* Add your CSS here */
+#cookie-policy-page{
+  min-height:80vh;
+  background:beige;
+}
 </style>
