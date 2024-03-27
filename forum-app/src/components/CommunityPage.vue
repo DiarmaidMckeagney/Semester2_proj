@@ -4,12 +4,11 @@
     <main>
       <!-- Sidebar: List of Users Joined -->
       <aside class="sidebar">
-        <router-link to="/community-finder" class="button-link">Back to Community Finder</router-link>
+        <router-link to="/community-finder" class="button-link" style="background-color: black; font-size: large;"> Back to Community Finder</router-link>
         <ul v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
-          <li>
-            <span></span>
-            <button class="join-button" @click="refreshCommunity(communities[n-1])">{{ communities[n-1] }}</button>
+          <li  :class="{ 'btn-selected': selectedCommunity === communities[n-1] }" class="join-button-li" :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }">
+            <button :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }"  class="join-button" @click="refreshCommunity(communities[n-1])">{{ communities[n-1] }} </button>
           </li>
         </ul>
       </aside>
@@ -67,6 +66,7 @@ export default {
       title: "",
       mainBodyOfText: "",
       selectedCommunity: null, // Track the selected community
+      chatroomColors:["LightPink","LightBlue", "PaleGreen", "Lavender", "SkyBlue","LightSalmon", "LightGreen", "Gold",  "LightSteelblue", "Pink","LightGrey"]
     };
   },
 
@@ -103,7 +103,9 @@ export default {
     },
 
     refreshCommunity(community) {
+
       this.selectedCommunity = community; // Set the selected community here
+      console.log(this.selectedCommunity);
       this.communityNamestore.changeName(community);
       this.displayPosts();
     },
@@ -130,7 +132,24 @@ export default {
 #community-page {
   background-color: beige;
 }
+.btn-selected {
+  background-color: red; /* Or your desired color */
+  border-color: red; /* Adjust border color if needed */
+  filter: drop-shadow(1px 1px 5px red);
+}
 
+.selected-community {
+  background-color: navy;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 main {
   display: flex;
   justify-content: space-between;
@@ -146,7 +165,8 @@ main {
   gap: 20px;
 }
 
-.button-link, .join-button, .post-button {
+
+.button-link, .post-button {
   background-color: navy;
   color: white;
   border-radius: 5px;
@@ -158,6 +178,26 @@ main {
   justify-content: center;
   align-items: center;
 }
+.join-button{
+  background-color: navy;
+  color: black;
+  font-weight: 700;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: large;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join-button-li:hover
+{
+  filter: brightness(0.7); 
+}
+
 
 .button-link:hover, .join-button:hover, .post-button:hover {
   background-color: #555;
