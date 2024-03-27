@@ -1,18 +1,8 @@
 
 <template>
-  <div id="home-page" class="container-fluid">
-    <main class="row" style="margin-top: 20px">
-      <aside v-if="userLoggedIn" class="col-md-3 users-section d-flex flex-column align-items-center" style="padding: 2vh; min-height: 91vh;">
-        <h1 style="font-size: 3vw; margin-left: 10px; justify-content: center">Communities</h1>
-        <ul v-for="n in communities.length" style="list-style: none;">
-          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center" @click="moveToCommunity(communities[n-1])">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
-        </ul>
-      </aside>
 
-      <section class="col-md-9 d-flex flex-column justify-content-between">
-     
-       <!-- Code for modal -->
-  <div class="modal fade display-flex" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      <!-- Code for modal -->
+      <div class="modal fade display-flex" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true" style="position: fixed;">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -37,29 +27,32 @@
       </div>
     </div>
   </div>
-    <!-- Main Content Section -->
-    <main class="row" style="margin-top: 20px">
-      <!-- Topics List Section -->
-      <aside v-if="userLoggedIn" class="col-md-3 users-section d-flex flex-column align-items-center" style="padding: 2vh; min-height: 91vh; width: 33%">
-        <h1 style="font-size: 3vw; margin-left: 10px; justify-content: center">Communities</h1>
-        <ul v-for="n in communities.length" style="list-style: none;">
-          <li style="font-size: 1.5vw; margin-bottom: 4px; justify-content: center" @click="moveToCommunity(communities[n-1])">{{ JSON.parse(JSON.stringify(communities[n-1])) }}</li>
-        </ul>
-      </aside>
+ 
+  <div id="home-page" class="container-fluid">
 
-      <section class="col-md-8  d-flex flex-column justify-content-between">
+    <main class="row" style="margin-top: 20px">
+        <aside class="sidebar col-md-4 d-flex flex-column justify-content-between" style="width: 33.3%">
+        <h1 class="font-center " style="margin-left: 16%; font-weight: 200px;"> Communities</h1>
+        <ul class="ul-side" v-for="n in communities.length" :key="refresher">
+          <!-- List of Communities -->
+          <li  :class="{ 'btn-selected': selectedCommunity === communities[n-1] }" class="li-side" :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }">
+            <button :style="{ backgroundColor: chatroomColors[(n-1) % chatroomColors.length] }"  class="join-button" @click="moveToCommunity(communities[n-1])">{{ communities[n-1] }} </button>
+          </li>
+        </ul>
+         </aside> 
+      <section class="col-md-8 d-flex flex-column" style="width: 66.6%">
+    
         <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
           <p style="font-size: 40px">You are successfully logged in! <br> Enjoy your stay! </p>
         </div>
-          <ul v-for="n in posts.length" :key="refresher">
-            <div v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
+        <div class="form-group text-center users-section">
+            <div v-for="n in posts.length" :key="refresher" v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; background-color: lightgreen; filter:brightness(1.2); padding: 20px; font-size: 20px; font-weight: bold; ">
               <h2>{{ JSON.parse(JSON.stringify(posts[n-1].title)) }}</h2>
-              <h5 @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
+              <h5 class="text-left" @click="moveToProfile(posts[n-1].uid)">{{ JSON.parse(JSON.stringify(posts[n-1].username)) }}</h5>
               <span>{{ JSON.parse(JSON.stringify(posts[n-1].mainText)) }}</span>
             </div>
-          </ul>
-      </section>
+        </div>
       </section>
 
       <section class="col-md-8  d-flex flex-column justify-content-between">
@@ -130,7 +123,8 @@ export default {
       dob: "",
       showCookie: false,
       posts: [],
-      refresher: 0
+      refresher: 0,
+      chatroomColors:["LightPink","LightBlue", "PaleGreen", "Lavender", "SkyBlue","LightSalmon", "LightGreen", "Gold",  "LightSteelblue", "Pink","LightGrey"]
     };
   },
   created() {
@@ -217,8 +211,76 @@ export default {
 .users-section {
   padding: 20px;
   background-color: lightblue; /* Slight contrast to main chat area */
-  border:2px solid navy;
   border-radius: 10px;
   overflow-y: auto; /* For scrolling if many users */
 }
+
+.sidebar {
+  width: 20%;
+  background-color: lightblue;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn-selected {
+  background-color: red; /* Or your desired color */
+  border-color: red; /* Adjust border color if needed */
+  filter: drop-shadow(1px 1px 5px red);
+}
+.button-link, .post-button {
+  background-color: navy;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.join-button{
+  background-color: navy;
+  color: black;
+  font-weight: 700;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: large;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join-button-li:hover
+{
+  filter: brightness(0.7); 
+}
+
+.ul-side {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.li-side {
+  background-color: lightblue;
+  color: navy;
+  border: 2px solid navy;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 </style>
+
