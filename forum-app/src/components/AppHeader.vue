@@ -27,7 +27,8 @@
           <LoginForm/>
           <SignUpForm/>
         </div>  
-          <div v-else class="dropdown">
+
+          <div v-else class="dropdown d-flex">
           <img src="@/assets/AlumnPSD-LogoOnly.png" alt="Default Icon"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 90px; height: auto; text-align: center;"> 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li  :class="{ 'currHere': $route.path === '/profile' }">
@@ -74,6 +75,7 @@ export default {
     SignUpForm,
     LoginForm
   },
+  
   methods: {
     moveToProfile(id){
       this.userIdStore.changeName(id);
@@ -90,6 +92,9 @@ export default {
            // No user is signed in
           this.userLoggedIn = false;
           this.user = null;
+          const cookieShown = localStorage.getItem('cookieShown');
+          localStorage.setItem('cookieShown', false);
+
           this.userDisplayName = "";
         })
         .catch((error) => {
@@ -118,6 +123,7 @@ export default {
     });
   }
 };
+
 </script>
 
 <style scoped>
@@ -156,6 +162,10 @@ export default {
 @media (max-width: 768px) {
   .btn {
     padding: 8px 16px; /* Adjust the padding for smaller screens */
+  }
+  img
+  {
+    max-width: 20vh;
   }
   
 }
