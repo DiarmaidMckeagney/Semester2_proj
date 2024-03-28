@@ -18,7 +18,7 @@
            <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="cookieModal">Cookie Policy</router-link></p>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
               <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="cookieModal">Submit</button>
+                data-dismiss="cookieModal">Accept</button>
                 <button @click="hideModal" type="button" class="btn btn-danger" data-target="#profileModal" data-toggle="modal"
                 data-dismiss="cookieModal">Reject</button>
             </div>
@@ -141,7 +141,7 @@ export default {
         // User is signed in
         this.userLoggedIn = true;
         this.showCookie = true;
-        if(!cookieShown)
+        if(cookieShown === "false")
         {
           $('#cookieModal').modal('show');
            console.log(this.showCookie);
@@ -189,6 +189,11 @@ export default {
         this.communities = result.data;
         console.log(this.communities);
       });
+    },
+    hideModal()
+    {
+      $('#cookieModal').modal('hide');
+
     }
   }
 }
