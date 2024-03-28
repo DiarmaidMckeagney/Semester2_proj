@@ -9,18 +9,18 @@
         <div class="modal-header border-bottom-0">
           <h5 class="modal-title" id="exampleModalLabel"> Cookie Policy </h5>
 
-          <button  @click="hideModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button  @click="hideModal" type="button" class="close" data-dismiss="cookieModal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form>
           <div class="modal-body">
-           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="modal">Cookie Policy</router-link></p>
+           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="cookieModal">Cookie Policy</router-link></p>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
               <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="modal">Submit</button>
+                data-dismiss="cookieModal">Submit</button>
                 <button @click="hideModal" type="button" class="btn btn-danger" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="modal">Reject</button>
+                data-dismiss="cookieModal">Reject</button>
             </div>
           </div>
         </form>
