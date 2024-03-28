@@ -9,18 +9,18 @@
         <div class="modal-header border-bottom-0">
           <h5 class="modal-title" id="exampleModalLabel"> Cookie Policy </h5>
 
-          <button  @click="hideModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button  @click="hideModal" type="button" class="close" data-dismiss="cookieModal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form>
           <div class="modal-body">
-           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="modal">Cookie Policy</router-link></p>
+           <p> This application uses cookies, if you want to learn more check out our <router-link to="/cookie-policy"  @click="hideModal" data-dismiss="cookieModal">Cookie Policy</router-link></p>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
               <button  @click="hideModal" type="button" class="btn btn-success" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="modal">Submit</button>
+                data-dismiss="cookieModal">Submit</button>
                 <button @click="hideModal" type="button" class="btn btn-danger" data-target="#profileModal" data-toggle="modal"
-                data-dismiss="modal">Reject</button>
+                data-dismiss="cookieModal">Reject</button>
             </div>
           </div>
         </form>
@@ -31,7 +31,7 @@
   <div id="home-page" class="container-fluid">
 
     <main class="row" style="margin-top: 20px">
-        <aside class="sidebar col-md-4 d-flex flex-column justify-content-between" style="width: 33.3%">
+        <aside v-if="userLoggedIn" class="sidebar col-md-4 d-flex flex-column justify-content-between" style="width: 33.3%">
         <h1 class="font-center " style="margin-left: 16%; font-weight: 200px;"> Communities</h1>
         <ul class="ul-side" v-for="n in communities.length" :key="refresher">
           <!-- List of Communities -->
@@ -40,7 +40,7 @@
           </li>
         </ul>
          </aside> 
-      <section class="col-md-8 d-flex flex-column" style="width: 66.6%">
+      <section v-if="userLoggedIn" class="col-md-8 d-flex flex-column" style="width: 66.6%">
     
         <div  v-if="userLoggedIn" class="form-group text-center users-section"  style="margin-bottom: 20px; padding: 20px; font-size: 20px; font-weight: bold; ">
           <img src="@/assets/AlumnPSD-Back.png" alt="Site Logo"  class="img-fluid dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" style="max-width: 500px; height: auto; text-align: center;">
