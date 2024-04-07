@@ -389,4 +389,3 @@ describe("Testing New profile feature", function () {
     });
 });
 
-//  TODO: need to implement editprofileinfo and newfriend test.
