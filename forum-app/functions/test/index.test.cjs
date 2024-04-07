@@ -360,3 +360,5 @@ describe("Testing New profile feature", function () {
         expect(result).status(500);
     });
 });
+
+//  TODO: need to implement editprofileinfo and newfriend test.
