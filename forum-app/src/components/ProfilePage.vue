@@ -103,7 +103,7 @@
           <div class="mb-3 right">
             <modal class="CreatePosts">
               <div class="container">
-                <button v-if="this.id === this.currentUserId" type="button" class="create-button" style="background-color: #333; color: white;" data-toggle="modal" data-target="#createForm">
+                <button type="button" class="create-button" style="background-color: lightgreen;border: solid 1px;border-color: black;border-radius:10px;color: white;" data-toggle="modal" data-target="#createForm">
                   New Post
                 </button>
               </div>
