@@ -190,12 +190,19 @@ describe("Testing New chatroom feature", function () {
 
 describe("Testing chatroom messages list", function () {
     this.timeout(100000);
-    it('Tests if the chatroom messages return correctly', async () => {
+    it('Tests if the chatroom messages return correctly a name', async () => {
         const result = await chai.request('https://us-central1-forum-app-9d1c4.cloudfunctions.net')
             .post('/chatroomMessages')
             .set('content-type', 'application/json')
             .send({data: {name: "Cooking" }});
         expect(result).status(200);
+    });
+    it('Tests if the chatroom messages return correctly with no info', async () => {
+        const result = await chai.request('https://us-central1-forum-app-9d1c4.cloudfunctions.net')
+            .post('/chatroomMessages')
+            .set('content-type', 'application/json')
+            .send();
+        expect(result).status(500);
     });
 });
 
@@ -247,6 +254,27 @@ describe("Testing friend messages list", function () {
             .set('content-type', 'application/json')
             .send( {data: {userId: "sDGoU8QCPjUPdbhZAGeCgZs1NJO2", friendId: "4NUTUaQp5jdRnxQekfmWzRmVsA83"} } );
         expect(result).status(200);
+    });
+    it('Tests if the friends messages return correctly with no userId', async () => {
+        const result = await chai.request('https://us-central1-forum-app-9d1c4.cloudfunctions.net')
+            .post('/displayFriendMessages')
+            .set('content-type', 'application/json')
+            .send( {data: {friendId: "4NUTUaQp5jdRnxQekfmWzRmVsA83"} } );
+        expect(result).status(500);
+    });
+    it('Tests if the friends messages return correctly with no friendId', async () => {
+        const result = await chai.request('https://us-central1-forum-app-9d1c4.cloudfunctions.net')
+            .post('/displayFriendMessages')
+            .set('content-type', 'application/json')
+            .send( {data: {userId: "sDGoU8QCPjUPdbhZAGeCgZs1NJO2"} } );
+        expect(result).status(500);
+    });
+    it('Tests if the friends messages return correctly with no info', async () => {
+        const result = await chai.request('https://us-central1-forum-app-9d1c4.cloudfunctions.net')
+            .post('/displayFriendMessages')
+            .set('content-type', 'application/json')
+            .send();
+        expect(result).status(500);
     });
 });
 
